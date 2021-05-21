@@ -1,4 +1,6 @@
-import "chat/ChatIndex";
 import "stage/StageIndex";
+import "chat/ChatIndex";
 
-console.log("container aaa");
+const title = document.createElement("h1");
+title.append("Event app");
+document.body.prepend(title);

@@ -7,4 +7,4 @@ for (let index = 0; index < 5; index++) {
   ul.append(li);
 }
 
-document.getElementById("root").append(ul);
+document.getElementById("root-chat").append(ul);
