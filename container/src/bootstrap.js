@@ -1,4 +1,3 @@
-import "stage/StageIndex";
 import "chat/ChatIndex";
 
 const title = document.createElement("h1");
