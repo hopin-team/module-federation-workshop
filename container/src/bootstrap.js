@@ -1,6 +1,8 @@
 import "stage/StageIndex";
-import "chat/ChatIndex";
+import mount from "chat/ChatIndex";
 
 const title = document.createElement("h1");
 title.append("Event app");
 document.getElementById("root-container").prepend(title);
+
+mount(document.getElementById("root-chat"));
