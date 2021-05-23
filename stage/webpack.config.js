@@ -16,6 +16,7 @@ module.exports = {
       exposes: {
         "./StageIndex": "./src/index.js",
       },
+      shared: ["txtgen"],
     }),
   ],
 };
