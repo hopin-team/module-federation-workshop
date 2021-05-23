@@ -14,7 +14,7 @@ module.exports = {
       name: "stage",
       filename: "remoteEntry.js",
       exposes: {
-        "./StageIndex": "./src/index.js",
+        "./StageIndex": "./src/bootstrap.js",
       },
       shared: ["txtgen"],
     }),

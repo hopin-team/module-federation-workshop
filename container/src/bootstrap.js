@@ -1,8 +1,9 @@
-import "stage/StageIndex";
-import mount from "chat/ChatIndex";
+import mountStage from "stage/StageIndex";
+import mountChat from "chat/ChatIndex";
 
 const title = document.createElement("h1");
 title.append("Event app");
 document.getElementById("root-container").prepend(title);
 
-mount(document.getElementById("root-chat"));
+mountChat(document.getElementById("root-chat"));
+mountStage(document.getElementById("root-stage"));
