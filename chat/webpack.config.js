@@ -16,6 +16,7 @@ module.exports = {
       exposes: {
         "./ChatIndex": "./src/index",
       },
+      shared: ["txtgen"],
     }),
   ],
 };
