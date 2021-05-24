@@ -1,5 +1,5 @@
-import "stage/StageIndex";
-import mount from "chat/ChatIndex";
+import "sessions/App";
+import mount from "chat/App";
 
 const title = document.createElement("h1");
 title.append("Event app");
