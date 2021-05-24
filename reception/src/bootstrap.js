@@ -7,9 +7,9 @@ function mount(el) {
 }
 
 if (process.env.NODE_ENV === "development") {
-  const el = document.getElementById("root-chat-dev");
-  if (el) {
-    mount(el);
+  const root = document.getElementById("root-reception-dev");
+  if (root) {
+    mount(root);
   }
 }
 

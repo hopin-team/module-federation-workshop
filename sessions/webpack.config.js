@@ -4,19 +4,34 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 module.exports = {
   mode: "development",
   devServer: {
-    port: 8886,
+    port: 8885,
+    historyApiFallback: {
+      index: "/index.html",
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
     new ModuleFederationPlugin({
-      name: "stage",
+      name: "sessions",
       filename: "remoteEntry.js",
       exposes: {
-        "./StageIndex": "./src/bootstrap.js",
+        "./App": "./src/bootstrap.js",
       },
-      shared: ["txtgen"],
+      shared: ["react"],
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
 };

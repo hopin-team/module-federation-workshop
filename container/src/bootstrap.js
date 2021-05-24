@@ -1,9 +1,11 @@
-import mountStage from "stage/StageIndex";
-import mountChat from "chat/ChatIndex";
+import ReactDOM from "react-dom";
+import App from "./components/App";
+import mountSessions from "sessions/App";
+import mountChat from "chat/App";
+import mountReception from "reception/App";
 
-const title = document.createElement("h1");
-title.append("Event app");
-document.getElementById("root-container").prepend(title);
+ReactDOM.render(<App />, document.getElementById("root-container"));
 
+mountReception(document.getElementById("root-reception"));
 mountChat(document.getElementById("root-chat"));
-mountStage(document.getElementById("root-stage"));
+mountSessions(document.getElementById("root-sessions"));

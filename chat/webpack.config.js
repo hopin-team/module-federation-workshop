@@ -5,6 +5,9 @@ module.exports = {
   mode: "development",
   devServer: {
     port: 8888,
+    historyApiFallback: {
+      index: "index.html",
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -14,9 +17,21 @@ module.exports = {
       name: "chat",
       filename: "remoteEntry.js",
       exposes: {
-        "./ChatIndex": "./src/bootstrap.js",
+        "./App": "./src/bootstrap.js",
       },
-      shared: ["txtgen"],
+      shared: ["react"],
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
 };

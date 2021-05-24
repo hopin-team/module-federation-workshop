@@ -4,7 +4,7 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 module.exports = {
   mode: "development",
   devServer: {
-    port: 8887,
+    port: 8886,
     historyApiFallback: {
       index: "index.html",
     },
@@ -14,11 +14,10 @@ module.exports = {
       template: "./public/index.html",
     }),
     new ModuleFederationPlugin({
-      name: "container",
-      remotes: {
-        chat: "chat@http://localhost:8888/remoteEntry.js",
-        sessions: "sessions@http://localhost:8885/remoteEntry.js",
-        reception: "reception@http://localhost:8886/remoteEntry.js",
+      name: "reception",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./App": "./src/bootstrap.js",
       },
       shared: ["react"],
     }),
