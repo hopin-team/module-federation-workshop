@@ -14,7 +14,7 @@ module.exports = {
       name: "container",
       remotes: {
         chat: "chat@http://localhost:8888/remoteEntry.js",
-        stage: "stage@http://localhost:8886/remoteEntry.js",
+        sessions: "sessions@http://localhost:8886/remoteEntry.js",
       },
     }),
   ],

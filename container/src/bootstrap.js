@@ -1,5 +1,5 @@
-import "chat/ChatIndex";
-import "stage/StageIndex";
+import "chat/App";
+import "sessions/App";
 
 const title = document.createElement("h1");
 title.append("Event app");

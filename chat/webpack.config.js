@@ -14,7 +14,7 @@ module.exports = {
       name: "chat",
       filename: "remoteEntry.js",
       exposes: {
-        "./ChatIndex": "./src/index",
+        "./App": "./src/index",
       },
       shared: ["txtgen"],
     }),

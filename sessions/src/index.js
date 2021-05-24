@@ -8,6 +8,9 @@ video.setAttribute(
   // thanks Mozilla for the video example
   "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
 );
-const root = document.getElementById("root-stage");
+const root = document.getElementById("root-sessions");
+const h1 = document.createElement("h1");
+h1.append("Welcome to this session");
+root.append(h1);
 root.append(video);
 root.append(`Title: ${gen.sentence()}`);
