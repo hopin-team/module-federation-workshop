@@ -7,13 +7,18 @@ export default function ReceptionApp() {
   const history = useHistory();
 
   useEffect(() => {
-    const { onParentNavigate } = mount(ref.current, {
+    const { onParentNavigate, unmount } = mount(ref.current, {
       onNavigate: (pathname) => {
         const currentPathname = history.location.pathname;
         if (currentPathname !== pathname) history.push(pathname);
       },
     });
-    return history.listen((e) => onParentNavigate(e.pathname));
+    const unlisten = history.listen((e) => onParentNavigate(e.pathname));
+
+    return () => {
+      unmount();
+      unlisten();
+    };
   }, [ref.current]);
 
   return <div ref={ref} />;

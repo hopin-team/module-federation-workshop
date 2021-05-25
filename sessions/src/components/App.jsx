@@ -12,9 +12,9 @@ export default function App({ history }) {
         <Route path="/sessions">
           <SessionList />
         </Route>
-        <Route>
+        {/* <Route>
           <Redirect to="/sessions" />
-        </Route>
+        </Route> */}
       </Switch>
     </Router>
   );
