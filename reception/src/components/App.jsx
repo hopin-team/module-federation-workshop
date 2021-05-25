@@ -1,10 +1,10 @@
 import { BrowserRouter } from "react-router-dom";
-import Schedule from "./Schedule";
+import WIP from "./WIP";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Schedule />
+      <WIP />
     </BrowserRouter>
   );
 }
