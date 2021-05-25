@@ -12,9 +12,6 @@ export default function App({ history }) {
         <Route path="/sessions">
           <SessionList />
         </Route>
-        {/* <Route>
-          <Redirect to="/sessions" />
-        </Route> */}
       </Switch>
     </Router>
   );
