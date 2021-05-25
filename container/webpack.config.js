@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const packageJson = require("./package.json");
 
 const port = 8887;
 
@@ -25,7 +26,7 @@ module.exports = {
         sessions: "sessions@http://localhost:8885/remoteEntry.js",
         reception: "reception@http://localhost:8886/remoteEntry.js",
       },
-      shared: ["react"],
+      shared: packageJson.dependencies,
     }),
   ],
   module: {

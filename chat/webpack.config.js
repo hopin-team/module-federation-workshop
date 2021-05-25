@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const packageJson = require("./package.json");
 
 const port = 8888;
 
@@ -24,7 +25,7 @@ module.exports = {
       exposes: {
         "./App": "./src/bootstrap.js",
       },
-      shared: ["react"],
+      shared: packageJson.dependencies,
     }),
   ],
   module: {
