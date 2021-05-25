@@ -1,4 +1,3 @@
-// import * as gen from "txtgen";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 

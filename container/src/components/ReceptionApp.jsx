@@ -13,6 +13,7 @@ export default function ReceptionApp() {
         if (currentPathname !== pathname) history.push(pathname);
       },
     });
+
     return history.listen((e) => onParentNavigate(e.pathname));
   }, [ref.current]);
 
