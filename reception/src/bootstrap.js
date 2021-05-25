@@ -3,9 +3,7 @@ import { createMemoryHistory, createBrowserHistory } from "history";
 import App from "./components/App";
 
 function mount(el, { onNavigate, history = createMemoryHistory() } = {}) {
-  if (onNavigate) {
-    history.listen((e) => onNavigate(e.pathname));
-  }
+  if (onNavigate) history.listen((e) => onNavigate(e.pathname));
   if (el) ReactDOM.render(<App history={history} />, el);
 
   return {

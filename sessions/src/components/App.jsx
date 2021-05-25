@@ -1,10 +1,10 @@
-import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
+import { Switch, Route, Router, Redirect } from "react-router-dom";
 import Session from "./Session";
 import SessionList from "./SessionList";
 
-export default function App() {
+export default function App({ history }) {
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <Switch>
         <Route path="/sessions/:id">
           <Session />
@@ -16,6 +16,6 @@ export default function App() {
           <Redirect to="/sessions" />
         </Route>
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 }
