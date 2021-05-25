@@ -1,9 +1,8 @@
 import ReactDOM from "react-dom";
-import { createMemoryHistory } from "history";
+import { createMemoryHistory, createBrowserHistory } from "history";
 import App from "./components/App";
 
-function mount(el, { onNavigate } = {}) {
-  const history = createMemoryHistory();
+function mount(el, { onNavigate, history = createMemoryHistory() } = {}) {
   if (onNavigate) {
     history.listen((e) => onNavigate(e.pathname));
   }
@@ -20,7 +19,7 @@ function mount(el, { onNavigate } = {}) {
 if (process.env.NODE_ENV === "development") {
   const root = document.getElementById("root-reception-dev");
   if (root) {
-    mount(root);
+    mount(root, { history: createBrowserHistory() });
   }
 }
 
