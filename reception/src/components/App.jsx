@@ -1,10 +1,10 @@
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import WIP from "./WIP";
 
-export default function App() {
+export default function App({ history }) {
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <WIP />
-    </BrowserRouter>
+    </Router>
   );
 }
