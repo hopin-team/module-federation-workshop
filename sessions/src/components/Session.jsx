@@ -5,7 +5,7 @@ export default function Session() {
     <>
       <h1>Session 123</h1>
       <p>
-        <Link to="/">Session list</Link> / Session 123
+        <Link to="/sessions">Session list</Link> / Session 123
       </p>
       <video
         loop

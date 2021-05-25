@@ -1,21 +1,21 @@
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import Session from "./Session";
 import SessionList from "./SessionList";
 
 export default function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Switch>
-        <Route path="/:id">
+        <Route path="/sessions/:id">
           <Session />
         </Route>
-        <Route path="/">
+        <Route path="/sessions">
           <SessionList />
         </Route>
-        <Route path="*">
-          <h1>Not found</h1>
+        <Route>
+          <Redirect to="/sessions" />
         </Route>
       </Switch>
-    </Router>
+    </BrowserRouter>
   );
 }

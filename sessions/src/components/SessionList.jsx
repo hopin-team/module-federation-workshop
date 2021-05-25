@@ -6,7 +6,7 @@ export default function SessionList() {
       <h1>Session List</h1>
       <ul>
         <li>
-          <Link to="/123">Session 123</Link>
+          <Link to="/sessions/123">Session 123</Link>
         </li>
       </ul>
     </>
