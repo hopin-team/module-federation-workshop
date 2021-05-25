@@ -10,7 +10,7 @@ export default function App() {
     <>
       <h1>Chat</h1>
       {messages.map((message) => (
-        <p key={message.sentAt.toTimeString()}>{message.text}</p>
+        <p key={message.sentAt.getTime()}>{message.text}</p>
       ))}
       <form
         onSubmit={(e) => {
