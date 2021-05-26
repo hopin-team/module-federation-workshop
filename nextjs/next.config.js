@@ -1,7 +1,8 @@
+const packageJsonDeps = require("./package.json").dependencies;
+
 module.exports = {
   future: { webpack5: true },
   webpack: (config, options) => {
-    const { buildId, dev, isServer, defaultLoaders, webpack } = options;
     const { ModuleFederationPlugin } = options.webpack.container;
 
     config.plugins.push(
@@ -9,7 +10,19 @@ module.exports = {
         remotes: {
           chat: "chat@http://localhost:8888/remoteEntry.js",
         },
-        //shared: ["react"],
+        shared: {
+          ...packageJsonDeps,
+          react: {
+            singleton: true,
+            eager: true,
+            requiredVersion: packageJsonDeps.react,
+          },
+          "react-dom": {
+            singleton: true,
+            eager: true,
+            requiredVersion: packageJsonDeps["react-dom"],
+          },
+        },
       })
     );
 
