@@ -9,6 +9,7 @@ export default function SessionList() {
           <Link to="/sessions/123">Session 123</Link>
         </li>
       </ul>
+      <Link to="/sessions">All sessions</Link>
     </>
   );
 }

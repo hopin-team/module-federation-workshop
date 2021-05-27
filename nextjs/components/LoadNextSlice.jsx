@@ -17,20 +17,20 @@ const LoadNextSlice = ({
         useEffect(() => {
           const { onParentNavigate, unmount } = mount(ref.current, {
             onNavigate: (pathname) => {
-              if (router.pathname !== pathname)
+              if (router.pathname !== pathname) {
                 router.push(pathname, undefined, {
                   shallow: true,
                 });
+              }
             },
           });
 
-          // Do I need this?
-          router.events.on("routeChangeStart", onParentNavigate);
+          //router.events.on("routeChangeStart", onParentNavigate);
 
           return () => {
             unmount();
             // TODO, does onParentNavigate keep the identity between renders?
-            router.events.off("routeChangeStart", onParentNavigate);
+            //router.events.off("routeChangeStart", onParentNavigate);
           };
         }, [ref.current]);
 
