@@ -8,7 +8,8 @@ module.exports = {
     config.plugins.push(
       new ModuleFederationPlugin({
         remotes: {
-          chat: "chat@http://localhost:8888/remoteEntry.js",
+          //chat: "chat@http://localhost:8888/remoteEntry.js",
+          sessions: "sessions@http://localhost:8885/remoteEntry.js",
         },
         shared: {
           ...packageJsonDeps,

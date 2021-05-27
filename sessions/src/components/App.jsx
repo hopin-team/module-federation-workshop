@@ -6,10 +6,16 @@ export default function App({ history }) {
   return (
     <Router history={history}>
       <Switch>
-        <Route path="/sessions/:id">
+        {/* <Route path="/sessions/:id">
           <Session />
         </Route>
         <Route path="/sessions">
+          <SessionList />
+        </Route> */}
+        <Route path="/:id">
+          <Session />
+        </Route>
+        <Route path="/">
           <SessionList />
         </Route>
       </Switch>

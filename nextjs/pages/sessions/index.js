@@ -1,7 +1,6 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Head from "next/head";
-//import ChatApp from "../components/ChatApp";
-import SessionsApp from "../components/SessionsApp";
+import SessionsApp from "../../components/SessionsApp";
 
 const Home = () => {
   return (
@@ -10,7 +9,7 @@ const Home = () => {
         <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Hello</h1>
+      <h1>hello</h1>
       <SessionsApp />
     </div>
   );

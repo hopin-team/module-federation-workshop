@@ -2,22 +2,17 @@ import React, { useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
-// import { useHistory } from "react-router-dom";
-
-const ChatApp = dynamic(
+const SessionsApp = dynamic(
   async () => {
-    const mount = (await import("chat/App")).default;
+    const mount = (await import("sessions/App")).default;
 
-    return function ChatApp() {
+    return function SessionsApp() {
       const ref = useRef();
-      // const history = useHistory();
       const router = useRouter();
 
       useEffect(() => {
         const { onParentNavigate, unmount } = mount(ref.current, {
           onNavigate: (pathname) => {
-            // const currentPathname = history.location.pathname;
-            // if (currentPathname !== pathname) history.push(pathname);
             if (router.pathname !== pathname)
               router.push(pathname, undefined, {
                 shallow: true,
@@ -26,7 +21,6 @@ const ChatApp = dynamic(
         });
 
         router.events.on("routeChangeStart", onParentNavigate);
-        //const unlisten = history.listen((e) => onParentNavigate(e.pathname));
 
         return () => {
           unmount();
@@ -44,4 +38,4 @@ const ChatApp = dynamic(
   }
 );
 
-export default ChatApp;
+export default SessionsApp;
