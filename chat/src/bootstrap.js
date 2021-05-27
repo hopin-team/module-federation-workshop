@@ -16,7 +16,7 @@ function mount(el, { onNavigate, history = createMemoryHistory() } = {}) {
   };
 }
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "development" && typeof document !== "undefined") {
   const el = document.getElementById("root-chat-dev");
   if (el) {
     mount(el, { history: createBrowserHistory() });

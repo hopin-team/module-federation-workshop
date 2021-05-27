@@ -1,7 +1,6 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Head from "next/head";
-//import ChatApp from "../components/ChatApp";
-import SessionsApp from "../components/SessionsApp";
+import Nav from "../components/Nav";
 
 const Home = () => {
   return (
@@ -10,14 +9,14 @@ const Home = () => {
         <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Hello</h1>
-      <SessionsApp />
+      <Nav />
+      <h1>Home page</h1>
     </div>
   );
 };
 
-Home.getInitialProps = async (ctx) => {
-  return {};
-};
+// Home.getInitialProps = async (ctx) => {
+//   return {};
+// };
 
 export default Home;
