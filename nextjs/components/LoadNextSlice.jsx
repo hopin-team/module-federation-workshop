@@ -15,7 +15,7 @@ const LoadNextSlice = ({
         const router = useRouter();
 
         useEffect(() => {
-          const { onParentNavigate, unmount } = mount(ref.current, {
+          const { unmount } = mount(ref.current, {
             onNavigate: (pathname) => {
               if (router.pathname !== pathname) {
                 router.push(pathname, undefined, {
