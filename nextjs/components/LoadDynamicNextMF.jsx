@@ -2,15 +2,15 @@ import React, { useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
-const LoadNextSlice = ({
+export default function LoadDynamicNextMF({
   dynamicImport,
   loadingComponent: LoadingComponent = () => "...",
-}) => {
-  const DynamicSlice = dynamic(
+}) {
+  const DynamicMF = dynamic(
     async () => {
       const mount = (await dynamicImport()).default;
 
-      return function MountSlice() {
+      return function MountMF() {
         const ref = useRef();
         const router = useRouter();
 
@@ -43,7 +43,5 @@ const LoadNextSlice = ({
     }
   );
 
-  return <DynamicSlice />;
-};
-
-export default LoadNextSlice;
+  return <DynamicMF />;
+}

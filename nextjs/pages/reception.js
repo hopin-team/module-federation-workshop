@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import LoadNextSlice from "../components/LoadNextSlice";
+import LoadVanillaNextMF from "../components/LoadVanillaNextMF";
 import Nav from "../components/Nav";
 
 const Reception = () => {
@@ -11,7 +11,7 @@ const Reception = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav />
-      <LoadNextSlice dynamicImport={() => import("reception/App")} />
+      <LoadVanillaNextMF dynamicImport={() => import("reception/App")} />
     </div>
   );
 };
