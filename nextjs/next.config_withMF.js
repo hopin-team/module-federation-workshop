@@ -1,10 +1,18 @@
 const packageJsonDeps = require("./package.json").dependencies;
-// const { MergeRuntime } = require("@module-federation/nextjs-mf");
+// const { withModuleFederation } = require("@module-federation/nextjs-mf");
+const withModuleFederation = require("./withModuleFederation");
 
 module.exports = {
   future: { webpack5: true },
   webpack: (config, options) => {
-    const federationConfig = {
+    const mfConf = {
+      mergeRuntime: true, //experimental
+      name: "nexthost",
+      library: {
+        type: config.output.libraryTarget,
+        name: "nexthost",
+      },
+      filename: "static/runtime/remoteEntry.js",
       remotes: {
         chat: "chat@http://localhost:8888/remoteEntry.js",
         reception: "reception@http://localhost:8886/remoteEntry.js",
@@ -24,10 +32,11 @@ module.exports = {
       },
     };
 
-    config.plugins.push(
-      new options.webpack.container.ModuleFederationPlugin(federationConfig)
-    );
-    //config.plugins.push(new MergeRuntime(federationConfig));
+    config.cache = false;
+    if (!options.isServer) {
+      config.output.publicPath = `http://localhost:3001/_next/`;
+    }
+    withModuleFederation(config, options, mfConf);
 
     return config;
   },
