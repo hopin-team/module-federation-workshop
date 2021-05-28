@@ -1,6 +1,6 @@
 const packageJsonDeps = require("./package.json").dependencies;
-// const { withModuleFederation } = require("@module-federation/nextjs-mf");
-const withModuleFederation = require("./withModuleFederation");
+const { withModuleFederation } = require("@module-federation/nextjs-mf");
+//const withModuleFederation = require("./withModuleFederation");
 
 module.exports = {
   future: { webpack5: true },
