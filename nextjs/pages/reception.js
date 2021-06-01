@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import LoadMF from "../components/LoadMF";
+import LoadNextMF from "../components/LoadNextMF";
 import Nav from "../components/Nav";
 
 const Reception = () => {
@@ -11,7 +11,7 @@ const Reception = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav />
-      <LoadMF
+      <LoadNextMF
         url="http://localhost:8886/remoteEntry.js"
         scope="reception"
         module="./App"
