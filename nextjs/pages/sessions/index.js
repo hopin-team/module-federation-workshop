@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import LoadVanillaNextMF from "../../components/LoadVanillaNextMF";
+import LoadWebpackMF from "../../components/LoadWebpackMF";
 import Nav from "../../components/Nav";
 
 const Home = () => {
@@ -11,7 +11,12 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav />
-      <LoadVanillaNextMF dynamicImport={() => import("sessions/App")} />
+      {/* <LoadVanillaNextMF dynamicImport={() => import("sessions/App")} /> */}
+      <LoadWebpackMF
+        url="http://localhost:8885/remoteEntry.js"
+        scope="sessions"
+        module="./App"
+      />
     </div>
   );
 };
