@@ -1,5 +1,4 @@
 const packageJsonDeps = require("./package.json").dependencies;
-// const { MergeRuntime } = require("@module-federation/nextjs-mf");
 
 module.exports = {
   future: { webpack5: true },
@@ -27,7 +26,6 @@ module.exports = {
     config.plugins.push(
       new options.webpack.container.ModuleFederationPlugin(federationConfig)
     );
-    //config.plugins.push(new MergeRuntime(federationConfig));
 
     return config;
   },
