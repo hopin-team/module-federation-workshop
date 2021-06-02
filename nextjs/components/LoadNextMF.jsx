@@ -1,13 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 async function loadModule(scope, module) {
   await __webpack_init_sharing__("default");
   const container = window[scope];
   await container.init(__webpack_share_scopes__.default);
   const factory = await window[scope].get(module);
-  const Module = factory();
-  return Module;
+  return factory();
 }
 
 function MountMF({ mount }) {
@@ -76,32 +76,40 @@ export default React.memo(function LoadNextMF({
   errorComponent: ErrorComponent = () => "There was an error",
   loadingComponent: LoadingComponent = () => "...",
 }) {
-  if (typeof window === "undefined") return <LoadingComponent />;
-
   const key = url + module + scope;
-  window.__MFE_MOUNTS = window.__MFE_MOUNTS || {};
-
   const { ready: scriptReady, failed: scriptFailed } = useDynamicScript({
     url,
   });
-  const [mount, setMount] = useState(() => window.__MFE_MOUNTS[key]);
+  const [mount, setMount] = useState(() =>
+    typeof window !== "undefined" ? window.__MFE_MOUNTS?.[key] : undefined
+  );
   const [moduleFailed, setModuleFailed] = useState(false);
 
   useEffect(() => {
     scriptReady &&
       loadModule(scope, module)
         .then(({ default: mountFn }) => {
+          window.__MFE_MOUNTS = window.__MFE_MOUNTS || {};
           window.__MFE_MOUNTS[key] = mountFn;
           setMount(() => mountFn);
         })
         .catch(() => setModuleFailed(true));
   }, [scriptReady, key, module, scope]);
 
-  if (mount) {
-    return <MountMF mount={mount} />;
-  } else if (scriptFailed || moduleFailed) {
-    return <ErrorComponent />;
-  } else {
-    return <LoadingComponent />;
-  }
+  const children = mount ? (
+    <MountMF mount={mount} />
+  ) : scriptFailed || moduleFailed ? (
+    <ErrorComponent />
+  ) : (
+    <LoadingComponent />
+  );
+
+  return (
+    <>
+      <Head>
+        <link rel="preload" as="script" href={url} />
+      </Head>
+      {children}
+    </>
+  );
 });

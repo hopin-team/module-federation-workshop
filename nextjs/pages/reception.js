@@ -20,7 +20,7 @@ const Reception = () => {
   );
 };
 
-Reception.getInitialProps = async (ctx) => {
+export const getInitialProps = async (ctx) => {
   return {};
 };
 
