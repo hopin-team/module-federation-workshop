@@ -12,7 +12,10 @@ function mount(el, { onNavigate, history = createMemoryHistory() } = {}) {
       const currentPathname = history.location.pathname;
       if (currentPathname !== pathname) history.push(pathname);
     },
-    unmount: () => cleanups.forEach((cleanup) => cleanup()),
+    unmount: () => {
+      cleanups.forEach((cleanup) => cleanup());
+      ReactDOM.unmountComponentAtNode(el);
+    },
   };
 }
 

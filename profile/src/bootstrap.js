@@ -2,10 +2,17 @@ import ReactDOM from "react-dom";
 import { createMemoryHistory, createBrowserHistory } from "history";
 import App from "./components/App";
 
-function mount(el, { onNavigate, history = createMemoryHistory() } = {}) {
+function mount(
+  el,
+  { onNavigate, history = createMemoryHistory(), dispatch, username } = {}
+) {
   const cleanups = [];
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
-  if (el) ReactDOM.render(<App history={history} />, el);
+  if (el)
+    ReactDOM.render(
+      <App history={history} dispatch={dispatch} username={username} />,
+      el
+    );
 
   return {
     onParentNavigate: (pathname) => {
@@ -19,10 +26,10 @@ function mount(el, { onNavigate, history = createMemoryHistory() } = {}) {
   };
 }
 
-if (process.env.NODE_ENV === "development") {
-  const root = document.getElementById("root-reception-dev");
-  if (root) {
-    mount(root, { history: createBrowserHistory() });
+if (process.env.NODE_ENV === "development" && typeof document !== "undefined") {
+  const el = document.getElementById("root-profile-dev");
+  if (el) {
+    mount(el, { history: createBrowserHistory() });
   }
 }
 

@@ -10,26 +10,35 @@ async function loadModule(scope, module) {
   return factory();
 }
 
-function MountMF({ mount }) {
-  const ref = useRef();
-  const router = useRouter();
+const MountMF = React.memo(
+  function MountMF({ mount, router, key, ...rest }) {
+    const ref = useRef();
 
-  useEffect(() => {
-    const { unmount } = mount(ref.current, {
-      onNavigate: (pathname) => {
-        if (router.pathname !== pathname) {
-          router.push(pathname, undefined, {
-            shallow: true,
-          });
-        }
-      },
-    });
+    useEffect(() => {
+      const { unmount } = mount(ref.current, {
+        onNavigate: (pathname) => {
+          if (router.pathname !== pathname) {
+            router.push(pathname, undefined, {
+              shallow: true,
+            });
+          }
+        },
+        ...rest,
+      });
 
-    return unmount;
-  }, [ref.current]);
+      return unmount;
+    }, [ref.current, mount]);
 
-  return <div ref={ref} />;
-}
+    return <div ref={ref} style={{ display: "inline" }} />;
+  },
+  function areEqual(prevProps, nextProps) {
+    return Object.keys(prevProps).reduce(
+      (acc, key) =>
+        (key === "router" || prevProps[key] === nextProps[key]) && acc,
+      true
+    );
+  }
+);
 
 function useDynamicScript({ url }) {
   const [ready, setReady] = useState(false);
@@ -75,8 +84,10 @@ export default React.memo(function LoadNextMF({
   scope,
   errorComponent: ErrorComponent = () => "There was an error",
   loadingComponent: LoadingComponent = () => "...",
+  ...rest
 }) {
   const key = url + module + scope;
+  const router = useRouter();
   const { ready: scriptReady, failed: scriptFailed } = useDynamicScript({
     url,
   });
@@ -86,7 +97,7 @@ export default React.memo(function LoadNextMF({
   const [moduleFailed, setModuleFailed] = useState(false);
 
   useEffect(() => {
-    scriptReady &&
+    if (scriptReady && !mount) {
       loadModule(scope, module)
         .then(({ default: mountFn }) => {
           window.__MFE_MOUNTS = window.__MFE_MOUNTS || {};
@@ -94,10 +105,11 @@ export default React.memo(function LoadNextMF({
           setMount(() => mountFn);
         })
         .catch(() => setModuleFailed(true));
+    }
   }, [scriptReady, key, module, scope]);
 
   const children = mount ? (
-    <MountMF mount={mount} />
+    <MountMF {...rest} mount={mount} router={router} key={key} />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (
