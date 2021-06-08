@@ -6,7 +6,6 @@ import App from "./components/App";
 const MICROFRONTEND_SESSIONS = "microfrontend-sessions";
 
 function cleanupCacheOnbeforeUnload() {
-  console.log("aaaaaaaa bye!");
   const prevOnbeforeunload = window.onunload;
 
   window.onbeforeunload = () => {
@@ -21,8 +20,6 @@ function mount(
   el,
   { onNavigate, history = createMemoryHistory(), username } = {}
 ) {
-  console.log("aaaaaa2 mounting sessions!!!");
-
   const initialState = JSON.parse(
     window.localStorage.getItem(MICROFRONTEND_SESSIONS)
   );

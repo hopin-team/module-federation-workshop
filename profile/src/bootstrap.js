@@ -4,21 +4,12 @@ import App from "./components/App";
 
 function mount(
   el,
-  {
-    onNavigate,
-    history = createMemoryHistory(),
-    shareState = () => {},
-    username,
-  } = {}
+  { onNavigate, history = createMemoryHistory(), shareState = () => {} } = {}
 ) {
-  console.log("aaaaaa2 mounting profile!!!");
   const cleanups = [];
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
   if (el)
-    ReactDOM.render(
-      <App history={history} shareState={shareState} username={username} />,
-      el
-    );
+    ReactDOM.render(<App history={history} shareState={shareState} />, el);
 
   return {
     onParentNavigate: (pathname) => {
