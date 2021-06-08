@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function SessionList() {
   const sessions = useSelector((state) => state.sessions);
-
+  const username = useSelector((state) => state.viewer?.username);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,9 +15,17 @@ export default function SessionList() {
     }
   }, [dispatch, sessions]);
 
+  useEffect(() => {
+    if (!username) {
+      fetch(`http://localhost:8889/api/viewer`)
+        .then((response) => response.json())
+        .then((payload) => dispatch({ type: "RECEIVE_VIEWER", payload }));
+    }
+  }, [dispatch, username]);
+
   return (
     <>
-      <h1>Session List for Alex</h1>
+      <h1>Session List for {username}</h1>
       <ul>
         {sessions.map((session) => (
           <li key={session.id}>

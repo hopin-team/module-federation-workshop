@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { useMFShareState } from "./MFProvider";
 
 async function loadModule(scope, module) {
   await __webpack_init_sharing__("default");
@@ -11,7 +12,7 @@ async function loadModule(scope, module) {
 }
 
 const MountMF = React.memo(
-  function MountMF({ mount, router, key, ...rest }) {
+  function MountMF({ mount, router, ...rest }) {
     const ref = useRef();
 
     useEffect(() => {
@@ -27,7 +28,7 @@ const MountMF = React.memo(
       });
 
       return unmount;
-    }, [ref.current, mount]);
+    }, [ref.current, mount, Object.values(rest)]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
   },
@@ -95,6 +96,7 @@ export default React.memo(function LoadNextMF({
     typeof window !== "undefined" ? window.__MFE_MOUNTS?.[key] : undefined
   );
   const [moduleFailed, setModuleFailed] = useState(false);
+  const { shareState } = useMFShareState();
 
   useEffect(() => {
     if (scriptReady && !mount) {
@@ -109,7 +111,7 @@ export default React.memo(function LoadNextMF({
   }, [scriptReady, key, module, scope]);
 
   const children = mount ? (
-    <MountMF {...rest} mount={mount} router={router} key={key} />
+    <MountMF {...rest} mount={mount} router={router} shareState={shareState} />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (
