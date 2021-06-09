@@ -34,7 +34,6 @@ export async function getServerSideProps({ req, resolvedUrl }) {
 
   return {
     props: { path, basename },
-    notFound: false,
   };
 }
 
