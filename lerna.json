@@ -6,7 +6,8 @@
     "session",
     "api",
     "profile",
-    "expo"
+    "expo",
+    "nextjs"
   ],
   "version": "0.0.0",
   "npmClient": "yarn"
