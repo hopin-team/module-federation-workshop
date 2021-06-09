@@ -12,8 +12,7 @@ export default function Nav() {
   return (
     <nav>
       <Link href="/">Home</Link> | <Link href="/reception">Reception</Link> |{" "}
-      <Link href="/sessions">Sessions</Link> |{" "}
-      <a href="https://www.google.com/">Google</a> |{" "}
+      <Link href="/sessions">Sessions</Link> | <Link href="/expo">Expo</Link> |{" "}
       <LoadNextMF
         url="http://localhost:8883/remoteEntry.js"
         scope="profile"

@@ -2,16 +2,16 @@ import React from "react";
 import Head from "next/head";
 import LoadNextMF from "../components/LoadNextMF";
 
-const Reception = () => {
+const Expo = () => {
   return (
     <div>
       <Head>
-        <title>Reception</title>
+        <title>Expo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <LoadNextMF
-        url="http://localhost:8886/remoteEntry.js"
-        scope="reception"
+        url="http://localhost:8882/remoteEntry.js"
+        scope="expo"
         module="./App"
       />
     </div>
@@ -22,4 +22,4 @@ export const getInitialProps = async (ctx) => {
   return {};
 };
 
-export default Reception;
+export default Expo;

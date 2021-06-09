@@ -29,4 +29,12 @@ module.exports = {
     // Important: return the modified config
     return config;
   },
+  async rewrites() {
+    return [
+      {
+        source: "/expo/:id",
+        destination: "/expo",
+      },
+    ];
+  },
 };

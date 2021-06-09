@@ -1,5 +1,13 @@
 {
-  "packages": ["chat", "reception", "sessions", "session", "api", "profile"],
+  "packages": [
+    "chat",
+    "reception",
+    "sessions",
+    "session",
+    "api",
+    "profile",
+    "expo"
+  ],
   "version": "0.0.0",
   "npmClient": "yarn"
 }

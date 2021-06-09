@@ -16,7 +16,7 @@ const MountMF = React.memo(
     const ref = useRef();
 
     useEffect(() => {
-      const { unmount } = mount(ref.current, {
+      const { unmount, onParentNavigate } = mount(ref.current, {
         onNavigate: (pathname) => {
           if (router.pathname !== pathname) {
             router.push(pathname, undefined, {
@@ -27,7 +27,12 @@ const MountMF = React.memo(
         ...rest,
       });
 
-      return unmount;
+      router.events.on("routeChangeStart", onParentNavigate);
+
+      return () => {
+        unmount();
+        router.events.off("routeChangeStart", onParentNavigate);
+      };
     }, [ref.current, mount, Object.values(rest)]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
