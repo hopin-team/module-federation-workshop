@@ -28,7 +28,7 @@ const MountMF = React.memo(
       });
 
       return unmount;
-    }, [ref.current, mount, Object.values(rest)]);
+    }, [ref.current, mount, ...Object.values(rest)]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
   },
