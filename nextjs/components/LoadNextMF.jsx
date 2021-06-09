@@ -111,7 +111,9 @@ export default React.memo(function LoadNextMF({
           window.__MFE_MOUNTS[key] = mountFn;
           setMount(() => mountFn);
         })
-        .catch(() => setModuleFailed(true));
+        .catch(() => {
+          setModuleFailed(true);
+        });
     }
   }, [scriptReady, key, module, scope]);
 
