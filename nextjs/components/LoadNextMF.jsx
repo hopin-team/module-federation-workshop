@@ -17,10 +17,10 @@ const MountMF = React.memo(
 
     useEffect(() => {
       const { unmount, onParentNavigate } = mount(ref.current, {
-        onNavigate: (pathname) => {
+        onNavigate: (pathname, { shallow = true } = {}) => {
           if (router.pathname !== pathname) {
             router.push(pathname, undefined, {
-              shallow: true,
+              shallow,
             });
           }
         },

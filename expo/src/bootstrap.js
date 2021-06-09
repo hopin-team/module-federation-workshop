@@ -4,11 +4,13 @@ import App from "./components/App";
 
 function mount(
   el,
-  { onNavigate, history = createMemoryHistory(), basename = "/expo" } = {}
+  { onNavigate, history = createMemoryHistory(), basename = "/expo", path } = {}
 ) {
   const cleanups = [];
+  const nextPath = path || basename;
+
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
-  if (basename) history.push(basename);
+  if (nextPath) history.push(nextPath);
   if (el) ReactDOM.render(<App history={history} basename={basename} />, el);
 
   return {

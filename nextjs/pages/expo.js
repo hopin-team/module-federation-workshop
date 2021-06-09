@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import LoadNextMF from "../components/LoadNextMF";
 
-const Expo = () => {
+const Expo = ({ path, basename }) => {
   return (
     <div>
       <Head>
@@ -13,13 +13,28 @@ const Expo = () => {
         url="http://localhost:8882/remoteEntry.js"
         scope="expo"
         module="./App"
+        path={path}
+        basename={basename}
       />
     </div>
   );
 };
 
-export const getInitialProps = async (ctx) => {
-  return {};
-};
+export async function getServerSideProps({ req, resolvedUrl }) {
+  const url = require("url");
+  const URL = url.parse(resolvedUrl);
+  const basename = URL.pathname;
+  let path = req.url.startsWith("/_next/data") ? basename : req.url;
+
+  if (URL.query) {
+    const searchParams = new URLSearchParams(URL.query);
+    path = `${basename}/${[...searchParams.values()].join("/")}`;
+  }
+
+  return {
+    props: { path, basename },
+    notFound: false,
+  };
+}
 
 export default Expo;

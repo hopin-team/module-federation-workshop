@@ -1,4 +1,4 @@
-import { Switch, Route, Router, useRouteMatch } from "react-router-dom";
+import { Switch, Route, Router } from "react-router-dom";
 import Expo from "./Expo";
 import ExpoList from "./ExpoList";
 

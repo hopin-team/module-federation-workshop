@@ -33,7 +33,7 @@ module.exports = {
     return [
       {
         source: "/expo/:id",
-        destination: "/expo",
+        destination: "/expo?id=:id",
       },
     ];
   },
