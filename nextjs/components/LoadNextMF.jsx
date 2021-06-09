@@ -33,7 +33,7 @@ const MountMF = React.memo(
         unmount();
         router.events.off("routeChangeStart", onParentNavigate);
       };
-    }, [ref.current, mount, Object.values(rest)]);
+    }, [ref.current, mount, ...Object.values(rest)]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
   },
