@@ -21,6 +21,7 @@ const Expo = ({ path, basename }) => {
 };
 
 export async function getServerSideProps({ req, resolvedUrl }) {
+  // We need this because shallow routing only works for same page URL changes (https://nextjs.org/docs/routing/shallow-routing#caveats)
   const url = require("url");
   const URL = url.parse(resolvedUrl);
   const basename = URL.pathname;
