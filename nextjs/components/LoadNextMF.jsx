@@ -16,7 +16,6 @@ const MountMF = React.memo(
     const ref = useRef();
 
     useEffect(() => {
-      console.log("aaaaaa rerendering");
       const { unmount, onParentNavigate } = mount(ref.current, {
         onNavigate: (pathname, { shallow = true } = {}) => {
           if (router.pathname !== pathname) {
