@@ -11,15 +11,10 @@ const Home = () => {
       </Head>
       <h1>Home page</h1>
       <LoadNextMF
-        url="https://localhost:8080/remoteEntry.js"
+        url="https://assets-cdn-dev.slices.hopin.com/slices/slice-hello/d02bcd1/remoteEntry.js"
         scope="slice_hello"
         module="Index"
       />
-      {/* <LoadNextMF
-        url="https://assets-cdn.slices.hopin.com/slices/slice-schedules/1.12.0/remoteEntry.js"
-        scope="slice_schedules"
-        module="Index"
-      /> */}
     </div>
   );
 };
