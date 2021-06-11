@@ -23,7 +23,7 @@ You need to be comfortable writing JavaScript, HTML, and React to do this exerci
 ## Getting started
 
 ```console
-git clone https://github.com/hopin-team/module-federation-workshop
+git clone git@github.com:hopin-team/module-federation-workshop.git
 cd module-federation-workshop
 yarn
 yarn start
