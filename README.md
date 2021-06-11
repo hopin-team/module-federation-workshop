@@ -32,7 +32,7 @@ yarn start
 ## 🥑 Before we start the exercise
 
 - ⚠️ Disclaimer, this is not meant to be a Webpack workshop
-- Explain briefly the two apps we have `chat` and `host` and how they are set up:
+- Explain briefly the two apps that we have `chat` and `host` and how they are set up:
   - `chat/package.json` scripts: `"start": "webpack serve"`
   - How does HtmlWebpackPlugin work?
   - Explain chat/src/index.js: `const root = document.getElementById("root-chat");`. Idem `host` app.
