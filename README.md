@@ -29,7 +29,7 @@ yarn
 yarn start
 ```
 
-## 🥑 Before we start the exercise
+## 🥑 Before we start exercise 1
 
 - ⚠️ Disclaimer, this is not meant to be a Webpack workshop
 - Explain briefly the two apps we have `chat` and `host` and how they are set up:
@@ -54,11 +54,12 @@ Our goal is to easily and efficiently share `chat` in a way that can be embedded
 
 - Now we could `import ChatApp from "chat/App"` from a remote app. Explain `scope` vs `module`.
 
-## 🧘🏾‍♀️ Warming up
+## 🤸‍♀️ Exercise 1
 
 Your turn:
 
 - Add Module Federation to your `chat`.
+- Go to http://localhost:8888/ and try to identify in the network tab where `txtgen` is being downloaded.
 - Add Module Federation to your `host`. Hint, instead of defining the `exposes` key in ModuleFederationPlugin you must define:
 
 ```
@@ -71,4 +72,4 @@ Your turn:
 
 🚨 Heads up 2. When you fix the previous error you'll get a new one `Uncaught (in promise) TypeError: Cannot read property 'append' of null`. How do you fix it? Hint: you need to add something in `host/public/index.html` to append the `chat`.
 
-## 🤸‍♀️ Exercise 1
+## 🤸‍♀️ Exercise 2
