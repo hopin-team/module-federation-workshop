@@ -1,4 +1,4 @@
-# Microfrontends Workshop
+# Moduel Federation Workshop
 
 ## Learning objectives
 
