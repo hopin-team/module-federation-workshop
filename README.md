@@ -52,7 +52,7 @@ Our goal is to easily and efficiently share `chat` in a way that can be embedded
 }),
 ```
 
-- Now we could `import ChatApp from "chat/App"`. Explain `scope` vs `module`.
+- Now we could `import ChatApp from "chat/App"` from a remote app. Explain `scope` vs `module`.
 
 ## 🧘🏾‍♀️ Warming up
 
