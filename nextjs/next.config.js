@@ -4,12 +4,6 @@ module.exports = {
   future: { webpack5: true },
   webpack: (config, options) => {
     const federationConfig = {
-      remotes: {
-        chat: "chat@http://localhost:8888/remoteEntry.js",
-        reception: "reception@http://localhost:8886/remoteEntry.js",
-        sessions: "sessions@http://localhost:8885/remoteEntry.js",
-        session: "session@http://localhost:8884/remoteEntry.js",
-      },
       shared: {
         ...packageJsonDeps,
         react: {

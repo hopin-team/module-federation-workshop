@@ -257,8 +257,10 @@ A) Everyone goes to the root directory of the project and:
 - Stop Webpack
 - Run `git checkout nextjs-exercise-1 && yarn && yarn start`
 
-B) Let me walk you through `src/nextjs/components/LoadNextMF`.
+B) Let me walk you through this code `src/nextjs/components/LoadNextMF`.
 
 C) Mount reception in `nextjs/pages/index.js` using `src/nextjs/components/LoadNextMF`
+
+D) How can we mount `reception` if there is no `remotes` in `nextjs/next.config.js`?
 
 ### 🤸‍♀️ Nextjs exercise 1
