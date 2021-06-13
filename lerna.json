@@ -1,5 +1,5 @@
 {
-  "packages": ["chat", "reception", "sessions", "session", "nextjs"],
+  "packages": ["chat", "nextjs"],
   "version": "0.0.0",
   "npmClient": "yarn"
 }

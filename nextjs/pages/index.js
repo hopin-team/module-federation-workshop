@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import LoadNextMF from "../components/LoadNextMF";
 
 const Home = () => {
   return (
@@ -7,7 +8,7 @@ const Home = () => {
       <Head>
         <title>Home</title>
       </Head>
-      <h1>TODO load reception here using LoadNextMF</h1>
+      <h1>TODO load the chat here using LoadNextMF</h1>
     </>
   );
 };

@@ -256,9 +256,9 @@ A) Run `git checkout nextjs && yarn && yarn start`
 
 B) Let me walk you through this code `src/nextjs/components/LoadNextMF`.
 
-C) Mount reception in `nextjs/pages/index.js` using `src/nextjs/components/LoadNextMF`
+C) Mount chat in `nextjs/pages/index.js` using `src/nextjs/components/LoadNextMF`
 
-D) How can we mount `reception` if there is no `remotes` in `nextjs/next.config.js`?
+D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 
 ### 🤸‍♀️ Nextjs exercise 1
 
@@ -268,3 +268,16 @@ D) How can we mount `reception` if there is no `remotes` in `nextjs/next.config.
 - Run `git checkout nextjs-exercise-1 && yarn && yarn start`
 
 2- Can you find where we are downloading React in the networking tab?
+
+### 🏋️‍♀️ Bonus Nextjs exercise 1
+
+4- Comment out the following line in `nextjs/next.config.js`:
+
+```js
+react: {
+  // eager: true,  👈 comment out this line
+  requiredVersion: packageJsonDeps.react,
+},
+```
+
+Then stop Webpack and run `yarn start` again. You should see this error `Uncaught Error: Shared module is not available for eager consumption`. What does the error mean?

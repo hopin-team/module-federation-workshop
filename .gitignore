@@ -1,3 +1,9 @@
 **/dist
 **/node_modules
-**/.DS_Store
+api
+expo
+profile
+reception
+session
+sessions
+.DS_Store
