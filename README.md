@@ -138,4 +138,8 @@ exposes: {
 
 ### 🥑 Before React exercise 1
 
+A) Run `git checkout react && yarn && yarn start`
+
+B)
+
 ### 🤸‍♀️ React exercise 1
