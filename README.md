@@ -132,6 +132,8 @@ exposes: {
 
 1- Create a `mount` function in `sessions/src/bootstrap` and import it in `host` similiarly to what we just did in `chat`.
 
+### 🏋️‍♀️ Bonus JS exercise 3
+
 2- If the `host` was a React app and we wanted to mount `sessions` inside the `host` component tree, how would you invoke `mount(el)` in the `host`? Hint: you need a reference to a DOM element.
 
 ## Part 2: React
@@ -161,8 +163,8 @@ E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountCha
 - A) How many instances of React does it download?
 - B) How many instances of React DOM does it download?
 - C) How many instances of React Router does it download?
-- D) Can you fix it so it only downloads 1 instance of each? Hint: Are you going to manually add all the dependencies every time you update the package.json? What if you import package.json and use it in webpack.config.js?
+- D) Can you fix it so it only downloads 1 instance of each? Hint: Are you going to manually share dependencies every time you update `package.json`? What if you import `package.json` and use it in `webpack.config.js`?
 
-### 🏋️‍♀️ Bonus
+### 🏋️‍♀️ Bonus React exercise 1
 
-Create `ReceptionApp` and render it in `host/src/components/App.jsx`. Can you abstract out some code instead of copy & pasting from `host/src/components/ChatApp`?
+5- Create `ReceptionApp` and render it in `host/src/components/App.jsx`. Can you abstract out some code instead of copy & pasting from `host/src/components/ChatApp`?
