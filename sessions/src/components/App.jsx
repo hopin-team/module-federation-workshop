@@ -1,10 +1,10 @@
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, Router } from "react-router-dom";
 import Session from "./Session";
 import SessionList from "./SessionList";
 
-export default function App() {
+export default function App({ history }) {
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <Switch>
         <Route path="/sessions/:id">
           <Session />
@@ -13,6 +13,6 @@ export default function App() {
           <SessionList />
         </Route>
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 }

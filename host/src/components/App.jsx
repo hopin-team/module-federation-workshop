@@ -1,17 +1,20 @@
 import { Route, BrowserRouter, Link } from "react-router-dom";
 import mountReception from "reception/App";
-import MountApp from "./MountApp";
+import mountSessions from "sessions/App";
+import MountMF from "./MountMF";
 
 export default function App() {
   return (
     <BrowserRouter>
       <nav>
-        <Link to="/">Home</Link> | <Link to="/reception">Reception</Link>
+        <Link to="/">Home</Link> | <Link to="/reception">Reception</Link> |{" "}
+        <Link to="/sessions">Sessions</Link>
       </nav>
       <Route path="/">
         <h1>Welcome to Hopin home page</h1>
       </Route>
-      <MountApp mount={mountReception} />
+      <MountMF mount={mountReception} />
+      <MountMF mount={mountSessions} />
     </BrowserRouter>
   );
 }

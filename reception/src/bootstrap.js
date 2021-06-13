@@ -2,9 +2,10 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import { createMemoryHistory } from "history";
 
-function mount(el, { onNavigate } = {}) {
+function mount(el, { onNavigate, pathname } = {}) {
   const history = createMemoryHistory();
 
+  if (pathname) history.push(pathname);
   if (el) ReactDOM.render(<App history={history} />, el);
   if (onNavigate) history.listen((e) => onNavigate(e.pathname));
 
