@@ -1,2 +1,8 @@
 **/dist
 **/node_modules
+api
+expo
+nextjs
+profile
+session
+.DS_Store
