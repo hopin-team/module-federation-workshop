@@ -240,4 +240,6 @@ B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `rec
 
 ### 🏋️‍♀️ Bonus React exercise 2
 
-3- Open the React dev tools and select the "Components" tab. In the home page (http://localhost:8887) you'll see that there are 3 React apps. In the home page we don't display `sessions` nor `reception`, why should we mount them? How would you mount only one React app on http://localhost:8887 ?
+4- If you navigate to http://localhost:8885/sessions or http://localhost:8886/reception you'll see that the remotes don't work in isolation anymore. How can you fix that? Hint, what history is being rendered when `reception` or `sessions` are not mounted by the `host`?
+
+5- Open the React dev tools and select the "Components" tab. In the home page (http://localhost:8887) you'll see that there are 3 React apps. In the home page we don't display `sessions` nor `reception`, why should we mount them? How would you mount only one React app on http://localhost:8887 ?

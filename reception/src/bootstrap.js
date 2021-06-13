@@ -1,10 +1,11 @@
 import ReactDOM from "react-dom";
 import App from "./components/App";
-import { createMemoryHistory } from "history";
+import { createMemoryHistory, createBrowserHistory } from "history";
 
-function mount(el, { onNavigate, pathname } = {}) {
-  const history = createMemoryHistory();
-
+function mount(
+  el,
+  { onNavigate, pathname, history = createMemoryHistory() } = {}
+) {
   if (pathname) history.push(pathname);
   if (el) ReactDOM.render(<App history={history} />, el);
   if (onNavigate) history.listen((e) => onNavigate(e.pathname));
@@ -18,9 +19,9 @@ function mount(el, { onNavigate, pathname } = {}) {
 }
 
 if (process.env.NODE_ENV === "development") {
-  const root = document.getElementById("root-sessions-dev");
+  const root = document.getElementById("root-reception-dev");
   if (root) {
-    mount(root);
+    mount(root, { history: createBrowserHistory() });
   }
 }
 
