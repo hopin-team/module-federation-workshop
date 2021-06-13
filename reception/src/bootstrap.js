@@ -6,7 +6,7 @@ function mount(el) {
 }
 
 if (process.env.NODE_ENV === "development") {
-  const root = document.getElementById("root-sessions-dev");
+  const root = document.getElementById("root-reception-dev");
   if (root) {
     mount(root);
   }
