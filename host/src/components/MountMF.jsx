@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 
-export default function MountApp({ mount }) {
+export default function MountMF({ mount }) {
   const ref = useRef();
 
   useEffect(() => {
