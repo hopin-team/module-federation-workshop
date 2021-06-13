@@ -232,9 +232,11 @@ B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `rec
 
 ### 🤸‍♀️ React exercise 2
 
-1. Implement navigation between `host` and `reception` and `reception` and `host` as we just did. You'll know it works because you'll be able to navigate to reception by clicking on "Reception" on the navigation bar. Once in reception you'll be able to navigate to `sessions` by clicking on "Session 123"
+1- Implement navigation between `host` and `reception` and `reception` and `host` as we just did. You'll know it works because you'll be able to navigate to reception by clicking on "Reception" on the navigation bar. Once in reception you'll be able to navigate to `sessions` by clicking on "Session 123"
 
-2. Once you implement the previous point full page reloads won't work anymore. When we reload http://localhost:8887/reception we see now the home page instead of `reception`. Same thing happens in http://localhost:8887/sessions. Can you fix that?
+2- Once you implement the previous point full page reloads won't work anymore. When we reload http://localhost:8887/reception we see now the home page instead of `reception`. Same thing happens in http://localhost:8887/sessions. Can you fix that?
+
+3- Display the `chat` app inside `Session.jsx` component underneath the video.
 
 ### 🏋️‍♀️ Bonus React exercise 2
 
