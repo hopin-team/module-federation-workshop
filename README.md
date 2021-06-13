@@ -66,6 +66,8 @@ Your turn:
 3- Add Module Federation to your `host`. Hint, instead of defining the `exposes` key in ModuleFederationPlugin you must define:
 
 ```
+    // no need to interpolate the template literals, just hardcode the string
+    // the template literal is just to hint you the value
     remotes: { chat: `${scope}@{remoteUrl}/${filename}` }
 ```
 
@@ -77,7 +79,7 @@ Your turn:
 
 ## 🥑 Before exercise 2
 
-A) Go to the root directory of the project and:
+A) Go to (everyone) the root directory of the project and: 
 
 - Stop Webpack
 - Run `git checkout exercise-2`
