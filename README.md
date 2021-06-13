@@ -1,4 +1,4 @@
-# Module Federation Workshop
+# Moduel Federation Workshop
 
 ## Learning objectives
 
@@ -176,7 +176,7 @@ E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountCha
 
 ### 🥑 Before React exercise 2
 
-We are going to add some soft navigations (no full page reload) between the host and the remotes.
+We are going to add some soft navigation (no full page reload) between the host and the remotes.
 
 A) (Everyone) run `git checkout react-exercise-2 && yarn && yarn start`
 
