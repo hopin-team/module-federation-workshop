@@ -236,10 +236,10 @@ B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `rec
 
 2- Once you implement the previous point full page reloads won't work anymore. When we reload http://localhost:8887/reception we see now the home page instead of `reception`. Same thing happens in http://localhost:8887/sessions. Can you fix that?
 
-3- Display the `chat` app inside `Session.jsx` component underneath the video.
+3- Display the `chat` app inside `Session.jsx` component above the video.
 
 ### 🏋️‍♀️ Bonus React exercise 2
 
-4- If you navigate to http://localhost:8885/sessions or http://localhost:8886/reception you'll see that the remotes don't work in isolation anymore. How can you fix that? Hint, what history is being rendered when `reception` or `sessions` are not mounted by the `host`?
+4- If you navigate to http://localhost:8885/sessions or http://localhost:8886/reception you'll see that the remotes don't work in isolation anymore. How can you fix that? Hint, `reception` and `sessions` should not be rendered with memory history when they are not mounted by the `host`. What other history have we used?
 
 5- Open the React dev tools and select the "Components" tab. In the home page (http://localhost:8887) you'll see that there are 3 React apps. In the home page we don't display `sessions` nor `reception`, why should we mount them? How would you mount only one React app on http://localhost:8887 ?
