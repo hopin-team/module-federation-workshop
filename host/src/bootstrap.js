@@ -1,4 +1,4 @@
 import ReactDOM from "react-dom";
 import App from "./components/App";
 
-ReactDOM.render(<App />, document.getElementById("root-container"));
+ReactDOM.render(<App />, document.getElementById("root-host"));
