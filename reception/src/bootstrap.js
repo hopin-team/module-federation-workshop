@@ -9,9 +9,9 @@ function mount(el, { onNavigate } = {}) {
   if (onNavigate) history.listen((e) => onNavigate(e.pathname));
 
   return {
-    onHostNavigate: (pathname) => {
-      const currentPathname = history.location.pathname;
-      if (currentPathname !== pathname) history.push(pathname);
+    onHostNavigate: (nextPathname) => {
+      const { pathname } = history.location;
+      if (nextPathname !== pathname) history.push(nextPathname);
     },
   };
 }

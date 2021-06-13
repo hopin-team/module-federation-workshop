@@ -209,9 +209,9 @@ E) In `host/src/components/MountMF` destructure `onHostNavigate` from `mount(` a
 ⚠️ Avoid infinite loops in the future. In `reception/src/bootstrap.js` add:
 
 ```js
-onHostNavigate: (pathname) => {
-    const currentPathname = history.location.pathname;
-    if (currentPathname !== pathname) history.push(pathname);
+onHostNavigate: (nextPathname) => {
+    const { pathname } = history.location;
+    if (nextPathname !== pathname) history.push(nextPathname);
 },
 ```
 
@@ -222,9 +222,9 @@ Now if reload the page in http://localhost:8887/reception it doesn't work.
 A) In `host/src/components/MountMF` we pass a second argument `{ onNavigate }` to the `mount` function. Now we pass a callback (`onNavigate`) that the `remote` will invoke when it changes a route. `onNavigate` will update the `host` history if the pathname is different:
 
 ```
-onNavigate: (e) => {
+onNavigate: (nextPathname) => {
     const { pathname } = history.location;
-    if (pathname != e.pathname) history.push(e.pathname);
+    if (pathname != nextPathname) history.push(nextPathname);
 },
 ```
 

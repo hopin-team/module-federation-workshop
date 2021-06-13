@@ -9,7 +9,7 @@ export default function App() {
         <Link to="/">Home</Link> | <Link to="/reception">Reception</Link>
       </nav>
       <Route path="/">
-        <h1>Welcome to Hopin</h1>
+        <h1>Welcome to Hopin home page</h1>
       </Route>
       <MountApp mount={mountReception} />
     </BrowserRouter>
