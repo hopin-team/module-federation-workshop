@@ -1,4 +1,4 @@
-# Moduel Federation Workshop
+# Module Federation Workshop
 
 ## Learning objectives
 
@@ -228,4 +228,4 @@ onNavigate: (nextPathname) => {
 },
 ```
 
-B) Destructure `onNavigate` from the `mount` 2nd argument in `reception/src/bootstrap.js`. If `onNavigate` then add a listener to `history` that invokes `(e) => onNavigate(e.pathname)`
+B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `reception/src/bootstrap.js`. If `onNavigate` then add a listener to `history` that invokes `(e) => onNavigate(e.pathname)`
