@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import LoadNextMF from "../components/LoadNextMF";
+import Nav from "../components/Nav";
 
 const Expo = ({ path, basename }) => {
   return (
@@ -9,6 +10,7 @@ const Expo = ({ path, basename }) => {
         <title>Expo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Nav />
       <LoadNextMF
         url="http://localhost:8882/remoteEntry.js"
         scope="expo"
