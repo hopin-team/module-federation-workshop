@@ -88,7 +88,7 @@ A) Go to (everyone) the root directory of the project and:
 
 B) Show trainees http://localhost:8888/ network tab and where `txtgen` is. Why is in a separate text? `src/chat/webpack.config.js` shared key.
 
-C) In `chat` we also had to add `src/bootstrap.js` and import it async in `src/index.js`. Why if we don't import any remote module in `chat`? Hint, replace `import("./bootstrap");` with `import "./bootstrap";` in `chat/src/index.js`.
+C) In `chat` we also had to add `src/bootstrap.js` and import it async in `src/index.js`. Why do we have to do that if we don't import any remote module in `chat`? Hint, replace `import("./bootstrap");` with `import "./bootstrap";` in `chat/src/index.js`, navigate to http://localhost:8888/ and look at the console tab on the browser.
 
 ## 🤸‍♀️ Exercise 2
 
