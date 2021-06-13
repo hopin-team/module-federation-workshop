@@ -1,4 +1,4 @@
-# Moduel Federation Workshop
+# Module Federation Workshop
 
 ## Learning objectives
 
