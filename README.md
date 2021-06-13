@@ -252,10 +252,7 @@ Nextjs current version (10.2) doesn't fully support Module Federation (oh 😞).
 
 The workaround is to load the [remote containers dynamically without SSR](https://github.com/module-federation/module-federation-examples/pull/835).
 
-A) Everyone goes to the root directory of the project and:
-
-- Stop Webpack
-- Run `git checkout nextjs-exercise-1 && yarn && yarn start`
+A) Run `git checkout nextjs && yarn && yarn start`
 
 B) Let me walk you through this code `src/nextjs/components/LoadNextMF`.
 
@@ -264,3 +261,10 @@ C) Mount reception in `nextjs/pages/index.js` using `src/nextjs/components/LoadN
 D) How can we mount `reception` if there is no `remotes` in `nextjs/next.config.js`?
 
 ### 🤸‍♀️ Nextjs exercise 1
+
+1- Everyone goes to the root directory of the project and:
+
+- Stop Webpack
+- Run `git checkout nextjs-exercise-1 && yarn && yarn start`
+
+2- Can you find where we are downloading React in the networking tab?
