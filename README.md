@@ -146,6 +146,6 @@ C) Comment out `<div id="root-chat"></div>` in `src/host/public/index.html`
 
 D) In `host/src/components` create component `ReceptionApp`. Mount reception in a `div` rendered by React in `ReceptionApp`.
 
-E) Render `ReceptionApp` component in `host/src/components/App.jsx`.
+E) Render `ReceptionApp` component in `host/src/components/App.jsx`. Remove `mountChat` from `host/src/bootstrap.js`
 
 ### 🤸‍♀️ React exercise 1
