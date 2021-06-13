@@ -1,10 +1,10 @@
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import Schedule from "./Schedule";
 
-export default function App() {
+export default function App({ history }) {
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <Schedule />
-    </BrowserRouter>
+    </Router>
   );
 }

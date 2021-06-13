@@ -45,7 +45,7 @@ C) Trainer demo `chat` here http://localhost:8888/ and `host` here http://localh
 
 D) Our goal is to easily and efficiently share `chat` within `host`. We'll do that by adding ModuleFederationPlugin to `chat`. Trainer explains steps:
 
-```
+```js
  new ModuleFederationPlugin({
     name: "chat",
     filename: "remoteEntry.js",
@@ -67,10 +67,12 @@ Your turn:
 
 3- Add Module Federation to your `host`. Hint, instead of defining the `exposes` key in ModuleFederationPlugin you must define:
 
-```
-    // no need to interpolate the template literals, just hardcode the string
-    // the template literal is just to hint you the value
-    remotes: { chat: `${scope}@{remoteUrl}/${filename}` }
+```js
+// no need to interpolate the template literals, just hardcode the string
+// the template literal is just to hint you the value
+remotes: {
+  chat: `${scope}@{remoteUrl}/${filename}`;
+}
 ```
 
 4- `import` the remote `chat` module `App` in `host/src/index.js`
@@ -112,7 +114,7 @@ C) Add `export default mount` in `chat/src/bootstrap.js`
 
 D) In `chat/webpack.config.js` replace:
 
-```
+```js
 exposes: {
     "./App": "./src/index.js",
 },
@@ -120,7 +122,7 @@ exposes: {
 
 with
 
-```
+```js
 exposes: {
     "./App": "./src/bootstrap.js",
 },
@@ -172,15 +174,58 @@ E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountCha
 
 5- Create `ReceptionApp` and render it in `host/src/components/App.jsx`. Can you abstract out some code instead of copy & pasting from `host/src/components/ChatApp`?
 
+6- Can we export `reception/src/components/Schedule.jsx` in the Reception ModuleFederationPlugin `exposes` property? Would it make sense to do that?
+
 ### 🥑 Before React exercise 2
 
-We are going to add some soft navigations (no full page reload) between the host and the remotes.
+We are going to add some soft navigation (no full page reload) between the host and the remotes.
 
-A) (Everyone) run `git checkout react-exercise-2 && yarn && yarn start`
+⚠️ Everyone run `git checkout react-exercise-2 && yarn && yarn start`
 
-B) If we navigate to http://localhost:8887 and click "Reception" on the menu the content of the page doesn't change. If we reload the page from http://localhost:8887/reception it show the reception component. Let's fix this.
+#### Navigation from host to remote:
 
-#### Navigating from `host` to `remotes`
+A) If we navigate to http://localhost:8887 and click "Reception" on the menu the content of the page doesn't change. If we reload the page from http://localhost:8887/reception it show the reception component. Let's fix this.
 
-) In `reception/src/bootstrap.js` create a history object in mount using `createMemoryHistory();` from the package `history`.
-) Replace `BrowserRouter` with `Router` in `reception/src/components/App`.
+B) In `reception/src/bootstrap.js` create a history object in mount using `createMemoryHistory();` from the package `history` and pass it to `<App history={history}/>` in `ReactDOM.render`.
+
+C) Replace `BrowserRouter` with `Router` in `reception/src/components/App` and pass the prop `history` to `<Router history={history}>`.
+
+D) In the `mount` function in `reception/src/bootstrap.js` return the following:
+
+```js
+return {
+  onHostNavigate: (pathname) => {
+    history.push(pathname);
+  },
+};
+```
+
+E) In `host/src/components/MountMF` destructure `onHostNavigate` from `mount(` and `return history.listen((e) => onHostNavigate(e.pathname));`. Use `useHistory` to get the `history` object in `MountMF`.
+
+🙌 At this point if we click on "Reception" in http://localhost:8887 it should work.
+
+🙋 **Any questions?**
+
+⚠️ Avoid infinite loops in the future. In `reception/src/bootstrap.js` add:
+
+```js
+onHostNavigate: (pathname) => {
+    const currentPathname = history.location.pathname;
+    if (currentPathname !== pathname) history.push(pathname);
+},
+```
+
+#### Navigation from remote to host
+
+Now if reload the page in http://localhost:8887/reception it doesn't work.
+
+A) In `host/src/components/MountMF` we pass a second argument `{ onNavigate }` to the `mount` function. Now we pass a callback (`onNavigate`) that the `remote` will invoke when it changes a route. `onNavigate` will update the `host` history if the pathname is different:
+
+```
+onNavigate: (e) => {
+    const { pathname } = history.location;
+    if (pathname != e.pathname) history.push(e.pathname);
+},
+```
+
+B) Destructure `onNavigate` from the `mount` 2nd argument in `reception/src/bootstrap.js`. If `onNavigate` then add a listener to `history` that invokes `(e) => onNavigate(e.pathname)`
