@@ -20,7 +20,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new ModuleFederationPlugin({
-      name: "container",
+      name: "host",
       remotes: {
         sessions: "sessions@http://localhost:8885/remoteEntry.js",
         reception: "reception@http://localhost:8886/remoteEntry.js",
