@@ -138,8 +138,14 @@ exposes: {
 
 ### 🥑 Before React exercise 1
 
-A) Run `git checkout react && yarn && yarn start`
+A) (Only trainer) run `git checkout react && yarn && yarn start`
 
-B)
+B) Demo http://localhost:8887/ and walk through code `chat/src/bootstrap.js` and `chat/src/components/App.jsx` (same for `sessions` and `reception`).
+
+C) Comment out `<div id="root-chat"></div>` in `src/host/public/index.html`
+
+D) In `host/src/components` create component `ReceptionApp`. Mount reception in a `div` rendered by React in `ReceptionApp`.
+
+E) Render `ReceptionApp` component in `host/src/components/App.jsx`.
 
 ### 🤸‍♀️ React exercise 1
