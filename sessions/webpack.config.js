@@ -24,7 +24,7 @@ module.exports = {
       exposes: {
         "./App": "./src/bootstrap.js",
       },
-      shared: ["react"],
+      shared: { react: "^17.0.2" },
     }),
   ],
   module: {

@@ -25,7 +25,7 @@ module.exports = {
         sessions: "sessions@http://localhost:8885/remoteEntry.js",
         reception: "reception@http://localhost:8886/remoteEntry.js",
       },
-      shared: ["react"],
+      shared: { react: "^17.0.2" },
     }),
   ],
   module: {

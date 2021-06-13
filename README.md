@@ -154,7 +154,7 @@ E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountCha
 
 2- Create the `SesssionsApp` component in `host/src/components` similarly to the previous `ChatApp`.
 
-3- Render `SessionsApp` in `host/src/components/App.jsx`. Remove `mountSessions` from `host/src/bootstrap.js`
+3- Render `SessionsApp` in `host/src/components/App.jsx`. Remove `mountSessions` from `host/src/bootstrap.js`.
 
 4- Go to http://localhost:8887 and check the network tab.
 
@@ -162,3 +162,7 @@ E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountCha
 - B) How many instances of React DOM does it download?
 - C) How many instances of React Router does it download?
 - D) Can you fix it so it only downloads 1 instance of each? Hint: Are you going to manually add all the dependencies every time you update the package.json? What if you import package.json and use it in webpack.config.js?
+
+### 🏋️‍♀️ Bonus
+
+Create `ReceptionApp` and render it in `host/src/components/App.jsx`. Can you abstract out some code instead of copy & pasting from `host/src/components/ChatApp`?
