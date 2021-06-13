@@ -1,5 +1,6 @@
 import { Route, BrowserRouter, Link } from "react-router-dom";
-import ReceptionApp from "./ReceptionApp";
+import mountReception from "reception/App";
+import MountApp from "./MountApp";
 
 export default function App() {
   return (
@@ -10,7 +11,7 @@ export default function App() {
       <Route path="/">
         <h1>Welcome to Hopin</h1>
       </Route>
-      <ReceptionApp />
+      <MountApp mount={mountReception} />
     </BrowserRouter>
   );
 }

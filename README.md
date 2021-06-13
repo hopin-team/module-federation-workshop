@@ -81,12 +81,10 @@ Your turn:
 
 ### 🥑 Before JS exercise 2
 
-A) Go to (everyone) the root directory of the project and:
+A) Everyone goes to the root directory of the project and:
 
 - Stop Webpack
-- Run `git checkout exercise-2`
-- Run `yarn`
-- Run `yarn start`
+- Run `git checkout exercise-2 && yarn && yarn start`
 
 B) Show trainees http://localhost:8888/ network tab and where `txtgen` is. Why is in a separate text? `src/chat/webpack.config.js` shared key.
 
@@ -130,11 +128,16 @@ exposes: {
 
 ### 🤸‍♀️ JS exercise 3
 
-1- Create a `mount` function in `sessions/src/bootstrap` and import it in `host` similiarly to what we just did in `chat`.
+1- Everyone goes to the root directory of the project and:
+
+- Stop Webpack
+- Run `git checkout exercise-2 && yarn && yarn start`
+
+2- Create a `mount` function in `sessions/src/bootstrap` and import it in `host` similiarly to what we just did in `chat`.
 
 ### 🏋️‍♀️ Bonus JS exercise 3
 
-2- If the `host` was a React app and we wanted to mount `sessions` inside the `host` component tree, how would you invoke `mount(el)` in the `host`? Hint: you need a reference to a DOM element.
+3- If the `host` was a React app and we wanted to mount `sessions` inside the `host` component tree, how would you invoke `mount(el)` in the `host`? Hint: you need a reference to a DOM element.
 
 ## Part 2: React
 
@@ -152,7 +155,7 @@ E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountCha
 
 ### 🤸‍♀️ React exercise 1
 
-1- Run `git checkout react-exercise-1 && yarn && yarn start`
+1- (Everyone) run `git checkout react-exercise-1 && yarn && yarn start`
 
 2- Create the `SesssionsApp` component in `host/src/components` similarly to the previous `ChatApp`.
 
@@ -168,3 +171,16 @@ E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountCha
 ### 🏋️‍♀️ Bonus React exercise 1
 
 5- Create `ReceptionApp` and render it in `host/src/components/App.jsx`. Can you abstract out some code instead of copy & pasting from `host/src/components/ChatApp`?
+
+### 🥑 Before React exercise 2
+
+We are going to add some soft navigations (no full page reload) between the host and the remotes.
+
+A) (Everyone) run `git checkout react-exercise-2 && yarn && yarn start`
+
+B) If we navigate to http://localhost:8887 and click "Reception" on the menu the content of the page doesn't change. If we reload the page from http://localhost:8887/reception it show the reception component. Let's fix this.
+
+#### Navigating from `host` to `remotes`
+
+) In `reception/src/bootstrap.js` create a history object in mount using `createMemoryHistory();` from the package `history`.
+) Replace `BrowserRouter` with `Router` in `reception/src/components/App`.
