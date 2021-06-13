@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Chat from "./ChatApp";
 
 export default function Session() {
   return (
@@ -13,7 +12,6 @@ export default function Session() {
         controls
         src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
       />
-      <Chat />
     </>
   );
 }

@@ -8,7 +8,7 @@ function mount(el, { onNavigate, history = createMemoryHistory() } = {}) {
   if (el) ReactDOM.render(<App history={history} />, el);
 
   return {
-    onParentNavigate: (pathname) => {
+    onHostNavigate: (pathname) => {
       const currentPathname = history.location.pathname;
       if (currentPathname !== pathname) history.push(pathname);
     },

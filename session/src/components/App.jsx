@@ -1,4 +1,4 @@
-import { Switch, Route, Router, Redirect } from "react-router-dom";
+import { Router } from "react-router-dom";
 import Session from "./Session";
 
 export default function App({ history }) {

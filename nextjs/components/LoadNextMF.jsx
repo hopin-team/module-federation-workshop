@@ -1,8 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useMFShareState } from "./MFProvider";
 
+// You don't have to change anything in this function
+// It's used to load remote containers to a host container dynamically at runtime
+// More about this funciton here https://webpack.js.org/concepts/module-federation/#dynamic-remote-containers
 async function loadModule(scope, module) {
   await __webpack_init_sharing__("default");
   const container = window[scope];
@@ -11,41 +13,7 @@ async function loadModule(scope, module) {
   return factory();
 }
 
-const MountMF = React.memo(
-  function MountMF({ mount, router, ...rest }) {
-    const ref = useRef();
-
-    useEffect(() => {
-      const { unmount, onParentNavigate } = mount(ref.current, {
-        onNavigate: (pathname, { shallow = true } = {}) => {
-          if (router.pathname !== pathname) {
-            router.push(pathname, undefined, {
-              shallow,
-            });
-          }
-        },
-        ...rest,
-      });
-
-      router.events.on("routeChangeStart", onParentNavigate);
-
-      return () => {
-        unmount();
-        router.events.off("routeChangeStart", onParentNavigate);
-      };
-    }, [ref.current, mount, ...Object.values(rest)]);
-
-    return <div ref={ref} style={{ display: "inline" }} />;
-  },
-  function areEqual(prevProps, nextProps) {
-    return Object.keys(prevProps).reduce(
-      (acc, key) =>
-        (key === "router" || prevProps[key] === nextProps[key]) && acc,
-      true
-    );
-  }
-);
-
+// You don't have to change anything in this function
 function useDynamicScript({ url }) {
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -84,39 +52,43 @@ function useDynamicScript({ url }) {
   };
 }
 
-export default React.memo(function LoadNextMF({
+function MountMF({ mount }) {
+  const ref = useRef();
+
+  useEffect(() => {
+    mount(ref.current);
+  }, [ref.current, mount]);
+
+  return <div ref={ref} />;
+}
+
+export default function LoadNextMF({
   url,
-  module,
   scope,
+  module,
   errorComponent: ErrorComponent = () => "There was an error",
   loadingComponent: LoadingComponent = () => "...",
-  ...rest
 }) {
-  const key = url + module + scope;
-  const router = useRouter();
   const { ready: scriptReady, failed: scriptFailed } = useDynamicScript({
     url,
   });
-  const [mount, setMount] = useState(() =>
-    typeof window !== "undefined" ? window.__MFE_MOUNTS?.[key] : undefined
-  );
   const [moduleFailed, setModuleFailed] = useState(false);
-  const { shareState } = useMFShareState();
+  const [mount, setMount] = useState();
 
   useEffect(() => {
     if (scriptReady && !mount) {
       loadModule(scope, module)
         .then(({ default: mountFn }) => {
-          window.__MFE_MOUNTS = window.__MFE_MOUNTS || {};
-          window.__MFE_MOUNTS[key] = mountFn;
           setMount(() => mountFn);
         })
-        .catch(() => setModuleFailed(true));
+        .catch(() => {
+          setModuleFailed(true);
+        });
     }
-  }, [scriptReady, key, module, scope]);
+  }, [scriptReady, module, scope]);
 
   const children = mount ? (
-    <MountMF {...rest} mount={mount} router={router} shareState={shareState} />
+    <MountMF mount={mount} />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (
@@ -131,4 +103,4 @@ export default React.memo(function LoadNextMF({
       {children}
     </>
   );
-});
+}

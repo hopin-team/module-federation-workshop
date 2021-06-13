@@ -22,9 +22,6 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "session",
       filename: "remoteEntry.js",
-      remotes: {
-        chat: "chat@http://localhost:8888/remoteEntry.js",
-      },
       exposes: {
         "./App": "./src/bootstrap.js",
       },

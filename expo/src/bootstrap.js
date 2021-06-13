@@ -7,14 +7,14 @@ function mount(
   { onNavigate, history = createMemoryHistory(), basename = "/expo", path } = {}
 ) {
   const cleanups = [];
-  const nextPath = path || basename;
+  const initialPath = path || basename;
 
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
-  if (nextPath) history.push(nextPath);
+  if (initialPath) history.push(initialPath);
   if (el) ReactDOM.render(<App history={history} basename={basename} />, el);
 
   return {
-    onParentNavigate: (pathname) => {
+    onHostNavigate: (pathname) => {
       const currentPathname = history.location.pathname;
       if (currentPathname !== pathname) history.push(pathname);
     },
