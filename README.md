@@ -172,6 +172,8 @@ E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountCha
 
 5- Create `ReceptionApp` and render it in `host/src/components/App.jsx`. Can you abstract out some code instead of copy & pasting from `host/src/components/ChatApp`?
 
+6- Can we export `reception/src/components/Schedule.jsx` in the Reception ModuleFederationPlugin `exposes` property? Would it make sense to do that?
+
 ### 🥑 Before React exercise 2
 
 We are going to add some soft navigations (no full page reload) between the host and the remotes.
@@ -182,5 +184,8 @@ B) If we navigate to http://localhost:8887 and click "Reception" on the menu the
 
 #### Navigating from `host` to `remotes`
 
-) In `reception/src/bootstrap.js` create a history object in mount using `createMemoryHistory();` from the package `history`.
-) Replace `BrowserRouter` with `Router` in `reception/src/components/App`.
+A) In `reception/src/bootstrap.js` create a history object in mount using `createMemoryHistory();` from the package `history` and pass it to `<App history={history}/>` in `ReactDOM.render`.
+
+B) Replace `BrowserRouter` with `Router` in `reception/src/components/App` and pass the prop `history` to `<Router history={history}>`.
+
+C) In `host/src/components/MountMF`
