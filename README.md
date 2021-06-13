@@ -229,3 +229,13 @@ onNavigate: (nextPathname) => {
 ```
 
 B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `reception/src/bootstrap.js`. If `onNavigate` then add a listener to `history` that invokes `(e) => onNavigate(e.pathname)`
+
+### 🤸‍♀️ React exercise 2
+
+1. Implement navigation between `host` and `reception` and `reception` and `host` as we just did. You'll know it works because you'll be able to navigate to reception by clicking on "Reception" on the navigation bar. Once in reception you'll be able to navigate to `sessions` by clicking on "Session 123"
+
+2. Once you implement the previous point full page reloads won't work anymore. When we reload http://localhost:8887/reception we see now the home page instead of `reception`. Same thing happens in http://localhost:8887/sessions. Can you fix that?
+
+### 🏋️‍♀️ Bonus React exercise 2
+
+3- Open the React dev tools and select the "Components" tab. In the home page (http://localhost:8887) you'll see that there are 3 React apps. In the home page we don't display `sessions` nor `reception`, why should we mount them? How would you mount only one React app on http://localhost:8887 ?
