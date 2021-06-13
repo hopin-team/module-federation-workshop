@@ -79,7 +79,7 @@ Your turn:
 
 ## 🥑 Before exercise 2
 
-A) Go to (everyone) the root directory of the project and: 
+A) Go to (everyone) the root directory of the project and:
 
 - Stop Webpack
 - Run `git checkout exercise-2`
@@ -98,7 +98,7 @@ C) In `chat` we also had to add `src/bootstrap.js` and import it async in `src/i
 
 3. What do you think will happen if sessions uses `txtgen` version 1 and `txtgen` version 2?
 
-## 🧘🏾‍♀️ Before exercise 3
+## 🥑 Before exercise 3
 
 Well done! you've built a good Module Federation foundation. Now it's time to create better boundaries between `chat`, `sessions`, and `host`. We'll use the same branch.
 
@@ -107,3 +107,27 @@ Trainer:
 A) Rename `id=”root-chat”` to `id=”root-chat-dev”` in `chat/public/index.html`.
 
 B) Create a `mount` function in `chat/src/bootstrap.js`. Pass to it the DOM element to which we want to insert the content. If `process.env.NODE_ENV === "development"` and we found `root-chat-dev` then the call `mount`.
+
+C) Add `export default mount` in `chat/src/bootstrap.js`
+
+D) In `chat/webpack.config.js` replace:
+
+```
+exposes: {
+    "./App": "./src/index.js",
+},
+```
+
+with
+
+```
+exposes: {
+    "./App": "./src/bootstrap.js",
+},
+```
+
+## 🤸‍♀️ Exercise 3
+
+1. Create a `mount` function in `sessions/src/bootstrap` and import it in `host` similiarly to what we just did in `chat`.
+
+2. If the `host` was a React app and we wanted to mount `sessions` inside the `host` component tree, how would you invoke `mount(el)` in the `host`? Hint: you need a reference to a DOM element.
