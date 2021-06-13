@@ -94,11 +94,11 @@ C) In `chat` we also had to add `src/bootstrap.js` and import it async in `src/i
 
 ### 🤸‍♀️ JS Exercise 2
 
-1. Add `txtgen` as a shared package in `sessions`. Make sure that http://localhost:8886/ works. Hint: add an async boundary in the entry point.
+1- Add `txtgen` as a shared package in `sessions`. Make sure that http://localhost:8886/ works. Hint: add an async boundary in the entry point.
 
-2. Why do you think it's useful in our case to add `txtgen` as a shared package to both `sessions` and `chat`? Hint, go to http://localhost:8887/ and look at the network tab.
+2- Why do you think it's useful in our case to add `txtgen` as a shared package to both `sessions` and `chat`? Hint, go to http://localhost:8887/ and look at the network tab.
 
-3. What do you think will happen if sessions uses `txtgen` version 1 and `txtgen` version 2?
+3- What do you think will happen if sessions uses `txtgen` version 1 and `txtgen` version 2?
 
 ### 🥑 Before JS exercise 3
 
@@ -130,9 +130,9 @@ exposes: {
 
 ### 🤸‍♀️ JS exercise 3
 
-1. Create a `mount` function in `sessions/src/bootstrap` and import it in `host` similiarly to what we just did in `chat`.
+1- Create a `mount` function in `sessions/src/bootstrap` and import it in `host` similiarly to what we just did in `chat`.
 
-2. If the `host` was a React app and we wanted to mount `sessions` inside the `host` component tree, how would you invoke `mount(el)` in the `host`? Hint: you need a reference to a DOM element.
+2- If the `host` was a React app and we wanted to mount `sessions` inside the `host` component tree, how would you invoke `mount(el)` in the `host`? Hint: you need a reference to a DOM element.
 
 ## Part 2: React
 
@@ -140,14 +140,25 @@ exposes: {
 
 A) (Only trainer) run `git checkout react && yarn && yarn start`
 
-B) Demo http://localhost:8887/ and walk through code `chat/src/bootstrap.js` and `chat/src/components/App.jsx` (same for `sessions` and `reception`).
+B) Demo http://localhost:8887 and walk through code `chat/src/bootstrap.js` and `chat/src/components/App.jsx` (same for `sessions` and `reception`).
 
 C) Comment out `<div id="root-chat"></div>` in `src/host/public/index.html`
 
-D) In `host/src/components` create component `ReceptionApp`. Mount reception in a `div` rendered by React in `ReceptionApp`.
+D) In `host/src/components` create component `ChatApp`. Mount reception in a `div` rendered by React in `ChatApp`.
 
-E) Render `ReceptionApp` component in `host/src/components/App.jsx`. Remove `mountChat` from `host/src/bootstrap.js`
+E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountChat` from `host/src/bootstrap.js`
 
 ### 🤸‍♀️ React exercise 1
 
 1- Run `git checkout react-exercise-1 && yarn && yarn start`
+
+2- Create the `SesssionsApp` component in `host/src/components` similarly to the previous `ChatApp`.
+
+3- Render `SessionsApp` in `host/src/components/App.jsx`. Remove `mountSessions` from `host/src/bootstrap.js`
+
+4- Go to http://localhost:8887 and check the network tab.
+
+- A) How many instances of React does it download?
+- B) How many instances of React DOM does it download?
+- C) How many instances of React Router does it download?
+- D) Can you fix it so it only downloads 1 instance of each? Hint: Are you going to manually add all the dependencies every time you update the package.json? What if you import package.json and use it in webpack.config.js?
