@@ -234,7 +234,7 @@ B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `rec
 
 1- Implement navigation between `host` and `reception` and `reception` and `host` as we just did. You'll know it works because you'll be able to navigate to reception by clicking on "Reception" on the navigation bar. Once in reception you'll be able to navigate to `sessions` by clicking on "Session 123"
 
-2- Once you implement the previous point full page reloads won't work anymore. When we reload http://localhost:8887/reception we see now the home page instead of `reception`. Same thing happens in http://localhost:8887/sessions. Can you fix that?
+2- Once you implement the previous point full page reloads won't work anymore. When we reload http://localhost:8887/reception we see now the home page instead of `reception`. Same thing happens in http://localhost:8887/sessions. Can you fix that? Hint: get the `pathname` in the `host`, pass it to `mount` and then `push` it to `history` before calling `ReactDOM.render`.
 
 3- Display the `chat` app inside `Session.jsx` component above the video.
 
@@ -254,7 +254,7 @@ The workaround is to load the [remote containers dynamically without SSR](https:
 
 A) Run `git checkout nextjs && yarn && yarn start`
 
-B) Let me walk you through this code `src/nextjs/components/LoadNextMF`.
+B) Let me walk you through this code `src/nextjs/components/LoadNextMF`. ⚠️ Notice we've added an `unmount` function to `chat/src/bootstrap.js`.
 
 C) Mount chat in `nextjs/pages/index.js` using `src/nextjs/components/LoadNextMF`
 
@@ -267,7 +267,7 @@ D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 - Stop Webpack
 - Run `git checkout nextjs-exercise-1 && yarn && yarn start`
 
-2- Can you find where we are downloading React in the networking tab on http://localhost:3001/reception?
+2- In http://localhost:3001/reception wow many copies of React do we download? Can you find where we are downloading React in the networking tab on?
 
 TODO REMOVE ALL THE LOADNEXTSLICE EXCEPT RECEPTION
 
