@@ -52,31 +52,39 @@ function useDynamicScript({ url }) {
   };
 }
 
-function MountMF({ mount, ...rest }) {
-  const ref = useRef();
-  const router = useRouter();
+const MountMF = React.memo(
+  function MountMF({ mount, router, ...rest }) {
+    const ref = useRef();
 
-  useEffect(() => {
-    const { unmount, onHostNavigate } = mount(ref.current, {
-      onNavigate: (nextPathname) => {
-        const { pathname } = router;
-        if (pathname !== nextPathname) {
-          router.push(nextPathname, undefined, { shallow: true });
-        }
-      },
-      ...rest,
-    });
+    useEffect(() => {
+      const { unmount, onHostNavigate } = mount(ref.current, {
+        onNavigate: (nextPathname) => {
+          const { pathname } = router;
+          if (pathname !== nextPathname) {
+            router.push(nextPathname, undefined, { shallow: true });
+          }
+        },
+        ...rest,
+      });
 
-    router.events.on("routeChangeStart", onHostNavigate);
+      router.events.on("routeChangeStart", onHostNavigate);
 
-    return () => {
-      router.events.off("routeChangeStart", onHostNavigate);
-      unmount();
-    };
-  }, [ref.current, mount]);
+      return () => {
+        router.events.off("routeChangeStart", onHostNavigate);
+        unmount();
+      };
+    }, [ref.current, mount, ...Object.values(rest)]);
 
-  return <div ref={ref} />;
-}
+    return <div ref={ref} />;
+  },
+  function areEqual(prevProps, nextProps) {
+    return Object.keys(prevProps).reduce(
+      (acc, key) =>
+        (key === "router" || prevProps[key] === nextProps[key]) && acc,
+      true
+    );
+  }
+);
 
 export default function LoadNextMF({
   url,
@@ -91,6 +99,7 @@ export default function LoadNextMF({
   });
   const [moduleFailed, setModuleFailed] = useState(false);
   const [mount, setMount] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     if (scriptReady && !mount) {
@@ -105,7 +114,7 @@ export default function LoadNextMF({
   }, [scriptReady, module, scope]);
 
   const children = mount ? (
-    <MountMF {...rest} mount={mount} />
+    <MountMF {...rest} mount={mount} router={router} />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (

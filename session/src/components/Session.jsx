@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ChatApp from "./ChatApp";
 
 export default function Session() {
   return (
@@ -7,6 +8,7 @@ export default function Session() {
       <p>
         <Link to="/sessions">Session list</Link> / Session 123
       </p>
+      <ChatApp />
       <video
         loop
         controls

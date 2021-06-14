@@ -8,7 +8,6 @@ function mount(
 ) {
   const cleanups = [];
   const initialPath = path || basename;
-
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
   if (initialPath) history.push(initialPath);
   if (el) ReactDOM.render(<App history={history} basename={basename} />, el);

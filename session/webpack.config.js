@@ -26,6 +26,9 @@ module.exports = {
         "./App": "./src/bootstrap.js",
       },
       shared: packageJson.dependencies,
+      remotes: {
+        chat: "chat@http://localhost:8888/remoteEntry.js",
+      },
     }),
   ],
   module: {

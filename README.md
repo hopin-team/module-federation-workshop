@@ -271,7 +271,7 @@ D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 
 3- We have not implemented any `host` to `remote` navigation nor the other way around. There is neither `onHostNavigate` nor `onNavigate` callbacks on `host/src/components/LoadNextMF.jsx`. How can we click on "Reception" in the navigation bar from http://localhost:3001/ and navigate to http://localhost:3001/reception?
 
-4- In http://localhost:3001/reception if you click on "Session 123" the navigation doesn't work. Can you fix it? Hint, you'll need to use `useRouter` from `next/router` to [push](https://nextjs.org/docs/api-reference/next/router#routerpush) a `pathname` in `LoadNextMF.jsx`. Tip: pass `{ shallow: true }` when pushing a route since we only need client-side navigation.
+4- In http://localhost:3001/reception if you click on "Expo 1" the navigation doesn't work. Can you fix it? Hint, you'll need to use `useRouter` from `next/router` to [push](https://nextjs.org/docs/api-reference/next/router#routerpush) a `pathname` in `LoadNextMF.jsx`. Tip: pass `{ shallow: true }` when pushing a route since we only need client-side navigation.
 
 5- Implmenent page http://localhost:3001/expo and http://localhost:3001/expo/1. In this case `expo` and `expo/1` are 2 pages in 1 microfrontend, do we need to implement router listeners to navigate from `host` to `remote`? You can test this by clicking on "Expo 1" on the navigation should display Expo 1 and not Expo list.
 
@@ -290,4 +290,4 @@ react: {
 
 Then stop Webpack and run `yarn start` again. You should see this error `Uncaught Error: Shared module is not available for eager consumption`. What does the error mean?
 
-7- Add `chat` to `session` without copy pasting the `LoadNextMF.jsx` from the `host`. Hint, share `LoadNextMF.jsx` using Module Federation with `session`.
+7- Add `chat` to `session`.
