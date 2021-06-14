@@ -246,7 +246,7 @@ B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `rec
 
 ## Part 3: Nextjs
 
-### 🥑 Before Nextjs exercise 1
+### 🥑 Before Nextjs exercise
 
 Nextjs current version (10.2) doesn't fully support Module Federation (oh 😞). The reason being Nextjs does not have an async boundary for Webpack to resolve modules in the shared scope. When using `dynamic from "next/dynamic"` shared packages, such as React, are downloaded more than once.
 
@@ -260,20 +260,26 @@ C) Mount chat in `nextjs/pages/index.js` using `src/nextjs/components/LoadNextMF
 
 D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 
-### 🤸‍♀️ Nextjs exercise 1
+### 🤸‍♀️ Nextjs exercise
 
 1- Everyone goes to the root directory of the project and:
 
 - Stop Webpack
 - Run `git checkout nextjs-exercise-1 && yarn && yarn start`
 
-2- In http://localhost:3001/reception wow many copies of React do we download? Can you find where we are downloading React in the networking tab on?
+2- In http://localhost:3001/reception how many copies of React do we download? Can you find where we are downloading React in the networking tab on?
 
-TODO REMOVE ALL THE LOADNEXTSLICE EXCEPT RECEPTION
+3- Implement page http://localhost:3001/sessions. Hint, you'll need to use `useRouter` from `next/router` to [push](https://nextjs.org/docs/api-reference/next/router#routerpush) a URL (`pathname`) in `LoadNextMF.jsx`. Tip: pass `{ shallow: true }` when pushing a route since we only need client-side navigation.
 
-### 🏋️‍♀️ Bonus Nextjs exercise 1
+4- Implement page http://localhost:3001/sessions/1. `sessions` and `sessions/1` are two different Nextjs pages - meaning 1 page 1 microfrontend - do we need to implement router listeners to navigate from `host` to `remote`? You can test this by clicking on "Sessions" and "Session 1" on the navigation bar.
 
-4- Comment out the following line in `nextjs/next.config.js`:
+5- Implmenent page http://localhost:3001/expo and http://localhost:3001/expo/1. In this case `expo` and `expo/1` are 2 pages in 1 microfrontend, do we need to implement router listeners to navigate from `host` to `remote`? You can test this by clicking on "Expo" and "Expo 1" on the navigation bar.
+
+⚠️ Tip: you can use this [routeChangeStart event](https://nextjs.org/docs/api-reference/next/router#routerevents) to implmement a listener. Pro-tip: don't forget to cleanup listeners with `router.events.off` if you add any listener.
+
+### 🏋️‍♀️ Bonus Nextjs exercise
+
+6- Comment out the following line in `nextjs/next.config.js`:
 
 ```js
 react: {
@@ -283,3 +289,5 @@ react: {
 ```
 
 Then stop Webpack and run `yarn start` again. You should see this error `Uncaught Error: Shared module is not available for eager consumption`. What does the error mean?
+
+7- Add `chat` to `session` without copy pasting the `LoadNextMF.jsx` from the `host`. Hint, share `LoadNextMF.jsx` using Module Federation with `session`.
