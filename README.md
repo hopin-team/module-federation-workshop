@@ -267,7 +267,9 @@ D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 - Stop Webpack
 - Run `git checkout nextjs-exercise-1 && yarn && yarn start`
 
-2- Can you find where we are downloading React in the networking tab on http://localhost:3001?
+2- Can you find where we are downloading React in the networking tab on http://localhost:3001/reception?
+
+TODO REMOVE ALL THE LOADNEXTSLICE EXCEPT RECEPTION
 
 ### 🏋️‍♀️ Bonus Nextjs exercise 1
 
