@@ -269,11 +269,11 @@ D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 
 2- In http://localhost:3001/reception how many copies of React do we download? Can you find where we are downloading React in the networking tab on?
 
-3- Implement page http://localhost:3001/sessions. Hint, you'll need to use `useRouter` from `next/router` to [push](https://nextjs.org/docs/api-reference/next/router#routerpush) a URL (`pathname`) in `LoadNextMF.jsx`. Tip: pass `{ shallow: true }` when pushing a route since we only need client-side navigation.
+3- Implement page http://localhost:3001/sessions. Hint, you'll need to use `useRouter` from `next/router` to [push](https://nextjs.org/docs/api-reference/next/router#routerpush) a URL (`pathname`) in `LoadNextMF.jsx`. Tip: pass `{ shallow: true }` when pushing a route since we only need client-side navigation. You can test it by clicking on "Session 1" in http://localhost:3001/sessions should navigate to http://localhost:3001/sessions/1
 
-4- Implement page http://localhost:3001/sessions/1. `sessions` and `sessions/1` are two different Nextjs pages - meaning 1 page 1 microfrontend - do we need to implement router listeners to navigate from `host` to `remote`? You can test this by clicking on "Sessions" and "Session 1" on the navigation bar.
+4- Implement page http://localhost:3001/sessions/1. `sessions` and `sessions/1` are two different Nextjs pages - meaning 1 page 1 microfrontend - do we need to implement router listeners to navigate from `host` to `remote`? You can test this by clicking on "Sessions" and "Session 1" on the navigation bar. You can test it by clicking on "Session list" in http://localhost:3001/sessions/1 should navigate to http://localhost:3001/sessions.
 
-5- Implmenent page http://localhost:3001/expo and http://localhost:3001/expo/1. In this case `expo` and `expo/1` are 2 pages in 1 microfrontend, do we need to implement router listeners to navigate from `host` to `remote`? You can test this by clicking on "Expo" and "Expo 1" on the navigation bar.
+5- Implmenent page http://localhost:3001/expo and http://localhost:3001/expo/1. In this case `expo` and `expo/1` are 2 pages in 1 microfrontend, do we need to implement router listeners to navigate from `host` to `remote`? You can test this by clicking on "Expo 1" on the navigation should display Expo 1 and not Expo list.
 
 ⚠️ Tip: you can use this [routeChangeStart event](https://nextjs.org/docs/api-reference/next/router#routerevents) to implmement a listener. Pro-tip: don't forget to cleanup listeners with `router.events.off` if you add any listener.
 
