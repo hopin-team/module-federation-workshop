@@ -161,7 +161,7 @@ E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountCha
 
 2- Create the `SesssionsApp` component in `host/src/components` similarly to the previous `ChatApp`.
 
-3- Render `SessionsApp` in `host/src/components/App.jsx`. Remove `mountSessions` from `host/src/bootstrap.js`.
+3- Render `SessionsApp` in `host/src/components/App.jsx`.
 
 4- Go to http://localhost:8887 and check the network tab.
 
