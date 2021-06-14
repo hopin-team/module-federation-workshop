@@ -133,7 +133,7 @@ exposes: {
 1- Everyone goes to the root directory of the project and:
 
 - Stop Webpack
-- Run `git checkout exercise-2 && yarn && yarn start`
+- Run `git checkout exercise-3 && yarn && yarn start`
 
 2- Create a `mount` function in `sessions/src/bootstrap` and import it in `host` similiarly to what we just did in `chat`.
 
