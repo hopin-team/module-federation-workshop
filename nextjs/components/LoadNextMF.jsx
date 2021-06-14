@@ -54,14 +54,25 @@ function useDynamicScript({ url }) {
 
 function MountMF({ mount, ...rest }) {
   const ref = useRef();
+  const router = useRouter();
 
   useEffect(() => {
-    const { unmount } = mount(ref.current, {
-      // add more arguments here
+    const { unmount, onHostNavigate } = mount(ref.current, {
+      onNavigate: (nextPathname) => {
+        const { pathname } = router;
+        if (pathname !== nextPathname) {
+          router.push(nextPathname, undefined, { shallow: true });
+        }
+      },
       ...rest,
     });
 
-    return unmount;
+    router.events.on("routeChangeStart", onHostNavigate);
+
+    return () => {
+      router.events.off("routeChangeStart", onHostNavigate);
+      unmount();
+    };
   }, [ref.current, mount]);
 
   return <div ref={ref} />;
