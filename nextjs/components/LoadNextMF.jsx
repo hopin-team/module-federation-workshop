@@ -52,11 +52,14 @@ function useDynamicScript({ url }) {
   };
 }
 
-function MountMF({ mount }) {
+function MountMF({ mount, ...rest }) {
   const ref = useRef();
 
   useEffect(() => {
-    mount(ref.current);
+    mount(ref.current, {
+      // add more arguments here
+      ...rest,
+    });
   }, [ref.current, mount]);
 
   return <div ref={ref} />;
@@ -68,6 +71,7 @@ export default function LoadNextMF({
   module,
   errorComponent: ErrorComponent = () => "There was an error",
   loadingComponent: LoadingComponent = () => "...",
+  ...rest // 👀  notice we are using the rest operator. This is because we want to pass arguments to the `mount` function. E.g. `path` in pages/expo.js
 }) {
   const { ready: scriptReady, failed: scriptFailed } = useDynamicScript({
     url,
@@ -88,7 +92,7 @@ export default function LoadNextMF({
   }, [scriptReady, module, scope]);
 
   const children = mount ? (
-    <MountMF mount={mount} />
+    <MountMF {...rest} mount={mount} />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (
