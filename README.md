@@ -234,7 +234,7 @@ B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `rec
 
 1- Implement navigation between `host` and `reception` and `reception` and `host` as we just did. You'll know it works because you'll be able to navigate to reception by clicking on "Reception" on the navigation bar. Once in reception you'll be able to navigate to `sessions` by clicking on "Session 123"
 
-2- Once you implement the previous point full page reloads won't work anymore. When we reload http://localhost:8887/reception we see now the home page instead of `reception`. Same thing happens in http://localhost:8887/sessions. Can you fix that?
+2- Once you implement the previous point full page reloads won't work anymore. When we reload http://localhost:8887/reception we see now the home page instead of `reception`. Same thing happens in http://localhost:8887/sessions. Can you fix that? Hint: get the `pathname` in the `host`, pass it to `mount` and then `push` it to `history` before calling `ReactDOM.render`.
 
 3- Display the `chat` app inside `Session.jsx` component above the video.
 
@@ -246,7 +246,7 @@ B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `rec
 
 ## Part 3: Nextjs
 
-### 🥑 Before Nextjs exercise 1
+### 🥑 Before Nextjs exercise
 
 Nextjs current version (10.2) doesn't fully support Module Federation (oh 😞). The reason being Nextjs does not have an async boundary for Webpack to resolve modules in the shared scope. When using `dynamic from "next/dynamic"` shared packages, such as React, are downloaded more than once.
 
@@ -254,24 +254,32 @@ The workaround is to load the [remote containers dynamically without SSR](https:
 
 A) Run `git checkout nextjs && yarn && yarn start`
 
-B) Let me walk you through this code `src/nextjs/components/LoadNextMF`.
+B) Let me walk you through this code `src/nextjs/components/LoadNextMF`. ⚠️ Notice we've added an `unmount` function to `chat/src/bootstrap.js`.
 
 C) Mount chat in `nextjs/pages/index.js` using `src/nextjs/components/LoadNextMF`
 
 D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 
-### 🤸‍♀️ Nextjs exercise 1
+### 🤸‍♀️ Nextjs exercise
 
 1- Everyone goes to the root directory of the project and:
 
 - Stop Webpack
 - Run `git checkout nextjs-exercise-1 && yarn && yarn start`
 
-2- Can you find where we are downloading React in the networking tab?
+2- In http://localhost:3001/reception how many copies of React do we download? Can you find where we are downloading React in the networking tab on?
 
-### 🏋️‍♀️ Bonus Nextjs exercise 1
+3- We have not implemented any `host` to `remote` navigation nor the other way around. There is neither `onHostNavigate` nor `onNavigate` callbacks on `host/src/components/LoadNextMF.jsx`. How can we click on "Reception" in the navigation bar from http://localhost:3001/ and navigate to http://localhost:3001/reception?
 
-4- Comment out the following line in `nextjs/next.config.js`:
+4- In http://localhost:3001/reception if you click on "Expo 1" the navigation doesn't work. Can you fix it? Hint, you'll need to use `useRouter` from `next/router` to [push](https://nextjs.org/docs/api-reference/next/router#routerpush) a `pathname` in `LoadNextMF.jsx`. Tip: pass `{ shallow: true }` when pushing a route since we only need client-side navigation.
+
+5- Implmenent page http://localhost:3001/expo and http://localhost:3001/expo/1. In this case `expo` and `expo/1` are 2 pages in 1 microfrontend, do we need to implement router listeners to navigate from `host` to `remote`? You can test this by clicking on "Expo 1" on the navigation should display Expo 1 and not Expo list.
+
+⚠️ Tip: you can use this [routeChangeStart event](https://nextjs.org/docs/api-reference/next/router#routerevents) to implmement a listener. Pro-tip: don't forget to cleanup listeners with `router.events.off` if you add any listener.
+
+### 🏋️‍♀️ Bonus Nextjs exercise
+
+6- Comment out the following line in `nextjs/next.config.js`:
 
 ```js
 react: {
@@ -281,3 +289,5 @@ react: {
 ```
 
 Then stop Webpack and run `yarn start` again. You should see this error `Uncaught Error: Shared module is not available for eager consumption`. What does the error mean?
+
+7- Add `chat` to `session`.
