@@ -56,7 +56,9 @@ function MountMF({ mount }) {
   const ref = useRef();
 
   useEffect(() => {
-    mount(ref.current);
+    const { unmount } = mount(ref.current);
+
+    return unmount;
   }, [ref.current, mount]);
 
   return <div ref={ref} />;
