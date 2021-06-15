@@ -267,7 +267,7 @@ D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 - Stop Webpack
 - Run `git checkout nextjs-exercise-1 && yarn && yarn start`
 
-2- In http://localhost:3001/reception how many copies of React do we download? Can you find where we are downloading React in the networking tab on?
+2- In http://localhost:3001/reception how many copies of React do we download? Can you find where we are downloading React in the networking tab?
 
 3- We have not implemented any `host` to `remote` navigation nor the other way around. There is neither `onHostNavigate` nor `onNavigate` callbacks on `host/src/components/LoadNextMF.jsx`. How can we click on "Reception" in the navigation bar from http://localhost:3001/ and navigate to http://localhost:3001/reception?
 
