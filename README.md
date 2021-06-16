@@ -4,7 +4,7 @@ by [@alex_lobera](https://twitter.com/alex_lobera)
 
 ## We are hiring
 
-Do you want to join our team? See [open roles here](https://hopin.com/careers).
+Do you want to join Hopin and work on cutting-edge microfrontends? See [open roles here](https://hopin.com/careers).
 
 ## Learning objectives
 
