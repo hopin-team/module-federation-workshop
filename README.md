@@ -1,5 +1,7 @@
 # Module Federation Workshop
 
+by [@alex_lobera](https://twitter.com/alex_lobera)
+
 ## Learning objectives
 
 - Configure Webpack Module Federation
