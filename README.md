@@ -292,4 +292,4 @@ react: {
 
 Then stop Webpack and run `yarn start` again. You should see this error `Uncaught Error: Shared module is not available for eager consumption`. What does the error mean?
 
-7- Add `chat` to `session`. Do you need to use `LoadNextMF.jsx`
+7- Add `chat` to `session`. Do you need to use `LoadNextMF.jsx`?
