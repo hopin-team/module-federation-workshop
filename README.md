@@ -1,5 +1,11 @@
 # Module Federation Workshop
 
+by [@alex_lobera](https://twitter.com/alex_lobera)
+
+## We are hiring
+
+Do you want to join Hopin and work on cutting-edge microfrontends? See [open roles here](https://hopin.com/careers).
+
 ## Learning objectives
 
 - Configure Webpack Module Federation
@@ -133,7 +139,7 @@ exposes: {
 1- Everyone goes to the root directory of the project and:
 
 - Stop Webpack
-- Run `git checkout exercise-2 && yarn && yarn start`
+- Run `git checkout exercise-3 && yarn && yarn start`
 
 2- Create a `mount` function in `sessions/src/bootstrap` and import it in `host` similiarly to what we just did in `chat`.
 
@@ -161,7 +167,7 @@ E) Render `ChatApp` component in `host/src/components/App.jsx`. Remove `mountCha
 
 2- Create the `SesssionsApp` component in `host/src/components` similarly to the previous `ChatApp`.
 
-3- Render `SessionsApp` in `host/src/components/App.jsx`. Remove `mountSessions` from `host/src/bootstrap.js`.
+3- Render `SessionsApp` in `host/src/components/App.jsx`.
 
 4- Go to http://localhost:8887 and check the network tab.
 
@@ -267,7 +273,7 @@ D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 - Stop Webpack
 - Run `git checkout nextjs-exercise-1 && yarn && yarn start`
 
-2- In http://localhost:3001/reception how many copies of React do we download? Can you find where we are downloading React in the networking tab on?
+2- In http://localhost:3001/reception how many copies of React do we download? Can you find where we are downloading React in the networking tab?
 
 3- We have not implemented any `host` to `remote` navigation nor the other way around. There is neither `onHostNavigate` nor `onNavigate` callbacks on `host/src/components/LoadNextMF.jsx`. How can we click on "Reception" in the navigation bar from http://localhost:3001/ and navigate to http://localhost:3001/reception?
 
@@ -290,4 +296,4 @@ react: {
 
 Then stop Webpack and run `yarn start` again. You should see this error `Uncaught Error: Shared module is not available for eager consumption`. What does the error mean?
 
-7- Add `chat` to `session`.
+7- Add `chat` to `session`. Do you need to use `LoadNextMF.jsx`?
