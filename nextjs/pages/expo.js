@@ -3,7 +3,7 @@ import Head from "next/head";
 import LoadNextMF from "../components/LoadNextMF";
 import Nav from "../components/Nav";
 
-const Expo = ({ path, basename }) => {
+const Expo = ({ pathname, basename }) => {
   return (
     <div>
       <Head>
@@ -15,7 +15,7 @@ const Expo = ({ path, basename }) => {
         url="http://localhost:8882/remoteEntry.js"
         scope="expo"
         module="./App"
-        path={path}
+        pathname={pathname}
         basename={basename}
       />
     </div>
@@ -25,16 +25,16 @@ const Expo = ({ path, basename }) => {
 export async function getServerSideProps({ req, resolvedUrl }) {
   // We need this because shallow routing only works for same page URL changes (https://nextjs.org/docs/routing/shallow-routing#caveats)
   const url = require("url").parse(resolvedUrl);
-  const basename = url.pathname;
-  let path = req.url.startsWith("/_next/data") ? basename : req.url;
+  const basename = url.pathname; // basename is the path to this file after /pages. E.g. /pages/expo.js = /expo
+  let pathname = req.url.startsWith("/_next/data") ? basename : req.url;
 
   if (url.query) {
     const searchParams = new URLSearchParams(url.query);
-    path = `${basename}/${[...searchParams.values()].join("/")}`;
+    pathname = `${basename}/${[...searchParams.values()].join("/")}`;
   }
 
   return {
-    props: { path, basename },
+    props: { pathname, basename },
   };
 }
 

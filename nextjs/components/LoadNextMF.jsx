@@ -53,18 +53,19 @@ function useDynamicScript({ url }) {
 }
 
 const MountMF = React.memo(
-  function MountMF({ mount, router, ...rest }) {
+  function MountMF({ mount, router, pathname, basename }) {
     const ref = useRef();
 
     useEffect(() => {
       const { unmount, onHostNavigate } = mount(ref.current, {
         onNavigate: (nextPathname) => {
-          const { pathname } = router;
+          const { pathname } = window.location;
           if (pathname !== nextPathname) {
             router.push(nextPathname, undefined, { shallow: true });
           }
         },
-        ...rest,
+        pathname,
+        basename,
       });
 
       router.events.on("routeChangeStart", onHostNavigate);
@@ -73,7 +74,7 @@ const MountMF = React.memo(
         router.events.off("routeChangeStart", onHostNavigate);
         unmount();
       };
-    }, [ref.current, mount, ...Object.values(rest)]);
+    }, [ref.current, mount, pathname, basename]);
 
     return <div ref={ref} />;
   },
@@ -92,7 +93,8 @@ export default function LoadNextMF({
   module,
   errorComponent: ErrorComponent = () => "There was an error",
   loadingComponent: LoadingComponent = () => "...",
-  ...rest // 👀  notice we are using the rest operator. This is because we want to pass props to the `mount` function. E.g. `path` in pages/expo.js
+  pathname,
+  basename,
 }) {
   const { ready: scriptReady, failed: scriptFailed } = useDynamicScript({
     url,
@@ -114,7 +116,12 @@ export default function LoadNextMF({
   }, [scriptReady, module, scope]);
 
   const children = mount ? (
-    <MountMF {...rest} mount={mount} router={router} />
+    <MountMF
+      mount={mount}
+      router={router}
+      pathname={pathname}
+      basename={basename}
+    />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (
