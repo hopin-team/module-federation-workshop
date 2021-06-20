@@ -254,7 +254,7 @@ B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `rec
 
 ### 🥑 Before Nextjs exercise
 
-Nextjs current version (10.2) doesn't fully support Module Federation (oh 😞). The reason being Nextjs does not have an async boundary for Webpack to resolve modules in the shared scope. When using `dynamic from "next/dynamic"` shared packages, such as React, are downloaded more than once.
+Nextjs current version (11.0.0) doesn't fully support Module Federation (oh 😞). The reason being Nextjs does not have an async boundary for Webpack to resolve modules in the shared scope. When using `dynamic from "next/dynamic"` shared packages, such as React, are downloaded more than once.
 
 The workaround is to load the [remote containers dynamically without SSR](https://github.com/module-federation/module-federation-examples/pull/835).
 
