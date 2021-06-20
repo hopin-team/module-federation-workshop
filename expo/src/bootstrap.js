@@ -4,10 +4,15 @@ import App from "./components/App";
 
 function mount(
   el,
-  { onNavigate, history = createMemoryHistory(), basename = "/expo", path } = {}
+  {
+    onNavigate,
+    history = createMemoryHistory(),
+    basename = "/expo",
+    pathname,
+  } = {}
 ) {
   const cleanups = [];
-  const initialPath = path || basename;
+  const initialPath = pathname || basename;
 
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
   if (initialPath) history.push(initialPath);
