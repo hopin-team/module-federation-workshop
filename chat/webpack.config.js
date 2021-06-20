@@ -9,15 +9,11 @@ module.exports = {
   mode: "development",
   output: {
     publicPath: `http://localhost:${port}/`,
-    filename: "[name].[contenthash].js",
   },
   devServer: {
     port,
     historyApiFallback: {
       index: "index.html",
-    },
-    headers: {
-      "Access-Control-Allow-Origin": "*",
     },
   },
   plugins: [
