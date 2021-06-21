@@ -5,12 +5,12 @@ import App from "./components/App";
 function mount(
   el,
   //{ onNavigate, history = createMemoryHistory(), shareState = () => {} } = {}
-  { shareState = () => {} } = {}
+  { shareValue = () => {} } = {}
 ) {
   // const cleanups = [];
   // if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
   if (el)
-    ReactDOM.render(<App history={history} shareState={shareState} />, el);
+    ReactDOM.render(<App history={history} shareValue={shareValue} />, el);
 
   return {
     // onParentNavigate: (pathname) => {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function App({ shareState, username: initialStateUsername }) {
+export default function App({ shareValue, username: initialStateUsername }) {
   const [username, setUsername] = useState(initialStateUsername);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function App({ shareState, username: initialStateUsername }) {
         }).then(() => {
           // ❌ make sure you don't share a state change unless it has changed.
           // E.g. it now submits the form even the username is the same. It rerenders the MF that use username on the first rerender
-          shareState({ username });
+          shareValue("username", username);
         });
       }}
     >

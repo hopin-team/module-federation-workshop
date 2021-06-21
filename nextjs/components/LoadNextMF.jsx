@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useMFShareState } from "./MFProvider";
+import { useShellShare, useShellValues } from "./MFDataLayer";
 
 async function loadModule(scope, module) {
   await __webpack_init_sharing__("default");
@@ -12,11 +12,12 @@ async function loadModule(scope, module) {
 }
 
 const MountMF = React.memo(
-  function MountMF({ mount, router, ...rest }) {
+  function MountMF({ mount, router, shareValue, ...rest }) {
     const ref = useRef();
 
     useEffect(() => {
       const { unmount } = mount(ref.current, {
+        ...rest,
         onNavigate: (pathname) => {
           if (router.pathname !== pathname) {
             router.push(pathname, undefined, {
@@ -24,11 +25,11 @@ const MountMF = React.memo(
             });
           }
         },
-        ...rest,
+        shareValue,
       });
 
       return unmount;
-    }, [ref.current, mount, ...Object.values(rest)]);
+    }, [...Object.values(rest), ref.current, mount, shareValue]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
   },
@@ -85,7 +86,7 @@ export default React.memo(function LoadNextMF({
   scope,
   errorComponent: ErrorComponent = () => "There was an error",
   loadingComponent: LoadingComponent = () => "...",
-  ...rest
+  shellKeys,
 }) {
   const key = url + module + scope;
   const router = useRouter();
@@ -96,7 +97,8 @@ export default React.memo(function LoadNextMF({
     typeof window !== "undefined" ? window.__MFE_MOUNTS?.[key] : undefined
   );
   const [moduleFailed, setModuleFailed] = useState(false);
-  const { shareState } = useMFShareState();
+  const { shareValue } = useShellShare();
+  const shellValues = useShellValues(shellKeys);
 
   useEffect(() => {
     if (scriptReady && !mount) {
@@ -111,7 +113,12 @@ export default React.memo(function LoadNextMF({
   }, [scriptReady, key, module, scope]);
 
   const children = mount ? (
-    <MountMF {...rest} mount={mount} router={router} shareState={shareState} />
+    <MountMF
+      {...shellValues}
+      mount={mount}
+      router={router}
+      shareValue={shareValue}
+    />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (
