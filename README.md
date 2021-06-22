@@ -333,6 +333,18 @@ Then stop Webpack and run `yarn start` again. You should see this error `Uncaugh
 
 8- Add `chat` to `session`. Do you need to use `LoadNextMF.jsx`?
 
+### 🥑 Before shared state exercise
+
+We have an endpoint that returns the current user http://localhost:8889/api/viewer. There are two microfrontends that display the username: `profile` and `sessions`. Profile also updates the username.
+
+Sessions stores the username in Redux, among other data. Profile only uses React. To avoid refetching the same data in `sessions` every time that we navigate between pages `sessions` stores the Redux state in localStorage (see `sessions/src/bootstrap.js`).
+
 ### 🤸‍♀️ Shared state exercise
 
-We have an endpoint that returns the current user
+1- Why do you think `sessions` refetches all the state if the state is in Redux (unless we persist it as we do)?
+
+2- Why do you think we use the function `cleanupCacheOnbeforeUnload` in `sessions/src/bootstrap.js`
+
+3- How would you share state changes between `profile` and `sessions`? Meaning `sessions` would display the last version of the username when we save the username in `profile`. Consider both `profile` and `sessions` are mounted when username changes.
+
+4- How would you share state changes between `profile` and `sessions` if `profile` is mounted but `sessions` is not?
