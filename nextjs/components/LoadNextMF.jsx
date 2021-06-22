@@ -12,13 +12,10 @@ async function loadModule(scope, module) {
 }
 
 const MountMF = React.memo(
-  function MountMF({ mount, router, reactiveSet, reactiveValues, ...rest }) {
+  function MountMF({ mount, router, reactiveSet, reactiveValues }) {
     const ref = useRef();
-    console.log("aaa MountMF");
     useEffect(() => {
-      console.log("aaa useEffect");
       const { unmount } = mount(ref.current, {
-        ...rest,
         onNavigate: (pathname) => {
           if (router.pathname !== pathname) {
             router.push(pathname, undefined, {
@@ -31,7 +28,7 @@ const MountMF = React.memo(
       });
 
       return unmount;
-    }, [...Object.values(rest), ref.current, mount]);
+    }, [...Object.values(reactiveValues), reactiveSet, ref.current, mount]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
   },
@@ -40,7 +37,6 @@ const MountMF = React.memo(
       (acc, key) =>
         (key === "router" ||
           key === "reactiveValues" ||
-          // key === "reactiveSet" ||
           prevProps[key] === nextProps[key]) &&
         acc,
       true
@@ -101,8 +97,6 @@ export default React.memo(function LoadNextMF({
   const [mount, setMount] = useState();
   const [moduleFailed, setModuleFailed] = useState(false);
   const { reactiveValues, reactiveSet } = useReactiveMap(reactiveKeys);
-
-  console.log("aaa LoadNextMF reactiveValues", reactiveValues.username?.());
 
   useEffect(() => {
     if (scriptReady && !mount) {

@@ -54,7 +54,6 @@ function mount(
       if (currentPathname !== pathname) history.push(pathname);
     },
     unmount: () => {
-      console.log("aaa unmount");
       cleanups.forEach((cleanup) => cleanup());
       ReactDOM.unmountComponentAtNode(el);
     },

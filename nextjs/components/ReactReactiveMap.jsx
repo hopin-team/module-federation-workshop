@@ -11,7 +11,10 @@ export default function ReactiveMapProvider({ children, reactiveMap }) {
 }
 
 export function useReactiveMap(keys = []) {
-  const reactiveMap = validateContext(useContext(ReactiveMapContext));
+  const reactiveMap = useContext(ReactiveMapContext);
+  if (!reactiveMap) {
+    throw new Error("ReactiveMapProvider is not an ancestor of this component");
+  }
 
   let reactiveValues = keys.reduce((acc, key) => {
     acc[key] = reactiveMap.get(key);
@@ -32,11 +35,4 @@ export function useReactiveValue(reactiveValue) {
   }, [reactiveValue]);
 
   return value;
-}
-
-function validateContext(context) {
-  if (!context)
-    throw new Error("ReactiveMapProvider is not an ancestor of this component");
-
-  return context;
 }
