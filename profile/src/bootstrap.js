@@ -1,24 +1,11 @@
 import ReactDOM from "react-dom";
-// import { createMemoryHistory, createBrowserHistory } from "history";
 import App from "./components/App";
 
-function mount(
-  el,
-  //{ onNavigate, history = createMemoryHistory(), shareState = () => {} } = {}
-  { shareValue = () => {} } = {}
-) {
-  // const cleanups = [];
-  // if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
+function mount(el, { reactiveSet = () => {} } = {}) {
   if (el)
-    ReactDOM.render(<App history={history} shareValue={shareValue} />, el);
-
+    ReactDOM.render(<App history={history} reactiveSet={reactiveSet} />, el);
   return {
-    // onParentNavigate: (pathname) => {
-    //   const currentPathname = history.location.pathname;
-    //   if (currentPathname !== pathname) history.push(pathname);
-    // },
     unmount: () => {
-      // cleanups.forEach((cleanup) => cleanup());
       ReactDOM.unmountComponentAtNode(el);
     },
   };

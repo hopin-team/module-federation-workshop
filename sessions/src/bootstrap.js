@@ -18,7 +18,7 @@ function cleanupCacheOnbeforeUnload() {
 
 function mount(
   el,
-  { onNavigate, history = createMemoryHistory(), username } = {}
+  { onNavigate, history = createMemoryHistory(), reactiveValues } = {}
 ) {
   const initialState = JSON.parse(
     window.localStorage.getItem(MICROFRONTEND_SESSIONS)
@@ -27,7 +27,7 @@ function mount(
     ...initialState,
     viewer: {
       ...initialState?.viewer,
-      username: username || initialState?.viewer?.username,
+      username: reactiveValues?.username?.() || initialState?.viewer?.username,
     },
   });
 
@@ -38,7 +38,11 @@ function mount(
         JSON.stringify(store.getState())
       );
     },
+    reactiveValues.username?.listen((username) => {
+      store.dispatch({ type: "UPDATE_USERNAME", username });
+    }),
   ];
+
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
   if (el) ReactDOM.render(<App history={history} store={store} />, el);
 
@@ -50,6 +54,7 @@ function mount(
       if (currentPathname !== pathname) history.push(pathname);
     },
     unmount: () => {
+      console.log("aaa unmount");
       cleanups.forEach((cleanup) => cleanup());
       ReactDOM.unmountComponentAtNode(el);
     },

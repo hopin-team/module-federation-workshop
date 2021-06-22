@@ -1,10 +1,12 @@
-import MFDataLayer from "../components/MFDataLayer";
+import ReactiveSetProvider from "../components/ReactReactiveMap";
+import Nav from "../components/Nav";
 
 function Application({ Component, pageProps }) {
   return (
-    <MFDataLayer>
+    <ReactiveSetProvider>
+      <Nav />
       <Component {...pageProps} />
-    </MFDataLayer>
+    </ReactiveSetProvider>
   );
 }
 

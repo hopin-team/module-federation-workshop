@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useShellShare, useShellValues } from "./MFDataLayer";
+import { useReactiveMap } from "./ReactReactiveMap";
 
 async function loadModule(scope, module) {
   await __webpack_init_sharing__("default");
@@ -12,10 +12,11 @@ async function loadModule(scope, module) {
 }
 
 const MountMF = React.memo(
-  function MountMF({ mount, router, shareValue, ...rest }) {
+  function MountMF({ mount, router, reactiveSet, reactiveValues, ...rest }) {
     const ref = useRef();
-
+    console.log("aaa MountMF");
     useEffect(() => {
+      console.log("aaa useEffect");
       const { unmount } = mount(ref.current, {
         ...rest,
         onNavigate: (pathname) => {
@@ -25,18 +26,23 @@ const MountMF = React.memo(
             });
           }
         },
-        shareValue,
+        reactiveSet,
+        reactiveValues,
       });
 
       return unmount;
-    }, [...Object.values(rest), ref.current, mount, shareValue]);
+    }, [...Object.values(rest), ref.current, mount]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
   },
   function areEqual(prevProps, nextProps) {
     return Object.keys(prevProps).reduce(
       (acc, key) =>
-        (key === "router" || prevProps[key] === nextProps[key]) && acc,
+        (key === "router" ||
+          key === "reactiveValues" ||
+          // key === "reactiveSet" ||
+          prevProps[key] === nextProps[key]) &&
+        acc,
       true
     );
   }
@@ -86,38 +92,32 @@ export default React.memo(function LoadNextMF({
   scope,
   errorComponent: ErrorComponent = () => "There was an error",
   loadingComponent: LoadingComponent = () => "...",
-  shellKeys,
+  reactiveKeys,
 }) {
-  const key = url + module + scope;
   const router = useRouter();
   const { ready: scriptReady, failed: scriptFailed } = useDynamicScript({
     url,
   });
-  const [mount, setMount] = useState(() =>
-    typeof window !== "undefined" ? window.__MFE_MOUNTS?.[key] : undefined
-  );
+  const [mount, setMount] = useState();
   const [moduleFailed, setModuleFailed] = useState(false);
-  const { shareValue } = useShellShare();
-  const shellValues = useShellValues(shellKeys);
+  const { reactiveValues, reactiveSet } = useReactiveMap(reactiveKeys);
 
   useEffect(() => {
     if (scriptReady && !mount) {
       loadModule(scope, module)
         .then(({ default: mountFn }) => {
-          window.__MFE_MOUNTS = window.__MFE_MOUNTS || {};
-          window.__MFE_MOUNTS[key] = mountFn;
           setMount(() => mountFn);
         })
         .catch(() => setModuleFailed(true));
     }
-  }, [scriptReady, key, module, scope]);
+  }, [scriptReady, module, scope]);
 
   const children = mount ? (
     <MountMF
-      {...shellValues}
       mount={mount}
       router={router}
-      shareValue={shareValue}
+      reactiveValues={reactiveValues}
+      reactiveSet={reactiveSet}
     />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />

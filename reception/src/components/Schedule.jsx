@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-export default function Schedule() {
+export default function Schedule({ username }) {
   return (
     <>
-      <h2>Reception</h2>
+      <h2>Reception, welcome {username}</h2>
       <h3>Schedule</h3>
 
       <strong>Now! </strong>

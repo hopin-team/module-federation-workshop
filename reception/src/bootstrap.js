@@ -2,10 +2,17 @@ import ReactDOM from "react-dom";
 import { createMemoryHistory, createBrowserHistory } from "history";
 import App from "./components/App";
 
-function mount(el, { onNavigate, history = createMemoryHistory() } = {}) {
+function mount(
+  el,
+  { onNavigate, history = createMemoryHistory(), reactiveValues } = {}
+) {
   const cleanups = [];
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
-  if (el) ReactDOM.render(<App history={history} />, el);
+  if (el)
+    ReactDOM.render(
+      <App history={history} reactiveValues={reactiveValues} />,
+      el
+    );
 
   return {
     onParentNavigate: (pathname) => {
