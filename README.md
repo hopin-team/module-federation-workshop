@@ -275,13 +275,11 @@ D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 
 2- In http://localhost:3001/reception how many copies of React do we download? Can you find where we are downloading React in the networking tab?
 
-3- We have not implemented any `host` to `remote` navigation nor the other way around. There is neither `onHostNavigate` nor `onNavigate` callbacks on `host/src/components/LoadNextMF.jsx`. How can we click on "Reception" in the navigation bar from http://localhost:3001/ and navigate to http://localhost:3001/reception?
+3- We have not implemented any `host` to `remote` navigation nor the other way around. There is neither `onHostNavigate` nor `onNavigate` callbacks in `host/src/components/LoadNextMF.jsx`. Why can we click on "Reception" in the navigation bar in http://localhost:3001/ and navigate to http://localhost:3001/reception?
 
 4- In http://localhost:3001/reception if you click on "Go to Expo 1" in the footer the expo page 1 is not loaded. Can you fix it? Hint, you'll need to use `useRouter` from `next/router` to [push](https://nextjs.org/docs/api-reference/next/router#routerpush) a `pathname` in `LoadNextMF.jsx`. Tip: pass `{ shallow: true }` when pushing a route since we only need client-side navigation.
 
-5- If you click on "Expo" and "Expo 1" in the navigation bar one of the two is not going to load. Can you fix that? You need to implement router listeners to navigate from `host` to `remote`.
-
-⚠️ Tip: You can use this [routeChangeStart event](https://nextjs.org/docs/api-reference/next/router#routerevents) to implement a listener. Pro-tip: don't forget to cleanup listeners with `router.events.off` if you add any listener.
+5- If you click on "Expo" and "Expo 1" in the navigation bar one of the two pages is not going to work. Can you fix that? You need to implement router listeners to navigate from `host` to `remote`. ⚠️ Tip: You can use this [routeChangeStart event](https://nextjs.org/docs/api-reference/next/router#routerevents) to implement a listener. Pro-tip: don't forget to cleanup listeners with `router.events.off` if you add any listener.
 
 6- Do you think we should use the rest operator in `nextjs/components/LoadNextMF.jsx` and then spread it in `MountMF` and `mount`? Or is it better to explicitly pass each argument as we currently do? Which approach is more future-proofed? Snippet of the proposed change:
 
