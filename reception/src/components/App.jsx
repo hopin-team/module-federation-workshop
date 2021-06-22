@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { Router } from "react-router-dom";
 import Schedule from "./Schedule";
 
@@ -6,7 +6,7 @@ export function useReactiveValue(reactiveValue) {
   const [value, setValue] = useState(reactiveValue?.());
 
   useEffect(() => {
-    reactiveValue?.listen((newValue) => {
+    return reactiveValue?.listen((newValue) => {
       setValue(newValue);
     });
   }, [reactiveValue]);
@@ -26,14 +26,19 @@ const UsernameProvider = ({ reactiveUsername, children }) => {
   );
 };
 
+export const useUsername = () => {
+  return useContext(UsernameContext);
+};
+
 export default function App({ history, reactiveValues }) {
-  const username = useReactiveValue(reactiveValues?.username);
+  //const username = useReactiveValue(reactiveValues?.username);
 
   return (
-    // <UsernameProvider reactiveUsername={reactiveValues.username}>
-    <Router history={history}>
-      <Schedule username={username} />
-    </Router>
-    // </UsernameProvider>
+    <UsernameProvider reactiveUsername={reactiveValues.username}>
+      <Router history={history}>
+        {/* <Schedule username={username} /> */}
+        <Schedule />
+      </Router>
+    </UsernameProvider>
   );
 }

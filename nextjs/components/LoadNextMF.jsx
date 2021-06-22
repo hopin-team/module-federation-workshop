@@ -102,6 +102,8 @@ export default React.memo(function LoadNextMF({
   const [moduleFailed, setModuleFailed] = useState(false);
   const { reactiveValues, reactiveSet } = useReactiveMap(reactiveKeys);
 
+  console.log("aaa LoadNextMF reactiveValues", reactiveValues.username?.());
+
   useEffect(() => {
     if (scriptReady && !mount) {
       loadModule(scope, module)

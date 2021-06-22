@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useUsername } from "./App";
 
-export default function Schedule({ username }) {
+export default function Schedule() {
+  const username = useUsername();
+
   return (
     <>
       <h2>Reception, welcome {username}</h2>
