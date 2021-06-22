@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useReactiveMap } from "./ReactReactiveMap";
 
 async function loadModule(scope, module) {
   await __webpack_init_sharing__("default");
@@ -12,7 +11,7 @@ async function loadModule(scope, module) {
 }
 
 const MountMF = React.memo(
-  function MountMF({ mount, router, reactiveSet, reactiveValues }) {
+  function MountMF({ mount, router }) {
     const ref = useRef();
     useEffect(() => {
       const { unmount } = mount(ref.current, {
@@ -23,22 +22,17 @@ const MountMF = React.memo(
             });
           }
         },
-        reactiveSet,
-        reactiveValues,
       });
 
       return unmount;
-    }, [...Object.values(reactiveValues), reactiveSet, ref.current, mount]);
+    }, [ref.current, mount]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
   },
   function areEqual(prevProps, nextProps) {
     return Object.keys(prevProps).reduce(
       (acc, key) =>
-        (key === "router" ||
-          key === "reactiveValues" ||
-          prevProps[key] === nextProps[key]) &&
-        acc,
+        (key === "router" || prevProps[key] === nextProps[key]) && acc,
       true
     );
   }
@@ -88,7 +82,6 @@ export default React.memo(function LoadNextMF({
   scope,
   errorComponent: ErrorComponent = () => "There was an error",
   loadingComponent: LoadingComponent = () => "...",
-  reactiveKeys,
 }) {
   const router = useRouter();
   const { ready: scriptReady, failed: scriptFailed } = useDynamicScript({
@@ -96,7 +89,6 @@ export default React.memo(function LoadNextMF({
   });
   const [mount, setMount] = useState();
   const [moduleFailed, setModuleFailed] = useState(false);
-  const { reactiveValues, reactiveSet } = useReactiveMap(reactiveKeys);
 
   useEffect(() => {
     if (scriptReady && !mount) {
@@ -109,12 +101,7 @@ export default React.memo(function LoadNextMF({
   }, [scriptReady, module, scope]);
 
   const children = mount ? (
-    <MountMF
-      mount={mount}
-      router={router}
-      reactiveValues={reactiveValues}
-      reactiveSet={reactiveSet}
-    />
+    <MountMF mount={mount} router={router} />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (

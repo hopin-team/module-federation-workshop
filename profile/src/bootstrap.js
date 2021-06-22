@@ -1,9 +1,8 @@
 import ReactDOM from "react-dom";
 import App from "./components/App";
 
-function mount(el, { reactiveSet = () => {} } = {}) {
-  if (el)
-    ReactDOM.render(<App history={history} reactiveSet={reactiveSet} />, el);
+function mount(el) {
+  if (el) ReactDOM.render(<App history={history} />, el);
   return {
     unmount: () => {
       ReactDOM.unmountComponentAtNode(el);

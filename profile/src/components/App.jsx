@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-export default function App({ reactiveSet, username: initialStateUsername }) {
-  const [username, setUsername] = useState(initialStateUsername);
+export default function App() {
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     if (username === undefined) {
@@ -23,10 +23,6 @@ export default function App({ reactiveSet, username: initialStateUsername }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ username }),
-        }).then(() => {
-          // ❌ make sure you don't share a state change unless it has changed.
-          // E.g. it now submits the form even the username is the same. It rerenders the MF that use username on the first rerender
-          reactiveSet("username", username);
         });
       }}
     >

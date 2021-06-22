@@ -16,10 +16,7 @@ function cleanupCacheOnbeforeUnload() {
   };
 }
 
-function mount(
-  el,
-  { onNavigate, history = createMemoryHistory(), reactiveValues } = {}
-) {
+function mount(el, { onNavigate, history = createMemoryHistory() } = {}) {
   const initialState = JSON.parse(
     window.localStorage.getItem(MICROFRONTEND_SESSIONS)
   );
@@ -27,7 +24,7 @@ function mount(
     ...initialState,
     viewer: {
       ...initialState?.viewer,
-      username: reactiveValues?.username?.() || initialState?.viewer?.username,
+      username: initialState?.viewer?.username,
     },
   });
 
@@ -38,9 +35,6 @@ function mount(
         JSON.stringify(store.getState())
       );
     },
-    reactiveValues.username?.listen((username) => {
-      store.dispatch({ type: "UPDATE_USERNAME", username });
-    }),
   ];
 
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
