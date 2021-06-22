@@ -96,7 +96,7 @@ export default function LoadNextMF({
   }, [scriptReady, module, scope]);
 
   const children = mount ? (
-    <MountMF {...rest} mount={mount} pathname={pathname} basename={basename} />
+    <MountMF mount={mount} pathname={pathname} basename={basename} />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (
