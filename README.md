@@ -279,7 +279,7 @@ D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 
 4- In http://localhost:3001/reception if you click on "Go to Expo 1" in the footer the expo page 1 is not loaded. Can you fix it? Hint, you'll need to use `useRouter` from `next/router` to [push](https://nextjs.org/docs/api-reference/next/router#routerpush) a `pathname` in `LoadNextMF.jsx`. Tip: pass `{ shallow: true }` when pushing a route since we only need client-side navigation.
 
-5- If you click on "Expo" in the navigation bar ("Expo" not "Expo 1"!🔥) the expo page doesn't loaded. Can you fix that? You need to implement router listeners to navigate from `host` to `remote`.
+5- If you click on "Expo" and "Expo 1" in the navigation bar one of the two is not going to load. Can you fix that? You need to implement router listeners to navigate from `host` to `remote`.
 
 ⚠️ Tip: You can use this [routeChangeStart event](https://nextjs.org/docs/api-reference/next/router#routerevents) to implmement a listener. Pro-tip: don't forget to cleanup listeners with `router.events.off` if you add any listener.
 
