@@ -9,7 +9,7 @@ export default function Schedule() {
       <Link to="/sessions/123">Session 123</Link>
       <hr />
       <Link to="/">Go home</Link> | <Link to="/expo">Expo</Link> |{" "}
-      <Link to="/expo/1">Expo 1</Link>
+      <Link to="/expo/1">Go to Expo 1</Link>
     </>
   );
 }
