@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 const ReactiveMapContext = createContext();
 
-export default function ReactiveMapProvider({ children, reactiveMap }) {
+export function ReactiveMapProvider({ children, reactiveMap }) {
   return (
     <ReactiveMapContext.Provider value={reactiveMap}>
       {children}

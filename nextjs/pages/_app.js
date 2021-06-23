@@ -1,4 +1,4 @@
-import ReactiveSetProvider from "../components/ReactReactiveMap";
+import { ReactiveMapProvider } from "../components/ReactReactiveMap";
 import Nav from "../components/Nav";
 import { ReactiveMap } from "../components/ReactiveMap";
 
@@ -6,10 +6,10 @@ const reactiveMap = new ReactiveMap();
 
 function Application({ Component, pageProps }) {
   return (
-    <ReactiveSetProvider reactiveMap={reactiveMap}>
+    <ReactiveMapProvider reactiveMap={reactiveMap}>
       <Nav />
       <Component {...pageProps} />
-    </ReactiveSetProvider>
+    </ReactiveMapProvider>
   );
 }
 
