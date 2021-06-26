@@ -1,18 +1,7 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useContext } from "react";
 import { Router } from "react-router-dom";
+import { useReactiveValue } from "nextjs/ReactReactiveMap";
 import Schedule from "./Schedule";
-
-export function useReactiveValue(reactiveValue) {
-  const [value, setValue] = useState(reactiveValue?.());
-
-  useEffect(() => {
-    return reactiveValue?.listen((newValue) => {
-      setValue(newValue);
-    });
-  }, [reactiveValue]);
-
-  return value;
-}
 
 const UsernameContext = createContext();
 

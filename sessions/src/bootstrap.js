@@ -16,7 +16,7 @@ function cleanupCacheOnbeforeUnload() {
   };
 }
 
-function mount(
+async function mount(
   el,
   { onNavigate, history = createMemoryHistory(), reactiveValues } = {}
 ) {
@@ -27,7 +27,8 @@ function mount(
     ...initialState,
     viewer: {
       ...initialState?.viewer,
-      username: reactiveValues?.username?.() || initialState?.viewer?.username,
+      username:
+        (await reactiveValues?.username?.()) || initialState?.viewer?.username,
     },
   });
 
@@ -38,8 +39,8 @@ function mount(
         JSON.stringify(store.getState())
       );
     },
-    reactiveValues.username?.listen((username) => {
-      store.dispatch({ type: "UPDATE_USERNAME", username });
+    reactiveValues.username?.listen(async (username) => {
+      store.dispatch({ type: "UPDATE_USERNAME", username: await username });
     }),
   ];
 

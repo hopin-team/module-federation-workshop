@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const ReactiveMapContext = createContext();
 
@@ -10,7 +10,7 @@ export function ReactiveMapProvider({ children, reactiveMap }) {
   );
 }
 
-export function useReactiveMap(keys = []) {
+export function useReactiveKeys(keys = []) {
   const reactiveMap = useContext(ReactiveMapContext);
   if (!reactiveMap) {
     throw new Error("ReactiveMapProvider is not an ancestor of this component");
@@ -22,17 +22,19 @@ export function useReactiveMap(keys = []) {
     return acc;
   }, {});
 
-  return { reactiveValues, reactiveSet: reactiveMap.set };
+  return reactiveValues;
 }
 
-export function useReactiveValue(reactiveValue) {
-  const [value, setValue] = useState(reactiveValue());
+export function useReactiveValue(reactiveValue, resolver) {
+  const [value, setValue] = useState();
 
   useEffect(() => {
-    return reactiveValue.listen((newValue) => {
-      setValue(newValue);
+    reactiveValue?.(resolver).then(setValue);
+
+    return reactiveValue.listen(async (newValue) => {
+      setValue(await newValue);
     });
   }, [reactiveValue]);
 
-  return value;
+  return [value, setValue];
 }

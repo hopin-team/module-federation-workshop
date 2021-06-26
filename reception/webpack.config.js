@@ -25,6 +25,10 @@ module.exports = {
       exposes: {
         "./App": "./src/bootstrap.js",
       },
+      remotes: {
+        nextjs:
+          "nextjs@http://localhost:3001/_next/static/chunks/remoteEntry.js",
+      },
       shared: packageJson.dependencies,
     }),
   ],

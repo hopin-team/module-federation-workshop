@@ -4,6 +4,8 @@ module.exports = {
   future: { webpack5: true },
   webpack: (config, options) => {
     const federationConfig = {
+      name: "nextjs",
+      filename: "static/chunks/remoteEntry.js",
       shared: {
         ...packageJsonDeps,
         react: {
@@ -14,6 +16,9 @@ module.exports = {
           eager: true,
           requiredVersion: packageJsonDeps["react-dom"],
         },
+      },
+      exposes: {
+        "./ReactReactiveMap": "./components/ReactReactiveMap.jsx",
       },
     };
 

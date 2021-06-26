@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useReactiveMap } from "./ReactReactiveMap";
+import { useReactiveKeys } from "./ReactReactiveMap";
 
 async function loadModule(scope, module) {
   await __webpack_init_sharing__("default");
@@ -14,8 +14,8 @@ async function loadModule(scope, module) {
 const MountMF = React.memo(
   function MountMF({ mount, router, reactiveValues }) {
     const ref = useRef();
-    useEffect(() => {
-      const { unmount } = mount(ref.current, {
+    useEffect(async () => {
+      const { unmount } = await mount(ref.current, {
         onNavigate: (pathname) => {
           if (router.pathname !== pathname) {
             router.push(pathname, undefined, {
@@ -95,7 +95,7 @@ export default React.memo(function LoadNextMF({
   });
   const [mount, setMount] = useState();
   const [moduleFailed, setModuleFailed] = useState(false);
-  const { reactiveValues } = useReactiveMap(reactiveKeys);
+  const reactiveValues = useReactiveKeys(reactiveKeys);
 
   useEffect(() => {
     if (scriptReady && !mount) {
@@ -108,11 +108,7 @@ export default React.memo(function LoadNextMF({
   }, [scriptReady, module, scope]);
 
   const children = mount ? (
-    <MountMF
-      mount={mount}
-      router={router}
-      reactiveValues={reactiveValues}
-    />
+    <MountMF mount={mount} router={router} reactiveValues={reactiveValues} />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (

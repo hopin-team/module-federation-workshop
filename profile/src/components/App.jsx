@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
+import { useReactiveValue } from "nextjs/ReactReactiveMap";
+
+async function resolver() {
+  const response = await fetch(`http://localhost:8889/api/viewer`);
+  const json = await response.json();
+  return json.username;
+}
 
 export default function App({ reactiveValues }) {
-  const [username, setUsername] = useState(reactiveValues?.username());
-
-  useEffect(() => {
-    if (username === undefined) {
-      fetch(`http://localhost:8889/api/viewer`)
-        .then((response) => response.json())
-        .then((data) => setUsername(data.username));
-    }
-  }, [username]);
+  const [username, setUsername] = useReactiveValue(
+    reactiveValues?.username,
+    resolver
+  );
 
   return (
     <form

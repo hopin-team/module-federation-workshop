@@ -10,13 +10,18 @@ export class ReactiveMap {
       throw new Error("Key is required");
     }
 
-    this.values.set(key, value);
+    this.values.set(key, Promise.resolve(value));
 
     if (!this.reactiveValues.has(key)) {
-      const reactiveValue = (newValue) => {
-        if (newValue) {
-          this.values.set(key, newValue);
-          this.listeners.get(key)?.map((listener) => listener(newValue));
+      const reactiveValue = async (newValue) => {
+        if (typeof newValue === "function") {
+          newValue = await newValue();
+        }
+
+        if (newValue !== undefined) {
+          const promiseNewValue = Promise.resolve(newValue);
+          this.values.set(key, promiseNewValue);
+          this.listeners.get(key)?.map((listener) => listener(promiseNewValue));
         }
 
         return this.values.get(key);
