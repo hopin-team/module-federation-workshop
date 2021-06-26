@@ -6,7 +6,7 @@ import Schedule from "./Schedule";
 const UsernameContext = createContext();
 
 const UsernameProvider = ({ reactiveUsername, children }) => {
-  const username = useReactiveValue(reactiveUsername);
+  const [username] = useReactiveValue(reactiveUsername);
 
   return (
     <UsernameContext.Provider value={username}>
@@ -20,7 +20,7 @@ export const useUsername = () => {
 };
 
 export default function App({ history, reactiveValues }) {
-  //const username = useReactiveValue(reactiveValues?.username);
+  //const [username] = useReactiveValue(reactiveValues?.username);
 
   return (
     <UsernameProvider reactiveUsername={reactiveValues.username}>
