@@ -1,9 +1,9 @@
 import { ReactiveMapProvider } from "../components/ReactReactiveMap";
 import { ScopedMapProvider, ScopedMap } from "../components/ScopedMap";
 import Nav from "../components/Nav";
-import { ReactiveMap } from "../components/ReactiveMap";
+import { MyProjectReactiveMap } from "../components/MyProjectReactiveMap";
 
-const reactiveMap = new ReactiveMap();
+const reactiveMap = new MyProjectReactiveMap();
 const scopedMap = new ScopedMap();
 
 function Application({ Component, pageProps }) {

@@ -26,12 +26,9 @@ export const useUsername = () => {
 };
 
 export default function App({ history, reactiveMapGet }) {
-  //const [username] = useReactiveValue(reactiveValues?.username);
-
   return (
     <UsernameProvider reactiveUsername={reactiveMapGet("username")}>
       <Router history={history}>
-        {/* <Schedule username={username} /> */}
         <Schedule />
       </Router>
     </UsernameProvider>

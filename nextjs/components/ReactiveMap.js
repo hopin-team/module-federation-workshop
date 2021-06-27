@@ -3,13 +3,22 @@ export class ReactiveMap {
     this.values = new Map();
     this.reactiveValues = new Map();
     this.listeners = new Map();
+    this.keyValidators = [];
   }
 
+  // make _validateKey private with TS
+  _validateKey = (key) =>
+    this.keyValidators.forEach((validator) => validator(key));
+
   // make _getValue private with TS
-  _getValue = (key) => Promise.resolve(this.values.get(key));
+  _getValue = (key) => {
+    this._validateKey(key);
+    return Promise.resolve(this.values.get(key));
+  };
 
   // make _setValue private with TS
   _setValue = (key, value) => {
+    this._validateKey(key);
     this.values.set(key, value);
     this.listeners.get(key)?.map((listener) => listener(this._getValue(key)));
   };
