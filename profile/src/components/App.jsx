@@ -7,10 +7,9 @@ async function fetchInitialValue() {
 }
 
 export default function App({ reactiveMapGet }) {
-  const [username, setUsername] = useReactiveValue(
-    reactiveMapGet("username"),
-    fetchInitialValue
-  );
+  const [username, setUsername] = useReactiveValue(reactiveMapGet("username"), {
+    fetchInitialValue,
+  });
 
   return (
     <form

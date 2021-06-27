@@ -4,24 +4,24 @@ import { configureStore } from "./store";
 import App from "./components/App";
 import "regenerator-runtime";
 
+const INITIAL_STATE_KEY = "PRIVATE-sessions-initial-state";
+
 async function mount(
   el,
   {
     onNavigate,
     history = createMemoryHistory(),
-    reactiveMapGet = "TODO new ReactiveMap()",
+    reactiveMapGet = "🔥🔥🔥🔥 TODO new ReactiveMap() 🔥🔥🔥🔥",
+    scopedMap = new Map(),
   } = {}
 ) {
-  const reactiveInitialState = reactiveMapGet("PRIVATE-sessions-initial-state");
+  const initialState = scopedMap.get(INITIAL_STATE_KEY);
   const reactiveUsername = reactiveMapGet("username");
-  const [initialState, username] = await Promise.all([
-    reactiveInitialState(),
-    reactiveUsername(async () => {
-      const response = await fetch(`http://localhost:8889/api/viewer`);
-      const viewer = await response.json();
-      return viewer.username;
-    }),
-  ]);
+  const username = await reactiveUsername(async () => {
+    const response = await fetch(`http://localhost:8889/api/viewer`);
+    const viewer = await response.json();
+    return viewer.username;
+  });
 
   const store = configureStore({
     ...initialState,
@@ -48,7 +48,7 @@ async function mount(
     },
     unmount: () => {
       cleanups.forEach((cleanup) => cleanup());
-      reactiveInitialState(store.getState());
+      scopedMap.set(INITIAL_STATE_KEY, store.getState());
       ReactDOM.unmountComponentAtNode(el);
     },
   };

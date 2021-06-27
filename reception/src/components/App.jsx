@@ -12,7 +12,7 @@ async function fetchInitialValue() {
 }
 
 const UsernameProvider = ({ reactiveUsername, children }) => {
-  const [username] = useReactiveValue(reactiveUsername, fetchInitialValue);
+  const [username] = useReactiveValue(reactiveUsername, { fetchInitialValue });
 
   return (
     <UsernameContext.Provider value={username}>

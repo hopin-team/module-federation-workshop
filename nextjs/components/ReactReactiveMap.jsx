@@ -2,6 +2,13 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const ReactiveMapContext = createContext();
 
+export const validateContextProvider = (context, provider) => {
+  if (!context) {
+    throw new Error(`${provider} is not an ancestor of this component`);
+  }
+  return context;
+};
+
 export function ReactiveMapProvider({ children, reactiveMap }) {
   return (
     <ReactiveMapContext.Provider value={reactiveMap}>
@@ -10,42 +17,24 @@ export function ReactiveMapProvider({ children, reactiveMap }) {
   );
 }
 
-// export function useReactiveKeys(keys = []) {
-//   const reactiveMap = useContext(ReactiveMapContext);
-//   if (!reactiveMap) {
-//     throw new Error("ReactiveMapProvider is not an ancestor of this component");
-//   }
-
-//   let reactiveValues = keys.reduce((acc, key) => {
-//     acc[key] = reactiveMap.get(key);
-
-//     return acc;
-//   }, {});
-
-//   return reactiveValues;
-// }
 export function useReactiveKey(key) {
   return useReactiveMap().get(key);
 }
 
 export function useReactiveMap() {
-  const reactiveMap = useContext(ReactiveMapContext);
-  if (!reactiveMap) {
-    throw new Error("ReactiveMapProvider is not an ancestor of this component");
-  }
-
-  return reactiveMap;
+  return validateContextProvider(
+    useContext(ReactiveMapContext),
+    "ReactiveMapContext"
+  );
 }
 
-export function useReactiveValue(reactiveValue, resolver) {
+export function useReactiveValue(reactiveValue, { fetchInitialValue } = {}) {
   const [value, setValue] = useState();
 
   useEffect(() => {
-    reactiveValue?.(resolver).then(setValue);
+    reactiveValue?.(fetchInitialValue).then(setValue);
 
-    return reactiveValue.listen(async (newValue) => {
-      setValue(await newValue);
-    });
+    return reactiveValue.listen(async (newValue) => setValue(await newValue));
   }, [reactiveValue]);
 
   return [value, setValue];

@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { useReactiveMap } from "./ReactReactiveMap";
+import { useScopedMap } from "./ScopedMap";
 
 async function loadModule(scope, module) {
   await __webpack_init_sharing__("default");
@@ -12,7 +13,7 @@ async function loadModule(scope, module) {
 }
 
 const MountMF = React.memo(
-  function MountMF({ mount, router, reactiveMapGet }) {
+  function MountMF({ mount, router, reactiveMapGet, scopedMap }) {
     const ref = useRef();
     useEffect(() => {
       let cleanup;
@@ -26,6 +27,7 @@ const MountMF = React.memo(
             }
           },
           reactiveMapGet,
+          scopedMap,
         });
 
         cleanup = unmount;
@@ -33,7 +35,7 @@ const MountMF = React.memo(
       iniMount();
 
       return () => cleanup?.();
-    }, [ref.current, mount, reactiveMapGet]);
+    }, [ref.current, mount, reactiveMapGet, scopedMap]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
   },
@@ -98,6 +100,7 @@ export default React.memo(function LoadNextMF({
   const [mount, setMount] = useState();
   const [moduleFailed, setModuleFailed] = useState(false);
   const reactiveMap = useReactiveMap();
+  const scopedMap = useScopedMap();
 
   useEffect(() => {
     if (scriptReady && !mount) {
@@ -110,7 +113,12 @@ export default React.memo(function LoadNextMF({
   }, [scriptReady, module, scope]);
 
   const children = mount ? (
-    <MountMF mount={mount} router={router} reactiveMapGet={reactiveMap.get} />
+    <MountMF
+      mount={mount}
+      router={router}
+      reactiveMapGet={reactiveMap.get}
+      scopedMap={scopedMap.get(`${module}-${scope}`)}
+    />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (

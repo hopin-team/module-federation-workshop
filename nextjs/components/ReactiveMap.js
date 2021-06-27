@@ -57,7 +57,7 @@ export class ReactiveMap {
         return () => {
           this.listeners.set(
             key,
-            this.listeners.get(key).filter((c) => c === callback)
+            this.listeners.get(key).filter((c) => c !== callback)
           );
         };
       };
