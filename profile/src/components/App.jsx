@@ -6,9 +6,9 @@ async function fetchInitialValue() {
   return json.username;
 }
 
-export default function App({ reactiveValues }) {
+export default function App({ reactiveMapGet }) {
   const [username, setUsername] = useReactiveValue(
-    reactiveValues?.username,
+    reactiveMapGet("username"),
     fetchInitialValue
   );
 
@@ -27,7 +27,7 @@ export default function App({ reactiveValues }) {
         }).then(() => {
           // ❌ make sure you don't share a state change unless it has changed.
           // E.g. it now submits the form even the username is the same. It rerenders the MF that use username on the first rerender
-          reactiveValues?.username(username);
+          reactiveMapGet("username")(username);
         });
       }}
     >

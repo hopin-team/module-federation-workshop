@@ -4,13 +4,13 @@ import App from "./components/App";
 
 function mount(
   el,
-  { onNavigate, history = createMemoryHistory(), reactiveValues } = {}
+  { onNavigate, history = createMemoryHistory(), reactiveMapGet } = {}
 ) {
   const cleanups = [];
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
   if (el)
     ReactDOM.render(
-      <App history={history} reactiveValues={reactiveValues} />,
+      <App history={history} reactiveMapGet={reactiveMapGet} />,
       el
     );
 

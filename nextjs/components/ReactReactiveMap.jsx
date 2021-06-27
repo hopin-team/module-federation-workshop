@@ -10,19 +10,31 @@ export function ReactiveMapProvider({ children, reactiveMap }) {
   );
 }
 
-export function useReactiveKeys(keys = []) {
+// export function useReactiveKeys(keys = []) {
+//   const reactiveMap = useContext(ReactiveMapContext);
+//   if (!reactiveMap) {
+//     throw new Error("ReactiveMapProvider is not an ancestor of this component");
+//   }
+
+//   let reactiveValues = keys.reduce((acc, key) => {
+//     acc[key] = reactiveMap.get(key);
+
+//     return acc;
+//   }, {});
+
+//   return reactiveValues;
+// }
+export function useReactiveKey(key) {
+  return useReactiveMap().get(key);
+}
+
+export function useReactiveMap() {
   const reactiveMap = useContext(ReactiveMapContext);
   if (!reactiveMap) {
     throw new Error("ReactiveMapProvider is not an ancestor of this component");
   }
 
-  let reactiveValues = keys.reduce((acc, key) => {
-    acc[key] = reactiveMap.get(key);
-
-    return acc;
-  }, {});
-
-  return reactiveValues;
+  return reactiveMap;
 }
 
 export function useReactiveValue(reactiveValue, resolver) {

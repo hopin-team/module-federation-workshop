@@ -13,7 +13,7 @@ const Reception = () => {
         url="http://localhost:8886/remoteEntry.js"
         scope="reception"
         module="./App"
-        reactiveKeys={["username"]}
+        //reactiveKeys={["username"]}
       />
     </div>
   );

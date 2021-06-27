@@ -25,11 +25,11 @@ export const useUsername = () => {
   return useContext(UsernameContext);
 };
 
-export default function App({ history, reactiveValues }) {
+export default function App({ history, reactiveMapGet }) {
   //const [username] = useReactiveValue(reactiveValues?.username);
 
   return (
-    <UsernameProvider reactiveUsername={reactiveValues.username}>
+    <UsernameProvider reactiveUsername={reactiveMapGet("username")}>
       <Router history={history}>
         {/* <Schedule username={username} /> */}
         <Schedule />

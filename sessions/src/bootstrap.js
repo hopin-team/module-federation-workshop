@@ -4,31 +4,24 @@ import { configureStore } from "./store";
 import App from "./components/App";
 import "regenerator-runtime";
 
-const MICROFRONTEND_SESSIONS = "microfrontend-sessions";
-
-function cleanupCacheOnbeforeUnload() {
-  const prevOnbeforeunload = window.onunload;
-
-  window.onbeforeunload = () => {
-    window.localStorage.removeItem(MICROFRONTEND_SESSIONS);
-    prevOnbeforeunload?.();
-
-    return null;
-  };
-}
-
 async function mount(
   el,
-  { onNavigate, history = createMemoryHistory(), reactiveValues } = {}
+  {
+    onNavigate,
+    history = createMemoryHistory(),
+    reactiveMapGet = "TODO new ReactiveMap()",
+  } = {}
 ) {
-  const initialState = JSON.parse(
-    window.localStorage.getItem(MICROFRONTEND_SESSIONS)
-  );
-  const username = await reactiveValues?.username?.(async () => {
-    const response = await fetch(`http://localhost:8889/api/viewer`);
-    const viewer = await response.json();
-    return viewer.username;
-  });
+  const reactiveInitialState = reactiveMapGet("PRIVATE-sessions-initial-state");
+  const reactiveUsername = reactiveMapGet("username");
+  const [initialState, username] = await Promise.all([
+    reactiveInitialState(),
+    reactiveUsername(async () => {
+      const response = await fetch(`http://localhost:8889/api/viewer`);
+      const viewer = await response.json();
+      return viewer.username;
+    }),
+  ]);
 
   const store = configureStore({
     ...initialState,
@@ -39,22 +32,14 @@ async function mount(
   });
 
   const cleanups = [
-    () => {
-      window.localStorage.setItem(
-        MICROFRONTEND_SESSIONS,
-        JSON.stringify(store.getState())
-      );
-    },
-    reactiveValues?.username?.listen(async (reactiveValue) => {
-      const username = await reactiveValue();
+    reactiveUsername?.listen(async (reactiveValue) => {
+      const username = await reactiveValue;
       store.dispatch({ type: "UPDATE_USERNAME", username });
     }),
   ];
 
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
   if (el) ReactDOM.render(<App history={history} store={store} />, el);
-
-  cleanupCacheOnbeforeUnload();
 
   return {
     onParentNavigate: (pathname) => {
@@ -63,6 +48,7 @@ async function mount(
     },
     unmount: () => {
       cleanups.forEach((cleanup) => cleanup());
+      reactiveInitialState(store.getState());
       ReactDOM.unmountComponentAtNode(el);
     },
   };

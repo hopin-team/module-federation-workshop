@@ -13,7 +13,7 @@ const Sessions = () => {
         url="http://localhost:8885/remoteEntry.js"
         scope="sessions"
         module="./App"
-        reactiveKeys={["username"]}
+        // reactiveKeys={["username"]}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useReactiveKeys } from "./ReactReactiveMap";
+import { useReactiveMap } from "./ReactReactiveMap";
 
 async function loadModule(scope, module) {
   await __webpack_init_sharing__("default");
@@ -12,32 +12,35 @@ async function loadModule(scope, module) {
 }
 
 const MountMF = React.memo(
-  function MountMF({ mount, router, reactiveValues }) {
+  function MountMF({ mount, router, reactiveMapGet }) {
     const ref = useRef();
-    useEffect(async () => {
-      const { unmount } = await mount(ref.current, {
-        onNavigate: (pathname) => {
-          if (router.pathname !== pathname) {
-            router.push(pathname, undefined, {
-              shallow: true,
-            });
-          }
-        },
-        reactiveValues,
-      });
+    useEffect(() => {
+      let cleanup;
+      async function iniMount() {
+        const { unmount } = await mount(ref.current, {
+          onNavigate: (pathname) => {
+            if (router.pathname !== pathname) {
+              router.push(pathname, undefined, {
+                shallow: true,
+              });
+            }
+          },
+          reactiveMapGet,
+        });
 
-      return unmount;
-    }, [...Object.values(reactiveValues), ref.current, mount]);
+        cleanup = unmount;
+      }
+      iniMount();
+
+      return () => cleanup?.();
+    }, [ref.current, mount, reactiveMapGet]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
   },
   function areEqual(prevProps, nextProps) {
     return Object.keys(prevProps).reduce(
       (acc, key) =>
-        (key === "router" ||
-          key === "reactiveValues" ||
-          prevProps[key] === nextProps[key]) &&
-        acc,
+        (key === "router" || prevProps[key] === nextProps[key]) && acc,
       true
     );
   }
@@ -87,7 +90,6 @@ export default React.memo(function LoadNextMF({
   scope,
   errorComponent: ErrorComponent = () => "There was an error",
   loadingComponent: LoadingComponent = () => "...",
-  reactiveKeys,
 }) {
   const router = useRouter();
   const { ready: scriptReady, failed: scriptFailed } = useDynamicScript({
@@ -95,7 +97,7 @@ export default React.memo(function LoadNextMF({
   });
   const [mount, setMount] = useState();
   const [moduleFailed, setModuleFailed] = useState(false);
-  const reactiveValues = useReactiveKeys(reactiveKeys);
+  const reactiveMap = useReactiveMap();
 
   useEffect(() => {
     if (scriptReady && !mount) {
@@ -108,7 +110,7 @@ export default React.memo(function LoadNextMF({
   }, [scriptReady, module, scope]);
 
   const children = mount ? (
-    <MountMF mount={mount} router={router} reactiveValues={reactiveValues} />
+    <MountMF mount={mount} router={router} reactiveMapGet={reactiveMap.get} />
   ) : scriptFailed || moduleFailed ? (
     <ErrorComponent />
   ) : (
