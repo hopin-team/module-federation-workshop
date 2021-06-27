@@ -15,13 +15,13 @@ export default function SessionList() {
     }
   }, [dispatch, sessions]);
 
-  useEffect(() => {
-    if (!username) {
-      fetch(`http://localhost:8889/api/viewer`)
-        .then((response) => response.json())
-        .then((payload) => dispatch({ type: "RECEIVE_VIEWER", payload }));
-    }
-  }, [dispatch, username]);
+  // useEffect(() => {
+  //   if (!username) {
+  //     fetch(`http://localhost:8889/api/viewer`)
+  //       .then((response) => response.json())
+  //       .then((payload) => dispatch({ type: "RECEIVE_VIEWER", payload }));
+  //   }
+  // }, [dispatch, username]);
 
   return (
     <>

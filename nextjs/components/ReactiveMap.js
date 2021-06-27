@@ -5,26 +5,46 @@ export class ReactiveMap {
     this.listeners = new Map();
   }
 
+  // make _getValue private with TS
+  _getValue = (key) => Promise.resolve(this.values.get(key));
+
+  // make _setValue private with TS
+  _setValue = (key, value) => {
+    this.values.set(key, value);
+    this.listeners.get(key)?.map((listener) => listener(this._getValue(key)));
+  };
+
   set = (key, value) => {
     if (!key) {
       throw new Error("Key is required");
     }
 
-    this.values.set(key, Promise.resolve(value));
+    this._setValue(key, value);
 
     if (!this.reactiveValues.has(key)) {
       const reactiveValue = async (newValue) => {
-        if (typeof newValue === "function") {
-          newValue = await newValue();
+        const currentValue = this.values.get(key);
+        if (Promise.resolve(currentValue) === currentValue) {
+          // current value is a promise
+          return currentValue;
         }
 
-        if (newValue !== undefined) {
-          const promiseNewValue = Promise.resolve(newValue);
-          this.values.set(key, promiseNewValue);
-          this.listeners.get(key)?.map((listener) => listener(promiseNewValue));
+        if (typeof newValue === "function" && currentValue === undefined) {
+          const promise = new Promise(async (resolve, reject) => {
+            try {
+              resolve(await newValue());
+            } catch (error) {
+              reject(error);
+            }
+          });
+          this.values.set(key, promise);
+          newValue = await promise;
+          this._setValue(key, newValue);
+        } else if (newValue !== undefined && typeof newValue !== "function") {
+          this._setValue(key, newValue);
         }
 
-        return this.values.get(key);
+        return this._getValue(key);
       };
 
       reactiveValue.listen = (callback) => {
@@ -44,8 +64,6 @@ export class ReactiveMap {
 
       this.reactiveValues.set(key, reactiveValue);
     }
-
-    this.listeners.get(key)?.map((listener) => listener(value));
 
     return this.reactiveValues.get(key);
   };

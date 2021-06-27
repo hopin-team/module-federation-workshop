@@ -1,6 +1,6 @@
 import { useReactiveValue } from "nextjs/ReactReactiveMap";
 
-async function resolver() {
+async function fetchInitialValue() {
   const response = await fetch(`http://localhost:8889/api/viewer`);
   const json = await response.json();
   return json.username;
@@ -9,7 +9,7 @@ async function resolver() {
 export default function App({ reactiveValues }) {
   const [username, setUsername] = useReactiveValue(
     reactiveValues?.username,
-    resolver
+    fetchInitialValue
   );
 
   return (

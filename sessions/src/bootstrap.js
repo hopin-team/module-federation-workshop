@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import { createMemoryHistory, createBrowserHistory } from "history";
 import { configureStore } from "./store";
 import App from "./components/App";
+import "regenerator-runtime";
 
 const MICROFRONTEND_SESSIONS = "microfrontend-sessions";
 
@@ -23,12 +24,17 @@ async function mount(
   const initialState = JSON.parse(
     window.localStorage.getItem(MICROFRONTEND_SESSIONS)
   );
+  const username = await reactiveValues?.username?.(async () => {
+    const response = await fetch(`http://localhost:8889/api/viewer`);
+    const viewer = await response.json();
+    return viewer.username;
+  });
+
   const store = configureStore({
     ...initialState,
     viewer: {
       ...initialState?.viewer,
-      username:
-        (await reactiveValues?.username?.()) || initialState?.viewer?.username,
+      username,
     },
   });
 
@@ -39,8 +45,9 @@ async function mount(
         JSON.stringify(store.getState())
       );
     },
-    reactiveValues.username?.listen(async (username) => {
-      store.dispatch({ type: "UPDATE_USERNAME", username: await username });
+    reactiveValues?.username?.listen(async (reactiveValue) => {
+      const username = await reactiveValue();
+      store.dispatch({ type: "UPDATE_USERNAME", username });
     }),
   ];
 
