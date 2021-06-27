@@ -4,14 +4,14 @@ import { configureStore } from "./store";
 import App from "./components/App";
 import "regenerator-runtime";
 
-const INITIAL_STATE_KEY = "PRIVATE-sessions-initial-state";
+const INITIAL_STATE_KEY = "sessions-initial-state";
 
 async function mount(
   el,
   {
     onNavigate,
     history = createMemoryHistory(),
-    reactiveMapGet = "🔥🔥🔥🔥 TODO new ReactiveMap() 🔥🔥🔥🔥",
+    reactiveMapGet = "🔥🔥🔥🔥 TODO new MyProjectReactiveMap() 🔥🔥🔥🔥",
     scopedMap = new Map(),
   } = {}
 ) {
