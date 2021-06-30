@@ -254,7 +254,7 @@ B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `rec
 
 ### 🥑 Before Nextjs exercise
 
-Nextjs current version (11.0.0) doesn't fully support Module Federation (oh 😞). The reason being Nextjs does not have an async boundary for Webpack to resolve modules in the shared scope. When using `dynamic from "next/dynamic"` shared packages, such as React, are downloaded more than once.
+Nextjs current version (10.2) doesn't fully support Module Federation (oh 😞). The reason being Nextjs does not have an async boundary for Webpack to resolve modules in the shared scope. When using `dynamic from "next/dynamic"` shared packages, such as React, are downloaded more than once.
 
 The workaround is to load the [remote containers dynamically without SSR](https://github.com/module-federation/module-federation-examples/pull/835).
 
@@ -283,44 +283,9 @@ D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 
 ⚠️ Tip: you can use this [routeChangeStart event](https://nextjs.org/docs/api-reference/next/router#routerevents) to implmement a listener. Pro-tip: don't forget to cleanup listeners with `router.events.off` if you add any listener.
 
-6- Do you think we should use the rest operator in `nextjs/components/LoadNextMF.jsx` and then spread it in `MountMF` and `mount`? Or is it better to explicitly pass each argument as we currently do? Which approach is more future-proofed? Snippet of the proposed change:
-
-```js
-export default function LoadNextMF({
-  url,
-  scope,
-  module,
-  errorComponent: ErrorComponent = () => "There was an error",
-  loadingComponent: LoadingComponent = () => "...",
-  ...rest // 👈
-}) {
-  // some code
-}
-
-//                           👇
-function MountMF({ mount, ...rest }) {
-  const ref = useRef();
-
-  useEffect(() => {
-    const { unmount } = mount(ref.current, {
-      // some arguments
-      ...rest, // 👈
-    });
-
-    return unmount;
-  }, [
-    ref.current,
-    mount,
-    ...Object.values(rest), // 👈
-  ]);
-
-  return <div ref={ref} />;
-}
-```
-
 ### 🏋️‍♀️ Bonus Nextjs exercise
 
-7- Comment out the following line in `nextjs/next.config.js`:
+6- Comment out the following line in `nextjs/next.config.js`:
 
 ```js
 react: {
@@ -331,4 +296,4 @@ react: {
 
 Then stop Webpack and run `yarn start` again. You should see this error `Uncaught Error: Shared module is not available for eager consumption`. What does the error mean?
 
-8- Add `chat` to `session`. Do you need to use `LoadNextMF.jsx`?
+7- Add `chat` to `session`. Do you need to use `LoadNextMF.jsx`?
