@@ -254,7 +254,7 @@ B) Destructure `onNavigate` from the `mount` 2nd argument (default = {}) in `rec
 
 ### 🥑 Before Nextjs exercise
 
-Nextjs current version (10.2) doesn't fully support Module Federation (oh 😞). The reason being Nextjs does not have an async boundary for Webpack to resolve modules in the shared scope. When using `dynamic from "next/dynamic"` shared packages, such as React, are downloaded more than once.
+Nextjs current version (11.0.0) doesn't fully support Module Federation (oh 😞). The reason being Nextjs does not have an async boundary for Webpack to resolve modules in the shared scope. When using `dynamic from "next/dynamic"` shared packages, such as React, are downloaded more than once.
 
 The workaround is to load the [remote containers dynamically without SSR](https://github.com/module-federation/module-federation-examples/pull/835).
 
@@ -275,17 +275,50 @@ D) How can we mount `chat` if there is no `remotes` in `nextjs/next.config.js`?
 
 2- In http://localhost:3001/reception how many copies of React do we download? Can you find where we are downloading React in the networking tab?
 
-3- We have not implemented any `host` to `remote` navigation nor the other way around. There is neither `onHostNavigate` nor `onNavigate` callbacks on `host/src/components/LoadNextMF.jsx`. How can we click on "Reception" in the navigation bar from http://localhost:3001/ and navigate to http://localhost:3001/reception?
+3- We have not implemented any `host` to `remote` navigation nor the other way around. There is neither `onHostNavigate` nor `onNavigate` callbacks in `host/src/components/LoadNextMF.jsx`. Why can we click on "Reception" in the navigation bar in http://localhost:3001/ and navigate to http://localhost:3001/reception?
 
-4- In http://localhost:3001/reception if you click on "Expo 1" the navigation doesn't work. Can you fix it? Hint, you'll need to use `useRouter` from `next/router` to [push](https://nextjs.org/docs/api-reference/next/router#routerpush) a `pathname` in `LoadNextMF.jsx`. Tip: pass `{ shallow: true }` when pushing a route since we only need client-side navigation.
+4- In http://localhost:3001/reception if you click on "Go to Expo 1" in the footer the expo page 1 is not loaded. Can you fix it? Hint, you'll need to use `useRouter` from `next/router` to [push](https://nextjs.org/docs/api-reference/next/router#routerpush) a `pathname` in `LoadNextMF.jsx`. Tip: pass `{ shallow: true }` when pushing a route since we only need client-side navigation.
 
-5- Implmenent page http://localhost:3001/expo and http://localhost:3001/expo/1. In this case `expo` and `expo/1` are 2 pages in 1 microfrontend, do we need to implement router listeners to navigate from `host` to `remote`? You can test this by clicking on "Expo 1" on the navigation should display Expo 1 and not Expo list.
+5- If you click on "Expo" and "Expo 1" in the navigation bar one of the two pages is not going to work. Can you fix that? You need to implement router listeners to navigate from `host` to `remote`. ⚠️ Tip: You can use this [routeChangeStart event](https://nextjs.org/docs/api-reference/next/router#routerevents) to implement a listener. Pro-tip: don't forget to cleanup listeners with `router.events.off` if you add any listener.
 
-⚠️ Tip: you can use this [routeChangeStart event](https://nextjs.org/docs/api-reference/next/router#routerevents) to implmement a listener. Pro-tip: don't forget to cleanup listeners with `router.events.off` if you add any listener.
+6- Do you think we should use the rest operator in `nextjs/components/LoadNextMF.jsx` and then spread it in `MountMF` and `mount`? Or is it better to explicitly pass each argument as we currently do? Which approach is more future-proofed? Snippet of the proposed change:
+
+```js
+export default function LoadNextMF({
+  url,
+  scope,
+  module,
+  errorComponent: ErrorComponent = () => "There was an error",
+  loadingComponent: LoadingComponent = () => "...",
+  ...rest // 👈
+}) {
+  // some code
+}
+
+//                           👇
+function MountMF({ mount, ...rest }) {
+  const ref = useRef();
+
+  useEffect(() => {
+    const { unmount } = mount(ref.current, {
+      // some arguments
+      ...rest, // 👈
+    });
+
+    return unmount;
+  }, [
+    ref.current,
+    mount,
+    ...Object.values(rest), // 👈
+  ]);
+
+  return <div ref={ref} />;
+}
+```
 
 ### 🏋️‍♀️ Bonus Nextjs exercise
 
-6- Comment out the following line in `nextjs/next.config.js`:
+7- Comment out the following line in `nextjs/next.config.js`:
 
 ```js
 react: {
@@ -296,4 +329,4 @@ react: {
 
 Then stop Webpack and run `yarn start` again. You should see this error `Uncaught Error: Shared module is not available for eager consumption`. What does the error mean?
 
-7- Add `chat` to `session`. Do you need to use `LoadNextMF.jsx`?
+8- Add `chat` to `session`. Do you need to use `LoadNextMF.jsx`?
