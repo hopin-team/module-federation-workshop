@@ -21,9 +21,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "host",
       remotes: {
-        chat: "chat@http://localhost:8888/remoteEntry.js",
-        sessions: "sessions@http://localhost:8885/remoteEntry.js",
-        reception: "reception@http://localhost:8886/remoteEntry.js",
+        remote: "remote@http://localhost:8888/remoteEntry.js",
       },
       shared: { react: "^17.0.2" },
     }),

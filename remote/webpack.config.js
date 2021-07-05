@@ -19,7 +19,7 @@ module.exports = {
       template: "./public/index.html",
     }),
     new ModuleFederationPlugin({
-      name: "chat",
+      name: "remote",
       filename: "remoteEntry.js",
       exposes: {
         "./App": "./src/bootstrap.js",
