@@ -27,12 +27,8 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-let startMeasurement;
-let endMeasurement;
-
 export default function App() {
   const [memory, setMemory] = useState({});
-  const [lastMeasurement, setLastMeasurement] = useState();
   const [appCount, setAppCount] = useState(1);
   const [showApps, setShowApps] = useState(true);
   const [rerenderPercentage, setRerenderPercentage] = useState(0);
@@ -40,8 +36,6 @@ export default function App() {
     reactiveMap.get("compCount"),
     { initialValue: 1 }
   );
-
-  startMeasurement = new Date();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -53,10 +47,6 @@ export default function App() {
       clearInterval(intervalId);
     };
   }, []);
-
-  useEffect(() => {
-    setLastMeasurement(Math.abs(new Date() - startMeasurement));
-  }, [appCount, compCount, showApps, rerenderPercentage]);
 
   useEffect(() => {
     if (!showApps) {
