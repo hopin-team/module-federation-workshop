@@ -5,8 +5,13 @@ import App from "./components/App";
 import "regenerator-runtime";
 
 const INITIAL_STATE_KEY = "sessions-initial-state";
+async function fetchInitialValue() {
+  const response = await fetch(`http://localhost:8889/api/viewer`);
+  const json = await response.json();
+  return json.username;
+}
 
-async function mount(
+function mount(
   el,
   {
     onNavigate,
@@ -16,24 +21,17 @@ async function mount(
   } = {}
 ) {
   const initialState = scopedMap.get(INITIAL_STATE_KEY);
-  const reactiveUsername = reactiveMapGet("username");
-  const username = await reactiveUsername(async () => {
-    const response = await fetch(`http://localhost:8889/api/viewer`);
-    const viewer = await response.json();
-    return viewer.username;
-  });
+  const reactiveUsername = reactiveMapGet("username", { fetchInitialValue });
 
   const store = configureStore({
     ...initialState,
     viewer: {
       ...initialState?.viewer,
-      username,
     },
   });
 
   const cleanups = [
-    reactiveUsername?.listen(async (reactiveValue) => {
-      const username = await reactiveValue;
+    reactiveUsername?.listen((username) => {
       store.dispatch({ type: "UPDATE_USERNAME", username });
     }),
   ];

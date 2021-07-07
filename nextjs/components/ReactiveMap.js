@@ -13,7 +13,7 @@ export class ReactiveMap {
   // make _getValue private with TS
   _getValue = (key) => {
     this._validateKey(key);
-    return Promise.resolve(this.values.get(key));
+    return this.values.get(key);
   };
 
   // make _setValue private with TS
@@ -31,37 +31,20 @@ export class ReactiveMap {
     this._setValue(key, value);
 
     if (!this.reactiveValues.has(key)) {
-      const reactiveValue = async (newValue) => {
-        const currentValue = this.values.get(key);
-        if (Promise.resolve(currentValue) === currentValue) {
-          // current value is a promise
-          return currentValue;
-        }
-
-        if (typeof newValue === "function" && currentValue === undefined) {
-          const promise = new Promise(async (resolve, reject) => {
-            try {
-              resolve(await newValue());
-            } catch (error) {
-              reject(error);
-            }
-          });
-          this.values.set(key, promise);
-          newValue = await promise;
-          this._setValue(key, newValue);
-        } else if (newValue !== undefined && typeof newValue !== "function") {
-          this._setValue(key, newValue);
-        }
+      const publish = (newValue) => {
+        this._setValue(key, newValue);
 
         return this._getValue(key);
       };
 
-      reactiveValue.listen = (callback) => {
+      const listen = (callback) => {
         if (this.listeners.has(key)) {
           this.listeners.get(key).push(callback);
         } else {
           this.listeners.set(key, [callback]);
         }
+        // Execute with current value
+        callback(this._getValue(key));
 
         return () => {
           this.listeners.set(
@@ -71,15 +54,25 @@ export class ReactiveMap {
         };
       };
 
-      this.reactiveValues.set(key, reactiveValue);
+      // Use explicit values `publish` and `listen`
+      this.reactiveValues.set(key, { listen, publish });
     }
 
     return this.reactiveValues.get(key);
   };
 
-  get = (key) => {
+  /** Should this be init ? */
+  get = (key, { fetchInitialValue } = {}) => {
     if (!this.reactiveValues.has(key)) {
+      // Setting the defined that it has been initialized by some party
       this.set(key, undefined);
+
+      // If there is an init function execute and setValue on resolution
+      if (fetchInitialValue && typeof fetchInitialValue === "function") {
+        fetchInitialValue()?.then((value) => {
+          this._setValue(key, value);
+        });
+      }
     }
 
     return this.reactiveValues.get(key);

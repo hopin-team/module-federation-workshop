@@ -7,9 +7,10 @@ async function fetchInitialValue() {
 }
 
 export default function App({ reactiveMapGet }) {
-  const [username, setUsername] = useReactiveValue(reactiveMapGet("username"), {
+  // There is definitely room to make this hook more react idomatic
+  const [username, setUsername] = useReactiveValue(reactiveMapGet("username",  {
     fetchInitialValue,
-  });
+  }));
 
   return (
     <form
@@ -26,7 +27,7 @@ export default function App({ reactiveMapGet }) {
         }).then(() => {
           // ❌ make sure you don't share a state change unless it has changed.
           // E.g. it now submits the form even the username is the same. It rerenders the MF that use username on the first rerender
-          reactiveMapGet("username")(username);
+          reactiveMapGet("username").publish(username);
         });
       }}
     >

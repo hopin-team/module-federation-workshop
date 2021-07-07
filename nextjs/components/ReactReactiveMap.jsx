@@ -28,13 +28,13 @@ export function useReactiveMap() {
   );
 }
 
-export function useReactiveValue(reactiveValue, { fetchInitialValue } = {}) {
+export function useReactiveValue(reactiveValue) {
   const [value, setValue] = useState();
 
   useEffect(() => {
-    reactiveValue?.(fetchInitialValue).then(setValue);
-
-    return reactiveValue.listen(async (newValue) => setValue(await newValue));
+    return reactiveValue.listen((newValue) => {
+      setValue(newValue)
+    });
   }, [reactiveValue]);
 
   return [value, setValue];
