@@ -25,26 +25,10 @@ export function ReactiveMapProvider({ children, reactiveMap }) {
   );
 }
 
-export function useReactiveKey(key) {
-  return useReactiveMap().get(key);
-}
-
-// export function useReactiveMapGet() {
-//   return useContext(ReactiveMapContext)?.get;
-// }
-
 export function useReactiveMap() {
   return validateContextProvider(
     useContext(ReactiveMapContext),
     "ReactiveMapContext"
-  );
-}
-
-export function ReactiveMapGetProvider({ children, reactiveMapGet }) {
-  return (
-    <ReactiveMapGetContext.Provider value={reactiveMapGet}>
-      {children}
-    </ReactiveMapGetContext.Provider>
   );
 }
 
@@ -53,39 +37,32 @@ export function useReadSharedState(key) {
 }
 
 export function useSharedState(key, { fetchInitialValue, ...restOptions }) {
-  const reactiveMapGet =
-    useContext(ReactiveMapGetContext) || restOptions.reactiveMapGet;
+  const reactiveMap = useContext(ReactiveMapContext) || restOptions.reactiveMap;
+  if (!reactiveMap) {
+    throw new Error(
+      "No ReactiveMap found in the context nor it was passed as an argument"
+    );
+  }
   const [value, setValue] = useState();
-  const refCleanup = useRef();
-  const refReactiveValue = useRef();
-
-  const shareState = useCallback(() => {
-    refReactiveValue.current?.();
-  }, [refReactiveValue.current]);
+  const item = reactiveMap.item(key, { fetchInitialValue });
 
   useEffect(() => {
-    reactiveMapGet(key, { fetchInitialValue }).then((reactiveValue) => {
-      setValue(reactiveValue());
-      refReactiveValue.current = reactiveValue;
-      refCleanup.current = reactiveValue.listen(setValue);
-    });
+    setValue(item.get());
 
-    return () => {
-      refCleanup.current?.();
-    };
-  }, [refCleanup.current, refReactiveValue.current, reactiveMapGet]);
+    return item.listen(setValue);
+  }, [item]);
 
-  return [value, setValue, shareState];
+  return [value, setValue, item.set];
 }
 
-export function useReactiveValue(reactiveValue, { fetchInitialValue } = {}) {
-  const [value, setValue] = useState();
+// export function useReactiveValue(reactiveValue, { fetchInitialValue } = {}) {
+//   const [value, setValue] = useState();
 
-  useEffect(() => {
-    reactiveValue?.(fetchInitialValue).then(setValue);
+//   useEffect(() => {
+//     reactiveValue?.(fetchInitialValue).then(setValue);
 
-    return reactiveValue.listen(async (newValue) => setValue(await newValue));
-  }, [reactiveValue]);
+//     return reactiveValue.listen(async (newValue) => setValue(await newValue));
+//   }, [reactiveValue]);
 
-  return [value, setValue];
-}
+//   return [value, setValue];
+// }

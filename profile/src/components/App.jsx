@@ -6,10 +6,10 @@ async function fetchInitialValue() {
   return json.username;
 }
 
-export default function App({ reactiveMapGet }) {
+export default function App({ reactiveMap }) {
   const [username, setUsername, shareUsername] = useSharedState("username", {
     fetchInitialValue,
-    reactiveMapGet,
+    reactiveMap,
   });
 
   return (

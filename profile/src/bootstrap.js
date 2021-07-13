@@ -1,12 +1,9 @@
 import ReactDOM from "react-dom";
 import App from "./components/App";
 
-function mount(el, { reactiveMapGet } = {}) {
+function mount(el, { reactiveMap } = {}) {
   if (el)
-    ReactDOM.render(
-      <App history={history} reactiveMapGet={reactiveMapGet} />,
-      el
-    );
+    ReactDOM.render(<App history={history} reactiveMap={reactiveMap} />, el);
   return {
     unmount: () => {
       ReactDOM.unmountComponentAtNode(el);

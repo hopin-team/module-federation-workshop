@@ -4,15 +4,12 @@ import App from "./components/App";
 
 async function mount(
   el,
-  { onNavigate, history = createMemoryHistory(), reactiveMapGet } = {}
+  { onNavigate, history = createMemoryHistory(), reactiveMap } = {}
 ) {
   const cleanups = [];
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
   if (el)
-    ReactDOM.render(
-      <App history={history} reactiveMapGet={reactiveMapGet} />,
-      el
-    );
+    ReactDOM.render(<App history={history} reactiveMap={reactiveMap} />, el);
 
   return {
     onParentNavigate: (pathname) => {

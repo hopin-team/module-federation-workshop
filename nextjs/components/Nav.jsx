@@ -11,7 +11,6 @@ export default function Nav() {
         url="http://localhost:8883/remoteEntry.js"
         scope="profile"
         module="./App"
-        // reactiveKeys={['username']}
       />
     </nav>
   );

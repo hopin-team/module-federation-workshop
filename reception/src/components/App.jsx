@@ -1,14 +1,14 @@
 // import { createContext, useContext } from "react";
 import { Router } from "react-router-dom";
-import { ReactiveMapGetProvider } from "nextjs/ReactReactiveMap";
+import { ReactiveMapProvider } from "nextjs/ReactReactiveMap";
 import Schedule from "./Schedule";
 
-export default function App({ history, reactiveMapGet }) {
+export default function App({ history, reactiveMap }) {
   return (
-    <ReactiveMapGetProvider reactiveMapGet={reactiveMapGet}>
+    <ReactiveMapProvider reactiveMap={reactiveMap}>
       <Router history={history}>
         <Schedule />
       </Router>
-    </ReactiveMapGetProvider>
+    </ReactiveMapProvider>
   );
 }

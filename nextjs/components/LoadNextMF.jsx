@@ -13,7 +13,7 @@ async function loadModule(scope, module) {
 }
 
 const MountMF = React.memo(
-  function MountMF({ mount, router, reactiveMapGet, scopedMap }) {
+  function MountMF({ mount, router, reactiveMap, scopedMap }) {
     const ref = useRef();
     useEffect(() => {
       let cleanup;
@@ -26,7 +26,7 @@ const MountMF = React.memo(
               });
             }
           },
-          reactiveMapGet,
+          reactiveMap,
           scopedMap,
         });
 
@@ -35,7 +35,7 @@ const MountMF = React.memo(
       iniMount();
 
       return () => cleanup?.();
-    }, [ref.current, mount, reactiveMapGet, scopedMap]);
+    }, [ref.current, mount, reactiveMap, scopedMap]);
 
     return <div ref={ref} style={{ display: "inline" }} />;
   },
@@ -116,7 +116,7 @@ export default React.memo(function LoadNextMF({
     <MountMF
       mount={mount}
       router={router}
-      reactiveMapGet={reactiveMap.get}
+      reactiveMap={reactiveMap}
       scopedMap={scopedMap.get(`${module}-${scope}`)}
     />
   ) : scriptFailed || moduleFailed ? (

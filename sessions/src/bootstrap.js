@@ -11,19 +11,19 @@ async function mount(
   {
     onNavigate,
     history = createMemoryHistory(),
-    reactiveMapGet = "🔥🔥🔥🔥 TODO new MyProjectReactiveMap() 🔥🔥🔥🔥",
+    reactiveMap = "🔥🔥🔥🔥 TODO new MyProjectReactiveMap() 🔥🔥🔥🔥",
     scopedMap = new Map(),
   } = {}
 ) {
   const initialState = scopedMap.get(INITIAL_STATE_KEY);
-  const reactiveUsername = await reactiveMapGet("username", {
+  const usernameItem = await reactiveMap.item("username", {
     fetchInitialValue: async () => {
       const response = await fetch(`http://localhost:8889/api/viewer`);
       const viewer = await response.json();
       return viewer.username;
     },
   });
-  const username = reactiveUsername();
+  const username = usernameItem.get();
 
   const store = configureStore({
     ...initialState,
@@ -34,8 +34,7 @@ async function mount(
   });
 
   const cleanups = [
-    reactiveUsername?.listen(async (reactiveValue) => {
-      const username = await reactiveValue;
+    usernameItem.listen((username) => {
       store.dispatch({ type: "UPDATE_USERNAME", username });
     }),
   ];
