@@ -16,12 +16,14 @@ async function mount(
   } = {}
 ) {
   const initialState = scopedMap.get(INITIAL_STATE_KEY);
-  const reactiveUsername = reactiveMapGet("username");
-  const username = await reactiveUsername(async () => {
-    const response = await fetch(`http://localhost:8889/api/viewer`);
-    const viewer = await response.json();
-    return viewer.username;
+  const reactiveUsername = await reactiveMapGet("username", {
+    fetchInitialValue: async () => {
+      const response = await fetch(`http://localhost:8889/api/viewer`);
+      const viewer = await response.json();
+      return viewer.username;
+    },
   });
+  const username = reactiveUsername();
 
   const store = configureStore({
     ...initialState,

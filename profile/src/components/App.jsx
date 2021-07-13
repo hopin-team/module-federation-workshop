@@ -1,4 +1,4 @@
-import { useReactiveValue } from "nextjs/ReactReactiveMap";
+import { useSharedState } from "nextjs/ReactReactiveMap";
 
 async function fetchInitialValue() {
   const response = await fetch(`http://localhost:8889/api/viewer`);
@@ -7,8 +7,9 @@ async function fetchInitialValue() {
 }
 
 export default function App({ reactiveMapGet }) {
-  const [username, setUsername] = useReactiveValue(reactiveMapGet("username"), {
+  const [username, setUsername, shareUsername] = useSharedState("username", {
     fetchInitialValue,
+    reactiveMapGet,
   });
 
   return (
@@ -26,7 +27,7 @@ export default function App({ reactiveMapGet }) {
         }).then(() => {
           // ❌ make sure you don't share a state change unless it has changed.
           // E.g. it now submits the form even the username is the same. It rerenders the MF that use username on the first rerender
-          reactiveMapGet("username")(username);
+          shareUsername(username);
         });
       }}
     >

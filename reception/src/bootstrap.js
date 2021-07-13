@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import { createMemoryHistory, createBrowserHistory } from "history";
 import App from "./components/App";
 
-function mount(
+async function mount(
   el,
   { onNavigate, history = createMemoryHistory(), reactiveMapGet } = {}
 ) {

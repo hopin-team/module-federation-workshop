@@ -13,7 +13,8 @@ export class ReactiveMap {
   // make _getValue private with TS
   _getValue = (key) => {
     this._validateKey(key);
-    return Promise.resolve(this.values.get(key));
+    // return Promise.resolve(this.values.get(key));
+    return this.values.get(key);
   };
 
   // make _setValue private with TS
@@ -31,25 +32,8 @@ export class ReactiveMap {
     this._setValue(key, value);
 
     if (!this.reactiveValues.has(key)) {
-      const reactiveValue = async (newValue) => {
-        const currentValue = this.values.get(key);
-        if (Promise.resolve(currentValue) === currentValue) {
-          // current value is a promise
-          return currentValue;
-        }
-
-        if (typeof newValue === "function" && currentValue === undefined) {
-          const promise = new Promise(async (resolve, reject) => {
-            try {
-              resolve(await newValue());
-            } catch (error) {
-              reject(error);
-            }
-          });
-          this.values.set(key, promise);
-          newValue = await promise;
-          this._setValue(key, newValue);
-        } else if (newValue !== undefined && typeof newValue !== "function") {
+      const reactiveValue = (newValue) => {
+        if (newValue !== undefined) {
           this._setValue(key, newValue);
         }
 
@@ -77,9 +61,26 @@ export class ReactiveMap {
     return this.reactiveValues.get(key);
   };
 
-  get = (key) => {
+  get = async (key, { fetchInitialValue } = {}) => {
     if (!this.reactiveValues.has(key)) {
+      // Setting the defined that it has been initialized by some party
       this.set(key, undefined);
+    }
+
+    // If there is an init function execute and setValue on resolution
+    if (
+      typeof fetchInitialValue === "function" &&
+      this.values.get(key) === undefined
+    ) {
+      const promise = new Promise(async (resolve, reject) => {
+        try {
+          resolve(await fetchInitialValue());
+        } catch (error) {
+          reject(error);
+        }
+      });
+      this.values.set(key, promise);
+      this._setValue(key, await promise);
     }
 
     return this.reactiveValues.get(key);
