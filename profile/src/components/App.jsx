@@ -1,14 +1,7 @@
 import { useSharedState } from "nextjs/ReactReactiveMap";
 
-async function fetchInitialValue() {
-  const response = await fetch(`http://localhost:8889/api/viewer`);
-  const json = await response.json();
-  return json.username;
-}
-
 export default function App({ reactiveMap }) {
   const [username, setUsername, shareUsername] = useSharedState("username", {
-    fetchInitialValue,
     reactiveMap,
   });
 

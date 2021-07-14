@@ -3,6 +3,17 @@ import { createMemoryHistory, createBrowserHistory } from "history";
 import { configureStore } from "./store";
 import App from "./components/App";
 import "regenerator-runtime";
+import { createPusherConnector } from "nextjs/Connectors";
+
+function pusherConnector(set, context = {}) {
+  console.log("test1 ✅ sessions connected to pusher");
+  return createPusherConnector({
+    channelId: "my-channel",
+    eventId: "my-event",
+    pusher: context.pusher,
+    set,
+  });
+}
 
 const INITIAL_STATE_KEY = "sessions-initial-state";
 
@@ -17,12 +28,13 @@ async function mount(
 ) {
   const initialState = scopedMap.get(INITIAL_STATE_KEY);
   const usernameItem = await reactiveMap.item("username", {
-    fetchInitialValue: async () => {
+    initialiser: async () => {
       const response = await fetch(`http://localhost:8889/api/viewer`);
       const viewer = await response.json();
       return viewer.username;
     },
   });
+
   const username = usernameItem.get();
 
   const store = configureStore({
@@ -34,6 +46,7 @@ async function mount(
   });
 
   const cleanups = [
+    usernameItem.connect(pusherConnector),
     usernameItem.listen((username) => {
       store.dispatch({ type: "UPDATE_USERNAME", username });
     }),

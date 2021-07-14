@@ -7,7 +7,7 @@ module.exports = {
       name: "nextjs",
       filename: "static/chunks/remoteEntry.js",
       shared: {
-        ...packageJsonDeps,
+        //...packageJsonDeps,
         react: {
           eager: true,
           requiredVersion: packageJsonDeps.react,
@@ -19,6 +19,7 @@ module.exports = {
       },
       exposes: {
         "./ReactReactiveMap": "./components/ReactReactiveMap.jsx",
+        "./Connectors": "./components/connectors.js",
       },
     };
 

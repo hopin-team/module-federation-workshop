@@ -1,12 +1,39 @@
 import ReactDOM from "react-dom";
 import App from "./components/App";
+import { createPusherConnector } from "nextjs/Connectors";
 
-function mount(el, { reactiveMap } = {}) {
-  if (el)
-    ReactDOM.render(<App history={history} reactiveMap={reactiveMap} />, el);
+function pusherConnector(set, context = {}) {
+  console.log("test1 ✅ profile connected to pusher");
+  return createPusherConnector({
+    channelId: "my-channel",
+    eventId: "my-event",
+    pusher: context.pusher,
+    set,
+  });
+}
+
+async function initialiser() {
+  const response = await fetch(`http://localhost:8889/api/viewer`);
+  const json = await response.json();
+  return json.username;
+}
+
+const fakeReactiveMap = {
+  item: () => ({
+    connect: () => {},
+  }),
+};
+
+function mount(el, { reactiveMap = fakeReactiveMap } = {}) {
+  const reactiveItem = reactiveMap.item("username", { initialiser });
+  const cleanups = [reactiveItem.connect(pusherConnector)];
+
+  if (el) ReactDOM.render(<App reactiveMap={reactiveMap} />, el);
+
   return {
     unmount: () => {
       ReactDOM.unmountComponentAtNode(el);
+      cleanups.forEach((cleanup) => cleanup());
     },
   };
 }
@@ -14,7 +41,7 @@ function mount(el, { reactiveMap } = {}) {
 if (process.env.NODE_ENV === "development" && typeof document !== "undefined") {
   const el = document.getElementById("root-profile-dev");
   if (el) {
-    mount(el, { history: createBrowserHistory() });
+    mount(el);
   }
 }
 

@@ -1,21 +1,13 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-} from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const ReactiveMapContext = createContext();
-const ReactiveMapGetContext = createContext();
 
-export const validateContextProvider = (context, provider) => {
+export function validateContextProvider(context, provider) {
   if (!context) {
     throw new Error(`${provider} is not an ancestor of this component`);
   }
   return context;
-};
+}
 
 export function ReactiveMapProvider({ children, reactiveMap }) {
   return (
@@ -33,10 +25,10 @@ export function useReactiveMap() {
 }
 
 export function useReadSharedState(key) {
-  // TODO
+  // TODO`
 }
 
-export function useSharedState(key, { fetchInitialValue, ...restOptions }) {
+export function useSharedState(key, { initialiser, ...restOptions } = {}) {
   const reactiveMap = useContext(ReactiveMapContext) || restOptions.reactiveMap;
   if (!reactiveMap) {
     throw new Error(
@@ -44,7 +36,7 @@ export function useSharedState(key, { fetchInitialValue, ...restOptions }) {
     );
   }
   const [value, setValue] = useState();
-  const item = reactiveMap.item(key, { fetchInitialValue });
+  const item = reactiveMap.item(key, { initialiser });
 
   useEffect(() => {
     setValue(item.get());
@@ -54,15 +46,3 @@ export function useSharedState(key, { fetchInitialValue, ...restOptions }) {
 
   return [value, setValue, item.set];
 }
-
-// export function useReactiveValue(reactiveValue, { fetchInitialValue } = {}) {
-//   const [value, setValue] = useState();
-
-//   useEffect(() => {
-//     reactiveValue?.(fetchInitialValue).then(setValue);
-
-//     return reactiveValue.listen(async (newValue) => setValue(await newValue));
-//   }, [reactiveValue]);
-
-//   return [value, setValue];
-// }

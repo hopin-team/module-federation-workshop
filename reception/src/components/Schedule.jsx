@@ -1,14 +1,8 @@
 import { useSharedState } from "nextjs/ReactReactiveMap";
 import { Link } from "react-router-dom";
 
-async function fetchInitialValue() {
-  const response = await fetch(`http://localhost:8889/api/viewer`);
-  const json = await response.json();
-  return json.username;
-}
-
 export default function Schedule() {
-  const [username] = useSharedState("username", { fetchInitialValue });
+  const [username] = useSharedState("username");
 
   return (
     <>
