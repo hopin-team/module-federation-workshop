@@ -3,7 +3,7 @@ import { createMemoryHistory, createBrowserHistory } from "history";
 import { configureStore } from "./store";
 import App from "./components/App";
 import "regenerator-runtime";
-import { createPusherConnector } from "nextjs/Connectors";
+import { createPusherConnector } from "nextjs2/Connectors";
 
 function pusherConnector(set, context = {}) {
   console.log("test1 ✅ sessions connected to pusher");

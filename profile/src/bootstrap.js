@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import App from "./components/App";
-import { createPusherConnector } from "nextjs/Connectors";
+import { createPusherConnector } from "nextjs2/Connectors";
 
 function pusherConnector(set, context = {}) {
   console.log("test1 ✅ profile connected to pusher");

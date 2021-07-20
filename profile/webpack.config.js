@@ -26,8 +26,8 @@ module.exports = {
         "./App": "./src/bootstrap.js",
       },
       remotes: {
-        nextjs:
-          "nextjs@http://localhost:3001/_next/static/chunks/remoteEntry.js",
+        nextjs2:
+          "nextjs2@http://localhost:3001/_next/static/chunks/remoteEntry.js",
       },
       shared: packageJson.dependencies,
     }),

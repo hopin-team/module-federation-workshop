@@ -1,4 +1,4 @@
-import { useSharedState } from "nextjs/ReactReactiveMap";
+import { useSharedState } from "nextjs2/ReactReactiveMap";
 
 export default function App({ reactiveMap }) {
   const [username, setUsername, shareUsername] = useSharedState("username", {

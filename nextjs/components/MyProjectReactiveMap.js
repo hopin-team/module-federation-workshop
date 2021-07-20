@@ -21,7 +21,7 @@ export class MyProjectReactiveMap extends ReactiveMap {
       pusher: new Pusher(PUSHER_APP_KEY, {
         cluster: PUSHER_APP_CLUSTER,
       }),
-      ably: new Ably.Realtime(ABLY_APP_KEY),
+      //ably: new Ably.Realtime(ABLY_APP_KEY),
     };
   }
 }

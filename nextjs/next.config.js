@@ -4,7 +4,7 @@ module.exports = {
   future: { webpack5: true },
   webpack: (config, options) => {
     const federationConfig = {
-      name: "nextjs",
+      name: "nextjs2",
       filename: "static/chunks/remoteEntry.js",
       shared: {
         //...packageJsonDeps,

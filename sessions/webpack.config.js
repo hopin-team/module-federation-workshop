@@ -27,8 +27,8 @@ module.exports = {
       },
       shared: packageJson.dependencies,
       remotes: {
-        nextjs:
-          "nextjs@http://localhost:3001/_next/static/chunks/remoteEntry.js",
+        nextjs2:
+          "nextjs2@http://localhost:3001/_next/static/chunks/remoteEntry.js",
       },
     }),
   ],
