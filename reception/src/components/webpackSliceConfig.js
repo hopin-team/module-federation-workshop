@@ -1,5 +1,37 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const VirtualModulesPlugin = require("webpack-virtual-modules");
+
+const templateIndexHtml = `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Profile/Schedule</title>
+  </head>
+  <body>
+    <div id="root-profile-schedule-dev"></div>
+  </body>
+</html>
+`;
+
+const devBootstrap = `
+import ReactDOM from "react-dom";
+import Slice from "./index.jsx";
+import { Root } from "../../../root";
+
+ReactDOM.render(
+  <Root>
+    <Slice />
+  </Root>,
+  document.getElementById("root-profile-schedule-dev")
+);
+`;
+
+const virtualModules = new VirtualModulesPlugin({
+  "./public/index.html": templateIndexHtml,
+  "./src/index.js": 'import("./devBootstrap.js");',
+  "./src/devBootstrap.js": devBootstrap,
+});
 
 const port = 8880;
 
@@ -18,6 +50,7 @@ function webpackSliceConfig({ packageJson }) {
       },
     },
     plugins: [
+      virtualModules,
       new HtmlWebpackPlugin({
         template: "./public/index.html",
       }),
@@ -25,7 +58,7 @@ function webpackSliceConfig({ packageJson }) {
         name: "receptionSliceSchedule",
         filename: "remoteEntry.js",
         exposes: {
-          "./FeaturedSchedule": "./src/components/index.jsx",
+          "./FeaturedSchedule": "./src/index.jsx",
         },
         remotes: {
           nextjs2:

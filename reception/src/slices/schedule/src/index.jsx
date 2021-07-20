@@ -1,5 +1,5 @@
 //import { useSharedState } from "nextjs2/ReactReactiveMap";
-import { useSharedState } from "../../../../components/CopyOfReactReactiveMap";
+import { useSharedState } from "../../../components/CopyOfReactReactiveMap";
 import { Link } from "react-router-dom";
 
 export default function FeaturedSchedule() {

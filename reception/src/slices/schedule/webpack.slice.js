@@ -1,4 +1,6 @@
 const packageJson = require("./package.json");
+const webpackSliceConfig = require("../../components/webpackSliceConfig");
+const { resolve } = require("path");
 
 module.exports = (env) =>
   webpackSliceConfig({
