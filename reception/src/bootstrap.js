@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import { createMemoryHistory, createBrowserHistory } from "history";
-// import { ReactiveMap } from "nextjs2/ReactiveMap";
 import App from "./components/App";
-import { Root } from "./root";
+import { getRootDevName } from "../slices-scripts/utils";
+const packageJson = require("../package.json");
 
 async function initialiser() {
   const response = await fetch(`http://localhost:8889/api/viewer`);
@@ -31,12 +31,7 @@ async function mount(
   const cleanups = [];
   if (onNavigate) cleanups.push(history.listen((e) => onNavigate(e.pathname)));
   if (el)
-    ReactDOM.render(
-      <Root history={history} reactiveMap={reactiveMap}>
-        <App />
-      </Root>,
-      el
-    );
+    ReactDOM.render(<App history={history} reactiveMap={reactiveMap} />, el);
 
   return {
     onParentNavigate: (pathname) => {
@@ -51,7 +46,8 @@ async function mount(
 }
 
 if (process.env.NODE_ENV === "development") {
-  const root = document.getElementById("root-reception-dev");
+  const root = document.getElementById(getRootDevName(packageJson.name));
+  // const root = document.getElementById("root-reception-dev");
   if (root) {
     mount(root, { history: createBrowserHistory() });
   }

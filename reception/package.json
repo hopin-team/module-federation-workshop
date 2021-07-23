@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve"
+    "__start": "webpack serve",
+    "_____start": "node ./slices-scripts/start.js & webpack serve --config webpackMicroFE.config.js",
+    "start": "node ./slices-scripts/start.js"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +28,7 @@
     "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.8.0",
     "webpack-virtual-modules": "^0.4.3"
   }
 }
