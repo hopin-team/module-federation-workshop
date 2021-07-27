@@ -26,7 +26,9 @@ const fakeReactiveMap = {
 
 function mount(el, { reactiveMap = fakeReactiveMap } = {}) {
   const reactiveItem = reactiveMap.item("username", { initialiser });
-  const cleanups = [reactiveItem.connect(pusherConnector)];
+  const cleanups = [
+    // reactiveItem.connect(pusherConnector)
+  ];
 
   if (el) ReactDOM.render(<App reactiveMap={reactiveMap} />, el);
 

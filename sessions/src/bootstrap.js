@@ -46,7 +46,7 @@ async function mount(
   });
 
   const cleanups = [
-    usernameItem.connect(pusherConnector),
+    // usernameItem.connect(pusherConnector),
     usernameItem.listen((username) => {
       store.dispatch({ type: "UPDATE_USERNAME", username });
     }),

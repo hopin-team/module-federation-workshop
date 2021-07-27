@@ -18,9 +18,9 @@ export class MyProjectReactiveMap extends ReactiveMap {
     super(...args);
     this.keyValidators = [whitelistKeys];
     this.context = {
-      pusher: new Pusher(PUSHER_APP_KEY, {
-        cluster: PUSHER_APP_CLUSTER,
-      }),
+      // pusher: new Pusher(PUSHER_APP_KEY, {
+      //   cluster: PUSHER_APP_CLUSTER,
+      // }),
       //ably: new Ably.Realtime(ABLY_APP_KEY),
     };
   }

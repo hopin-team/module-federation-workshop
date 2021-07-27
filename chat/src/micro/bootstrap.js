@@ -5,6 +5,8 @@ export default function mount(el) {
   if (el) {
     const app = createApp(App);
     app.mount(el);
+
+    return { unmount: () => {} };
   }
 }
 

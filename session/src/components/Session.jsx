@@ -13,7 +13,7 @@ export default function Session() {
         controls
         src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
       />
-      {/* <Chat /> */}
+      <Chat />
     </>
   );
 }

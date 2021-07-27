@@ -21,7 +21,7 @@ module.exports = {
       name: "chat",
       filename: "remoteEntry.js",
       exposes: {
-        "./App": "./src/bootstrap",
+        "./App": "./src/micro/bootstrap",
       },
       shared: packageJson.dependencies,
     }),

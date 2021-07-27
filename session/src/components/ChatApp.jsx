@@ -7,17 +7,10 @@ export default function ChatApp() {
   const history = useHistory();
 
   useEffect(() => {
-    const { onParentNavigate, unmount } = mount(ref.current, {
-      onNavigate: (pathname) => {
-        const currentPathname = history.location.pathname;
-        if (currentPathname !== pathname) history.push(pathname);
-      },
-    });
-    const unlisten = history.listen((e) => onParentNavigate(e.pathname));
+    const { unmount } = mount(ref.current);
 
     return () => {
       unmount();
-      unlisten();
     };
   }, [ref.current]);
 
