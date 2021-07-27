@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "__start": "webpack serve",
-    "_____start": "node ./slices-scripts/start.js & webpack serve --config webpackMicroFE.config.js",
-    "start": "node ./slices-scripts/start.js"
+    "start": "node slices-cli/start.js",
+    "build": "node slices-cli/build.js"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +23,7 @@
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.13.13",
     "babel-loader": "^8.2.2",
+    "chalk": "^4.1.1",
     "html-webpack-plugin": "^5.3.1",
     "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0",

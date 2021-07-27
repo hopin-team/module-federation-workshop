@@ -1,6 +1,5 @@
 {
   "packages": [
-    "*/src/slices/*",
     "chat",
     "reception",
     "sessions",
