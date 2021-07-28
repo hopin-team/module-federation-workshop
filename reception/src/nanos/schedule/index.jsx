@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-// 🔥 TODO enable ModuleScopePlugin in src/nanos/schedule (basically in each nano)
 // import THIS_SHOULD_ERROR from "../sponsors/src/index";
 // import THIS_SHOULD_ERROR from "../../micro/App";
 

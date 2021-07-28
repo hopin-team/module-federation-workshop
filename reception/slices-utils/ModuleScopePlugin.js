@@ -18,7 +18,7 @@ class ModuleScopePlugin {
     this.appSrcs = Array.isArray(appSrc) ? appSrc : [appSrc];
     this.allowedFiles = new Set(allowedFiles);
   }
-
+ 
   apply(resolver) {
     const { appSrcs } = this;
     resolver.hooks.file.tapAsync(

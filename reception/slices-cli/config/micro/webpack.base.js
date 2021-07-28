@@ -1,9 +1,9 @@
+const fs = require("fs");
+const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const VirtualModulesPlugin = require("webpack-virtual-modules");
 const ModuleScopePlugin = require("../../../slices-utils/ModuleScopePlugin");
-const fs = require("fs");
-const path = require("path");
-const { getRootDevName } = require("../../../slices-utils");
+const { getRootDevName } = require("../../../slices-utils/index.js");
 
 const templateIndexHtml = ({ name }) => `
 <!DOCTYPE html>
@@ -56,10 +56,13 @@ module.exports = ({ packageJson }) => {
         template: "./public/index.html",
       }),
       // TODO THIS PLUGIN DOESN'T WORK WITH WEBPACK 5
-      // new ModuleScopePlugin(resolvePath("src/micro")),
     ],
     resolve: {
       extensions: [".js", ".jsx"],
+      plugins: [new ModuleScopePlugin(resolvePath("src/micro"), [
+        resolvePath('package.json'), 
+        resolvePath('slices-utils') // remove this when slices utils is an npm package
+      ])]
     },
   };
 };

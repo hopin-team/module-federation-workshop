@@ -1,5 +1,11 @@
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const VirtualModulesPlugin = require("webpack-virtual-modules");
+const fs = require("fs");
+const path = require("path");
+const ModuleScopePlugin = require("../../../slices-utils/ModuleScopePlugin");
+
+const appDirectory = fs.realpathSync(process.cwd());
+const resolvePath = (relativePath) => path.resolve(appDirectory, relativePath);
 
 module.exports = ({
   packageJson,
@@ -64,7 +70,8 @@ module.exports = ({
       }),
     ],
     resolve: {
-      extensions: [".js", ".jsx"],
+      extensions: [".js", ".jsx"], 
+      plugins: [new ModuleScopePlugin(resolvePath(`src/nanos/${nanoName}`))]
     },
   };
 };
